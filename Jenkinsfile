@@ -21,7 +21,7 @@ pipeline {
     }      
      steps {
        cleanWs()
-       git credentialsId: 'github', url: "https://github.com/myfinance/mfframework.git"
+       git credentialsId: 'github', url: "https://github.com/myfinance/mfbackend.git"
      }
    }
    stage('build'){
