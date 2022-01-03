@@ -34,7 +34,7 @@ pipeline {
        sh '''mvn versions:set -DnewVersion=${VERSION}'''
        sh '''mvn clean deploy -DtargetRepository=${MVN_REPO}'''
      }
-   } 
+   }     
 
  }
 }
