@@ -9,7 +9,7 @@
 		<groupId>de.hf.myfinance</groupId>
 		<artifactId>root</artifactId>
         <version>0.0.0-0-SNAPSHOT</version>
-		<relativePath>../parentpom</relativePath> 
+		<relativePath>..</relativePath> 
 	</parent>
 	<dependencies>
         <dependency>
