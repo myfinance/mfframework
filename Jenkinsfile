@@ -32,6 +32,7 @@ pipeline {
     }      
      steps {
        sh '''mvn versions:set -DnewVersion=${VERSION}'''
+       sh '''mvn -f parentpom/pom.xml versions:set -DnewVersion=${VERSION}'''
        sh '''mvn clean deploy -DtargetRepository=${MVN_REPO}'''
      }
    }     
