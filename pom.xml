@@ -15,6 +15,7 @@
 
     <modules>
         <module>mfframework</module>
+        <module>mfapi</module>
     </modules>
 
     <properties>
