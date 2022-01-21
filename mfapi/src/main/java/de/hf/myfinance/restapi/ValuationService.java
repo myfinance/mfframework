@@ -9,5 +9,6 @@ public interface ValuationService {
 	@GetMapping("/")
 	String index();
 
-
+	@GetMapping("/helloInstrument")
+	String helloInstrument();
 }
