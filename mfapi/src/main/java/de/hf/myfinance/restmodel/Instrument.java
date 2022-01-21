@@ -2,9 +2,12 @@ package de.hf.myfinance.restmodel;
 
 
 public class Instrument {
-    private final Integer instrumentid;
-    private final String description;
-    private final String serviceAddress;
+    private Integer instrumentid;
+    private String description;
+    private String serviceAddress;
+
+    public Instrument() {
+    }
 
     public Instrument(Integer instrumentid, String description, String serviceAddress){
         this.instrumentid = instrumentid;
