@@ -41,7 +41,7 @@ class GlobalControllerExceptionHandler {
   @ResponseStatus(INTERNAL_SERVER_ERROR)
   @ExceptionHandler(MFException.class)
   public @ResponseBody HttpErrorInfo handleMFException(
-    ServerHttpRequest request, InvalidInputException ex) {
+    ServerHttpRequest request, MFException ex) {
 
     return createHttpErrorInfo(INTERNAL_SERVER_ERROR, request, ex);
   }
