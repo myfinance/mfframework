@@ -1,4 +1,4 @@
-package de.hf.myfinance.utils;
+package de.hf.framework.utils;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import de.hf.myfinance.exceptions.InvalidInputException;
-import de.hf.myfinance.exceptions.NotFoundException;
+import de.hf.framework.exceptions.InvalidInputException;
+import de.hf.framework.exceptions.NotFoundException;
 
 @RestControllerAdvice
 class GlobalControllerExceptionHandler {

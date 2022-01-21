@@ -13,9 +13,10 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import de.hf.myfinance.exceptions.InvalidInputException;
-import de.hf.myfinance.exceptions.NotFoundException;
-import de.hf.myfinance.utils.HttpErrorInfo;
+
+import de.hf.framework.exceptions.InvalidInputException;
+import de.hf.framework.exceptions.NotFoundException;
+import de.hf.framework.utils.HttpErrorInfo;
 import de.hf.myfinance.restapi.InstrumentService;
 import de.hf.myfinance.restmodel.Instrument;
 

@@ -1,4 +1,4 @@
-package de.hf.myfinance.utils;
+package de.hf.framework.utils;
 
 import java.time.ZonedDateTime;
 import org.springframework.http.HttpStatus;

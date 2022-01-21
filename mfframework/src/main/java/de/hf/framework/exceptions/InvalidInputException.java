@@ -1,4 +1,4 @@
-package de.hf.myfinance.exceptions;
+package de.hf.framework.exceptions;
 
 public class InvalidInputException extends RuntimeException {
     public InvalidInputException() {}

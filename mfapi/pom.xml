@@ -16,5 +16,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>de.hf.myfinance</groupId>
+			<artifactId>mfframework</artifactId>
+            <version>${project.version}</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -1,4 +1,4 @@
-package de.hf.myfinance.exceptions;
+package de.hf.framework.exceptions;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException() {}
