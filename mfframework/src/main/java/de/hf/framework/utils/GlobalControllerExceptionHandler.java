@@ -2,6 +2,7 @@ package de.hf.framework.utils;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import de.hf.framework.exceptions.InvalidInputException;
+import de.hf.framework.exceptions.MFException;
 import de.hf.framework.exceptions.NotFoundException;
 
 @RestControllerAdvice
@@ -34,6 +36,14 @@ class GlobalControllerExceptionHandler {
     ServerHttpRequest request, InvalidInputException ex) {
 
     return createHttpErrorInfo(UNPROCESSABLE_ENTITY, request, ex);
+  }
+
+  @ResponseStatus(INTERNAL_SERVER_ERROR)
+  @ExceptionHandler(MFException.class)
+  public @ResponseBody HttpErrorInfo handleMFException(
+    ServerHttpRequest request, InvalidInputException ex) {
+
+    return createHttpErrorInfo(INTERNAL_SERVER_ERROR, request, ex);
   }
 
   private HttpErrorInfo createHttpErrorInfo(

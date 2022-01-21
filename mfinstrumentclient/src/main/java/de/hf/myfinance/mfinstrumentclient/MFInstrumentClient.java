@@ -15,10 +15,12 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import de.hf.framework.exceptions.InvalidInputException;
+import de.hf.framework.exceptions.MFException;
 import de.hf.framework.exceptions.NotFoundException;
 import de.hf.framework.utils.HttpErrorInfo;
 import de.hf.myfinance.restapi.InstrumentService;
 import de.hf.myfinance.restmodel.Instrument;
+import de.hf.myfinance.exception.MFMsgKey;
 
 
 @Component
@@ -87,6 +89,9 @@ public class MFInstrumentClient implements InstrumentService {
     
             case UNPROCESSABLE_ENTITY:
               throw new InvalidInputException(getErrorMessage(ex));
+
+            case INTERNAL_SERVER_ERROR:
+              throw new MFException(MFMsgKey.UNSPECIFIED, getErrorMessage(ex));              
     
             default:
               LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());

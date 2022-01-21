@@ -1,7 +1,8 @@
 package de.hf.myfinance.restapi;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
+import de.hf.myfinance.restmodel.Instrument;
 
 
 public interface ValuationService {
@@ -10,5 +11,5 @@ public interface ValuationService {
 	String index();
 
 	@GetMapping("/helloInstrument")
-	String helloInstrument();
+	Instrument helloInstrument();
 }

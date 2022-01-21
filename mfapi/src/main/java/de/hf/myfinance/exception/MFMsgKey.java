@@ -15,11 +15,11 @@
  * ----------------------------------------------------------------------------
  */
 
-package de.hf.myfinance.exceptions;
+package de.hf.myfinance.exception;
 
 import de.hf.framework.exceptions.MsgKey;
 
-/** Message key to be part of CCRException providing a unique id and a unique type (message type) */
+/** Message key to be part of MFException providing a unique id and a unique type (message type) */
 public enum MFMsgKey implements MsgKey {
     // 10000 - 14999: system errors
     SYSTEM(10001),
@@ -55,9 +55,11 @@ public enum MFMsgKey implements MsgKey {
     NO_VALID_INSTRUMENT(21019),
     // 25000 - 29999: analysis
     NO_INSTRUMENT_FOUND_EXCEPTION(25001),
-    MD_UNSPECIFIED(30000);
 
-    private final String globalPrefix = "MD";
+    //this number is fix and must not be changed
+    UNSPECIFIED(30000);
+
+    private final String globalPrefix = "MF";
 
     private final int id;
 
