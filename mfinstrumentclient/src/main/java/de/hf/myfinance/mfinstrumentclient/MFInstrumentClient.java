@@ -1,15 +1,11 @@
 package de.hf.myfinance.mfinstrumentclient;
 
-import static org.springframework.http.HttpMethod.GET;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -70,7 +66,8 @@ public class MFInstrumentClient implements InstrumentService {
     }
 
 
-    public Instrument getProduct(int productId) {
+    @Override
+    public Instrument getInstrument(int productId) {
 
         try {
           String url = instrumentServiceUrl + "/instrument/" + productId;
