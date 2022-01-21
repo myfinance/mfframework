@@ -12,5 +12,5 @@ public interface InstrumentService {
 	String index();
 
 	@GetMapping(value = "/instrument/{instrumentId}", produces = "application/json") 
-	Instrument getProduct(@PathVariable int instrumentId);
+	Instrument getInstrument(@PathVariable int instrumentId);
 }
