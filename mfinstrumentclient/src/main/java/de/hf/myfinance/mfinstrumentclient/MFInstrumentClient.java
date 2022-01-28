@@ -2,6 +2,7 @@ package de.hf.myfinance.mfinstrumentclient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,9 +54,10 @@ public class MFInstrumentClient implements InstrumentService {
             switch (ex.getStatusCode()) {
               case NOT_FOUND:
                 throw new NotFoundException(getErrorMessage(ex));
-      
               case UNPROCESSABLE_ENTITY:
                 throw new InvalidInputException(getErrorMessage(ex));
+              case INTERNAL_SERVER_ERROR:
+                throw new MFException(MFMsgKey.UNSPECIFIED, getErrorMessage(ex));  
       
               default:
                 LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
@@ -83,12 +85,10 @@ public class MFInstrumentClient implements InstrumentService {
           switch (ex.getStatusCode()) {
             case NOT_FOUND:
               throw new NotFoundException(getErrorMessage(ex));
-    
             case UNPROCESSABLE_ENTITY:
               throw new InvalidInputException(getErrorMessage(ex));
-
             case INTERNAL_SERVER_ERROR:
-              throw new MFException(MFMsgKey.UNSPECIFIED, getErrorMessage(ex));              
+              throw new MFException(MFMsgKey.UNSPECIFIED, getErrorMessage(ex));                         
     
             default:
               LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
