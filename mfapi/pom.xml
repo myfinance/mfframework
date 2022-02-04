@@ -21,5 +21,10 @@
 			<artifactId>mfframework</artifactId>
             <version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-common</artifactId>
+			<version>${springdoc.version}</version>
+		</dependency>
 	</dependencies>
 </project>
