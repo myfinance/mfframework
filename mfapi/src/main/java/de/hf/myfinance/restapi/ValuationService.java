@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import de.hf.myfinance.restmodel.Instrument;
 
 @Tag(name = "ValuationService", description =
-		"REST API for valuation informations of instruments.")
+		"${api.common.description}")
 public interface ValuationService {
 
 	@GetMapping("/")
