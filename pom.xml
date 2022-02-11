@@ -40,6 +40,7 @@
         <jib.image-tag>192.168.100.73:31003/repository/mydockerrepo/holgerfischer/myfinance-mfinstruments:${project.version}</jib.image-tag>
 
         <springdoc.version>1.5.9</springdoc.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
  
 
         <assembly-plugin.version>3.1.0</assembly-plugin.version>
@@ -51,6 +52,7 @@
         <surefire-plugin.version>2.22.2</surefire-plugin.version>
         <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
         <jar-plugin.version>3.0.2</jar-plugin.version>
+        <compiler-plugin.version>3.9.0</compiler-plugin.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
     </properties>
 
@@ -119,7 +121,24 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
-            </plugin>           
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source> <!-- depending on your project -->
+                    <target>${java.version}</target> <!-- depending on your project -->
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                        <!-- other annotation processors -->
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <distributionManagement>
