@@ -31,8 +31,8 @@ pipeline {
         }
     }      
      steps {
-       sh '''mvn versions:set -DnewVersion=${VERSION}'''
-       sh '''mvn clean deploy -DtargetRepository=${MVN_REPO}'''
+       sh '''mvn versions:set -DnewVersion=${VERSION} --settings ./settings.xml'''
+       sh '''mvn clean deploy -DtargetRepository=${MVN_REPO} --settings ./settings.xml'''
      }
    }     
 
