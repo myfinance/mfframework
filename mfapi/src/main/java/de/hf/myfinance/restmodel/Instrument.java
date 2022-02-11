@@ -1,31 +1,97 @@
 package de.hf.myfinance.restmodel;
 
 
-public class Instrument {
-    private Integer instrumentid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+public abstract class Instrument {
+    private InstrumentType instrumentType;
     private String description;
+    private boolean isactive;
+    private LocalDate maturitydate;
+    private LocalDate closingdate;
+    private LocalDateTime treelastchanged;
+    private String businesskey;
     private String serviceAddress;
 
     public Instrument() {
     }
 
-    public Instrument(Integer instrumentid, String description, String serviceAddress){
-        this.instrumentid = instrumentid;
+    public Instrument(String businesskey,
+                      String description,
+                      InstrumentType instrumentType,
+                      boolean isactive,
+                      LocalDateTime treelastchanged,
+                      String serviceAddress){
+        this.businesskey = businesskey;
         this.description = description;
+        this.instrumentType = instrumentType;
+        this.isactive = isactive;
+        this.treelastchanged = treelastchanged;
         this.serviceAddress =serviceAddress;
     }
 
+    public InstrumentType getInstrumentType() {
+        return instrumentType;
+    }
 
-    public Integer getInstrumentid() {
-        return instrumentid;
+    public void setInstrumentType(InstrumentType instrumentType) {
+        this.instrumentType = instrumentType;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isIsactive() {
+        return isactive;
+    }
+
+    public void setIsactive(boolean isactive) {
+        this.isactive = isactive;
+    }
+
+    public LocalDate getMaturitydate() {
+        return maturitydate;
+    }
+
+    public void setMaturitydate(LocalDate maturitydate) {
+        this.maturitydate = maturitydate;
+    }
+
+    public LocalDate getClosingdate() {
+        return closingdate;
+    }
+
+    public void setClosingdate(LocalDate closingdate) {
+        this.closingdate = closingdate;
+    }
+
+    public LocalDateTime getTreelastchanged() {
+        return treelastchanged;
+    }
+
+    public void setTreelastchanged(LocalDateTime treelastchanged) {
+        this.treelastchanged = treelastchanged;
+    }
+
+    public String getBusinesskey() {
+        return businesskey;
+    }
+
+    public void setBusinesskey(String businesskey) {
+        this.businesskey = businesskey;
+    }
+
     public String getServiceAddress() {
         return serviceAddress;
     }
 
+    public void setServiceAddress(String serviceAddress) {
+        this.serviceAddress = serviceAddress;
+    }
 }
