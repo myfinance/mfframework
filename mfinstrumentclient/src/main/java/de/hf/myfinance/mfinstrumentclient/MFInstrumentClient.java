@@ -76,7 +76,7 @@ public class MFInstrumentClient implements InstrumentApi {
           LOG.debug("Will call getProduct API on URL: {}", url);
     
           Instrument instrument = restTemplate.getForObject(url, Instrument.class);
-          LOG.debug("Found a product with id: {}", instrument.getInstrumentid());
+          LOG.debug("Found a instrument with businesskey: {}", instrument.getBusinesskey());
     
           return instrument;
     
