@@ -15,13 +15,13 @@ import de.hf.framework.exceptions.InvalidInputException;
 import de.hf.framework.exceptions.MFException;
 import de.hf.framework.exceptions.NotFoundException;
 import de.hf.framework.utils.HttpErrorInfo;
-import de.hf.myfinance.restapi.InstrumentService;
+import de.hf.myfinance.restapi.InstrumentApi;
 import de.hf.myfinance.restmodel.Instrument;
 import de.hf.myfinance.exception.MFMsgKey;
 
 
 @Component
-public class MFInstrumentClient implements InstrumentService {
+public class MFInstrumentClient implements InstrumentApi {
     private static final Logger LOG = LoggerFactory.getLogger(MFInstrumentClient.class);
     private final RestTemplate restTemplate;
     private final ObjectMapper mapper;

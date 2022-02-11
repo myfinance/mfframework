@@ -1,12 +1,14 @@
 package de.hf.myfinance.restapi;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import de.hf.myfinance.restmodel.Instrument;
 
-
-public interface InstrumentService {
+@Tag(name = "InstrumentApi", description =
+		"${api.common.description}")
+public interface InstrumentApi {
 
 	@GetMapping("/")
 	String index();

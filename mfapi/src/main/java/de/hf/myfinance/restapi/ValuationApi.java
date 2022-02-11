@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import de.hf.myfinance.restmodel.Instrument;
 
-@Tag(name = "ValuationService", description =
+@Tag(name = "ValuationApi", description =
 		"${api.common.description}")
-public interface ValuationService {
+public interface ValuationApi {
 
 	@GetMapping("/")
 	String index();
 
 	@Operation(
 			summary =
-					"${api.valuationService.helloInstrument.description}",
+					"${api.ValuationApi.helloInstrument.description}",
 			description =
-					"${api.valuationService.helloInstrument.notes}")
+					"${api.ValuationApi.helloInstrument.notes}")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description =
 					"${api.responseCodes.ok.description}"),
