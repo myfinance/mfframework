@@ -3,6 +3,7 @@ package de.hf.myfinance.mfinstrumentclient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
+import de.hf.myfinance.restmodel.Tenant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +99,12 @@ public class MFInstrumentClient implements InstrumentApi {
         }
       }
 
-      private String getErrorMessage(HttpClientErrorException ex) {
+    @Override
+    public void saveTenant(Tenant tenant) {
+
+    }
+
+    private String getErrorMessage(HttpClientErrorException ex) {
         try {
           return mapper.readValue(ex.getResponseBodyAsString(), HttpErrorInfo.class).getMessage();
         } catch (IOException ioex) {
