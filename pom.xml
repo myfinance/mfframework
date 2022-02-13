@@ -41,7 +41,7 @@
 
         <springdoc.version>1.5.9</springdoc.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
- 
+        <postgresql.version>42.2.2</postgresql.version>
 
         <assembly-plugin.version>3.1.0</assembly-plugin.version>
         <dependency-plugin.version>3.0.2</dependency-plugin.version>
