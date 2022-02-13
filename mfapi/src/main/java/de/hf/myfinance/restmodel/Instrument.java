@@ -20,15 +20,12 @@ public abstract class Instrument {
     public Instrument(String businesskey,
                       String description,
                       InstrumentType instrumentType,
-                      boolean isactive,
-                      LocalDateTime treelastchanged,
-                      String serviceAddress){
+                      boolean isactive){
         this.businesskey = businesskey;
         this.description = description;
         this.instrumentType = instrumentType;
         this.isactive = isactive;
-        this.treelastchanged = treelastchanged;
-        this.serviceAddress =serviceAddress;
+        this.treelastchanged = LocalDateTime.now();
     }
 
     public InstrumentType getInstrumentType() {

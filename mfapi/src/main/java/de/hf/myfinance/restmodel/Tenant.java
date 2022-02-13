@@ -8,7 +8,7 @@ public class Tenant extends Instrument {
         super();
     }
 
-    public Tenant(String businesskey, String description, boolean isactive, LocalDateTime treelastchanged, String serviceAddress){
-        super(businesskey, description, InstrumentType.TENANT, isactive, treelastchanged, serviceAddress);
+    public Tenant(String businesskey, String description, boolean isactive){
+        super(businesskey, description, InstrumentType.TENANT, isactive);
     }
 }
