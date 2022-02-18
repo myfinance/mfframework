@@ -9,6 +9,8 @@ import de.hf.myfinance.restmodel.Instrument;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 @Tag(name = "InstrumentApi", description =
 		"${api.common.description}")
 public interface InstrumentApi {
@@ -19,18 +21,15 @@ public interface InstrumentApi {
 	@GetMapping(value = "/instrument/{instrumentId}", produces = "application/json") 
 	Instrument getInstrument(@PathVariable int instrumentId);
 
-	/**
-	 * Sample usage, see below.
-	 *
-	 * curl -X POST $HOST:$PORT/instrument \
-	 *   -H "Content-Type: application/json" --data \
-	 *   '{"businesskey":"testkey","description":"desc","isactive":true}'
-	 *
-	 * @param tenant A JSON representation of the new review
-	 */
+	@GetMapping(value = "/instruments", produces = "application/json")
+	List<Instrument> listInstruments();
+
+	@GetMapping(value = "/tenants", produces = "application/json")
+	List<Tenant> listTenants();
+
 	@PostMapping(
-			value    = "/instrument",
+			value    = "/addtenant",
 			consumes = "application/json",
 			produces = "application/json")
-	void saveTenant(@RequestBody Tenant tenant);
+	void addTenant(@RequestBody String description);
 }

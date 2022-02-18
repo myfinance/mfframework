@@ -2,6 +2,7 @@ package de.hf.myfinance.mfinstrumentclient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.List;
 
 import de.hf.myfinance.restmodel.Tenant;
 import org.slf4j.Logger;
@@ -100,7 +101,17 @@ public class MFInstrumentClient implements InstrumentApi {
       }
 
     @Override
-    public void saveTenant(Tenant tenant) {
+    public List<Instrument> listInstruments() {
+        return null;
+    }
+
+    @Override
+    public List<Tenant> listTenants() {
+        return null;
+    }
+
+    @Override
+    public void addTenant(String description) {
 
     }
 
