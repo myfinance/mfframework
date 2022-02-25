@@ -43,6 +43,8 @@
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <postgresql.version>42.2.2</postgresql.version>
         <h2.version>1.4.200</h2.version>
+        <!--list helper-->
+        <guava.version>31.0.1-jre</guava.version>
 
         <assembly-plugin.version>3.1.0</assembly-plugin.version>
         <dependency-plugin.version>3.0.2</dependency-plugin.version>
