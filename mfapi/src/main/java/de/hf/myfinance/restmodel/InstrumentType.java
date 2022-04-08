@@ -104,7 +104,6 @@ public enum InstrumentType {
             case 4: return InstrumentType.BUILDINGSAVINGACCOUNT;
             case 5: return InstrumentType.BUDGET;
             case 6: return InstrumentType.TENANT;
-            //case 7: return InstrumentType.BudgetGroupPortfolio;
             case 8: return InstrumentType.ACCOUNTPORTFOLIO;
             case 9: return InstrumentType.ARTIFICALPORTFOLIO;
             case 10: return InstrumentType.BUDGETGROUP;

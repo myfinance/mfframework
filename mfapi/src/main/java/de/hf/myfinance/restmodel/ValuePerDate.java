@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public class ValuePerDate {
 
-    final protected double value;
-    final protected LocalDate date;
+    protected final double value;
+    protected final LocalDate date;
 
     public ValuePerDate(String valuePerDateString) {
         String[] values = valuePerDateString.split(",");

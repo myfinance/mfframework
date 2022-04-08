@@ -24,7 +24,7 @@ public class MFException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     /** the message key associated with the exception */
-    protected  MsgKey msgKey;
+    protected final MsgKey msgKey;
 
 
     public MFException(MsgKey msgKey, String message, Throwable e) {

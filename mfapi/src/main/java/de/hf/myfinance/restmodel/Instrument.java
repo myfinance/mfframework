@@ -14,10 +14,10 @@ public abstract class Instrument {
     private String businesskey;
     private String serviceAddress;
 
-    public Instrument() {
+    protected Instrument() {
     }
 
-    public Instrument(String businesskey,
+    protected Instrument(String businesskey,
                       String description,
                       InstrumentType instrumentType,
                       boolean isactive){
