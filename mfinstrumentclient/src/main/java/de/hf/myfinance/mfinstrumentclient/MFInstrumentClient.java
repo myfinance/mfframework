@@ -106,7 +106,7 @@ public class MFInstrumentClient implements InstrumentApi {
     }
 
     @Override
-    public List<Tenant> listTenants() {
+    public List<Instrument> listTenants() {
         return null;
     }
 
