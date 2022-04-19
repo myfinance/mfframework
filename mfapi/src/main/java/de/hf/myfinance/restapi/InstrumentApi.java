@@ -25,7 +25,7 @@ public interface InstrumentApi {
 	List<Instrument> listInstruments();
 
 	@GetMapping(value = "/instrumentsfortenant", produces = "application/json")
-	List<Instrument> listInstrumentsForTenant();
+	List<Instrument> listInstrumentsForTenant(@PathVariable String businesskey);
 
 	@GetMapping(value = "/tenants", produces = "application/json")
 	List<Tenant> listTenants();

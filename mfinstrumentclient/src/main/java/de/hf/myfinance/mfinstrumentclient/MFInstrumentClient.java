@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -47,24 +48,21 @@ public class MFInstrumentClient implements InstrumentApi {
             LOG.debug("Will call getProduct API on URL: {}", instrumentServiceUrl);
       
             String aString = restTemplate.getForObject(instrumentServiceUrl, String.class);
-            LOG.debug("Found a string:", aString);
+            LOG.debug("Found a string:{}", aString);
       
             return aString;
       
           } catch (HttpClientErrorException ex) {
-      
+
             switch (ex.getStatusCode()) {
-              case NOT_FOUND:
-                throw new NotFoundException(getErrorMessage(ex));
-              case UNPROCESSABLE_ENTITY:
-                throw new InvalidInputException(getErrorMessage(ex));
-              case INTERNAL_SERVER_ERROR:
-                throw new MFException(MFMsgKey.UNSPECIFIED, getErrorMessage(ex));  
-      
-              default:
-                LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
-                LOG.warn("Error body: {}", ex.getResponseBodyAsString());
-                throw ex;
+                case NOT_FOUND -> throw new NotFoundException(getErrorMessage(ex));
+                case UNPROCESSABLE_ENTITY -> throw new InvalidInputException(getErrorMessage(ex));
+                case INTERNAL_SERVER_ERROR -> throw new MFException(MFMsgKey.UNSPECIFIED, getErrorMessage(ex));
+                default -> {
+                    LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
+                    LOG.warn("Error body: {}", ex.getResponseBodyAsString());
+                    throw ex;
+                }
             }
           }       
     }
@@ -78,25 +76,22 @@ public class MFInstrumentClient implements InstrumentApi {
           LOG.debug("Will call getProduct API on URL: {}", url);
     
           Instrument instrument = restTemplate.getForObject(url, Instrument.class);
-          LOG.debug("Found a instrument with businesskey: {}", instrument.getBusinesskey());
+          if(instrument!=null) LOG.debug("Found a instrument with businesskey: {}", instrument.getBusinesskey());
     
           return instrument;
     
         } catch (HttpClientErrorException ex) {
-    
-          switch (ex.getStatusCode()) {
-            case NOT_FOUND:
-              throw new NotFoundException(getErrorMessage(ex));
-            case UNPROCESSABLE_ENTITY:
-              throw new InvalidInputException(getErrorMessage(ex));
-            case INTERNAL_SERVER_ERROR:
-              throw new MFException(MFMsgKey.UNSPECIFIED, getErrorMessage(ex));                         
-    
-            default:
-              LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
-              LOG.warn("Error body: {}", ex.getResponseBodyAsString());
-              throw ex;
-          }
+
+            switch (ex.getStatusCode()) {
+                case NOT_FOUND -> throw new NotFoundException(getErrorMessage(ex));
+                case UNPROCESSABLE_ENTITY -> throw new InvalidInputException(getErrorMessage(ex));
+                case INTERNAL_SERVER_ERROR -> throw new MFException(MFMsgKey.UNSPECIFIED, getErrorMessage(ex));
+                default -> {
+                    LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
+                    LOG.warn("Error body: {}", ex.getResponseBodyAsString());
+                    throw ex;
+                }
+            }
         }
       }
 
@@ -106,7 +101,7 @@ public class MFInstrumentClient implements InstrumentApi {
     }
 
     @Override
-    public List<Instrument> listInstrumentsForTenant() {
+    public List<Instrument> listInstrumentsForTenant(String businesskey) {
         return null;
     }
 
@@ -117,12 +112,12 @@ public class MFInstrumentClient implements InstrumentApi {
 
     @Override
     public void addTenant(String description) {
-
+        // not impl yet
     }
 
     @Override
     public void updateInstrument(String description, String businesskey, boolean isactive) {
-
+        // not impl yet
     }
 
     private String getErrorMessage(HttpClientErrorException ex) {
