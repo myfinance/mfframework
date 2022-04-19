@@ -71,10 +71,10 @@ public class MFInstrumentClient implements InstrumentApi {
 
 
     @Override
-    public Instrument getInstrument(int productId) {
+    public Instrument getInstrument(String businesskey) {
 
         try {
-          String url = instrumentServiceUrl + "/instrument/" + productId;
+          String url = instrumentServiceUrl + "/instrument/" + businesskey;
           LOG.debug("Will call getProduct API on URL: {}", url);
     
           Instrument instrument = restTemplate.getForObject(url, Instrument.class);
@@ -106,12 +106,22 @@ public class MFInstrumentClient implements InstrumentApi {
     }
 
     @Override
+    public List<Instrument> listInstrumentsForTenant() {
+        return null;
+    }
+
+    @Override
     public List<Tenant> listTenants() {
         return null;
     }
 
     @Override
     public void addTenant(String description) {
+
+    }
+
+    @Override
+    public void updateInstrument(String description, String businesskey, boolean isactive) {
 
     }
 
