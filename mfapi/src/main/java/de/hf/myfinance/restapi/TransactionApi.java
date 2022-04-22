@@ -14,13 +14,9 @@ public interface TransactionApi {
     @GetMapping("/")
     String index();
 
-    /**
-     *
-     * @param trade RequestBody is necessery to force deserialisation of complex objects
-     */
     @PostMapping(
             value    = "/addtrade",
             consumes = "application/json",
             produces = "application/json")
-    void addTrade(@RequestBody Trade trade);
+    void addTrade(Trade trade);
 }

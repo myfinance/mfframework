@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -111,12 +112,12 @@ public class MFInstrumentClient implements InstrumentApi {
     }
 
     @Override
-    public void addTenant(String description) {
+    public void addInstrument(Instrument instrument) {
         // not impl yet
     }
 
     @Override
-    public void updateInstrument(String description, String businesskey, boolean isactive) {
+    public void updateInstrument(Instrument instrument) {
         // not impl yet
     }
 

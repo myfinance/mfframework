@@ -34,11 +34,11 @@ public interface InstrumentApi {
 			value    = "/addtenant",
 			consumes = "application/json",
 			produces = "application/json")
-	void addTenant(String description);
+	void addInstrument(@RequestBody Instrument instrument);
 
 	@PostMapping(
 			value    = "/updateinstrument",
 			consumes = "application/json",
 			produces = "application/json")
-	void updateInstrument(String description, String businesskey, boolean isactive);
+	void updateInstrument(@RequestBody Instrument instrument);
 }
