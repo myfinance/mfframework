@@ -34,7 +34,7 @@ public interface InstrumentApi {
 			value    = "/addtenant",
 			consumes = "application/json",
 			produces = "application/json")
-	void addTenant(@RequestBody String description);
+	void addTenant(String description);
 
 	@PostMapping(
 			value    = "/updateinstrument",
