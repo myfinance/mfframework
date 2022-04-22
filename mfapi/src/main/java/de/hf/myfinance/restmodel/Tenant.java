@@ -1,7 +1,5 @@
 package de.hf.myfinance.restmodel;
 
-import java.time.LocalDateTime;
-
 public class Tenant extends Instrument {
 
     public Tenant(){
