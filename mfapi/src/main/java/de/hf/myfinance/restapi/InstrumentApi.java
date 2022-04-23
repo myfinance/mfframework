@@ -1,6 +1,5 @@
 package de.hf.myfinance.restapi;
 
-import de.hf.myfinance.restmodel.Tenant;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

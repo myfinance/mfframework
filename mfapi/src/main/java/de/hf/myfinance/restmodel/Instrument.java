@@ -4,7 +4,7 @@ package de.hf.myfinance.restmodel;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public abstract class Instrument {
+public class Instrument {
     private InstrumentType instrumentType;
     private String description;
     private boolean isactive;
@@ -14,10 +14,15 @@ public abstract class Instrument {
     private String businesskey;
     private String serviceAddress;
 
-    protected Instrument() {
+    public Instrument() {
     }
 
-    protected Instrument(String businesskey,
+    public Instrument(String description,
+                      InstrumentType instrumentType){
+        this("", description, instrumentType, true);
+    }
+
+    public Instrument(String businesskey,
                       String description,
                       InstrumentType instrumentType,
                       boolean isactive){
