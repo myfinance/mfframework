@@ -30,7 +30,7 @@ public interface InstrumentApi {
 	List<Instrument> listTenants();
 
 	@PostMapping(
-			value    = "/addtenant",
+			value    = "/addinstrument",
 			consumes = "application/json",
 			produces = "application/json")
 	void addInstrument(@RequestBody Instrument instrument);
