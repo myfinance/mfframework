@@ -7,7 +7,9 @@ import de.hf.myfinance.mfinstrumentclient.MFInstrumentClient;
 import de.hf.myfinance.restapi.CompositeApi;
 import de.hf.myfinance.restmodel.Instrument;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class CompositeApiImpl  implements CompositeApi {
     ServiceUtil serviceUtil;
     MFInstrumentClient instrumentClient;
