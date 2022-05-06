@@ -1,0 +1,29 @@
+server.port: 7005
+logging:
+  level:
+    root: INFO
+    de.hf.myfinance: DEBUG
+app:
+  mfinstruments:
+    host: localhost
+    port: 7001
+
+springdoc:
+  swagger-ui.path: /openapi/swagger-ui.html
+  api-docs.path: /openapi/v3/api-docs
+  packagesToScan: de.hf.myfinance
+  pathsToMatch: /**
+
+api:
+  common:
+    version: 1.0.0
+    title: CompositeApi
+    description: the composition of alle myfinance APIs
+
+---
+spring.config.activate.on-profile: k8n
+
+app:
+  mfinstruments:
+    host: mfinstruments
+    port: 30024
