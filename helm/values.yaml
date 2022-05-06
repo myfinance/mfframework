@@ -10,7 +10,7 @@ image:
   pullPolicy: IfNotPresent
 
 mfcomposite:
-  mf_http_port_ext: 30026
+  mf_http_port_ext: 30027
   mf_http_port: 7005
   mf_name: mfcomposite
 
