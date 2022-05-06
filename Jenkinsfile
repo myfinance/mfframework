@@ -19,8 +19,8 @@ pipeline {
    SONAR = "https://sonarcloud.io"
    DEV_NAMESPACE = "mfdev"
    TEST_NAMESPACE = "mftest"
-   DEV_PORT = "30027"
-   TEST_PORT = "30037"
+   DEV_PORT = "30028"
+   TEST_PORT = "30038"
  }
  
  stages{
