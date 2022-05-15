@@ -19,6 +19,7 @@ import de.hf.framework.utils.HttpErrorInfo;
 import de.hf.myfinance.restapi.InstrumentApi;
 import de.hf.myfinance.restmodel.Instrument;
 import de.hf.myfinance.exception.MFMsgKey;
+import reactor.core.publisher.Mono;
 
 
 @Component
@@ -65,9 +66,14 @@ public class MFInstrumentClient implements InstrumentApi {
           }       
     }
 
+    @Override
+    public Mono<Instrument> getInstrument(String businesskey) {
+        return null;
+    }
+
 
     @Override
-    public Instrument getInstrument(String businesskey) {
+    public Instrument getInstrumentBlocking(String businesskey) {
 
         try {
           String url = instrumentServiceUrl + "/instrument/" + businesskey;

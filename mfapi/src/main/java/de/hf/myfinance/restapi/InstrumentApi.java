@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import de.hf.myfinance.restmodel.Instrument;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -18,7 +19,10 @@ public interface InstrumentApi {
 	String index();
 
 	@GetMapping(value = "/instrument/{businesskey}", produces = "application/json")
-	Instrument getInstrument(@PathVariable String businesskey);
+	Mono<Instrument> getInstrument(@PathVariable String businesskey);
+
+	@GetMapping(value = "/instrumentblocking/{businesskey}", produces = "application/json")
+	Instrument getInstrumentBlocking(@PathVariable String businesskey);
 
 	@GetMapping(value = "/instruments", produces = "application/json")
 	List<Instrument> listInstruments();
