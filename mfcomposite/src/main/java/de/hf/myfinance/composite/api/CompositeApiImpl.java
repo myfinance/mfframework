@@ -27,7 +27,7 @@ public class CompositeApiImpl  implements CompositeApi {
     @Override
     public Instrument helloInstrumentService() {
         try{
-            return instrumentClient.getInstrument("1");
+            return instrumentClient.getInstrumentBlocking("1");
         } catch(MFException e) {
             throw e;
         }

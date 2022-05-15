@@ -68,7 +68,27 @@ public class MFInstrumentClient implements InstrumentApi {
 
     @Override
     public Mono<Instrument> getInstrument(String businesskey) {
-        return null;
+        try {
+            String url = instrumentServiceUrl + "/instrumentblocking/" + businesskey;
+            LOG.debug("Will call getProduct API on URL: {}", url);
+
+            Mono<Instrument> instrument = restTemplate.getForObject(url, Mono.class);
+
+            return instrument;
+
+        } catch (HttpClientErrorException ex) {
+
+            switch (ex.getStatusCode()) {
+                case NOT_FOUND -> throw new NotFoundException(getErrorMessage(ex));
+                case UNPROCESSABLE_ENTITY -> throw new InvalidInputException(getErrorMessage(ex));
+                case INTERNAL_SERVER_ERROR -> throw new MFException(MFMsgKey.UNSPECIFIED, getErrorMessage(ex));
+                default -> {
+                    LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
+                    LOG.warn("Error body: {}", ex.getResponseBodyAsString());
+                    throw ex;
+                }
+            }
+        }
     }
 
 
@@ -76,7 +96,7 @@ public class MFInstrumentClient implements InstrumentApi {
     public Instrument getInstrumentBlocking(String businesskey) {
 
         try {
-          String url = instrumentServiceUrl + "/instrument/" + businesskey;
+          String url = instrumentServiceUrl + "/instrumentblocking/" + businesskey;
           LOG.debug("Will call getProduct API on URL: {}", url);
     
           Instrument instrument = restTemplate.getForObject(url, Instrument.class);
