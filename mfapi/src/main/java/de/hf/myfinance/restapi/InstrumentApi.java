@@ -37,7 +37,7 @@ public interface InstrumentApi {
 			value    = "/addinstrument",
 			consumes = "application/json",
 			produces = "application/json")
-	void addInstrument(@RequestBody Instrument instrument);
+	Mono<Instrument> addInstrument(@RequestBody Instrument instrument);
 
 	@PostMapping(
 			value    = "/updateinstrument",

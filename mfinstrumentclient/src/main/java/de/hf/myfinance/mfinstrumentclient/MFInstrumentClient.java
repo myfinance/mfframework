@@ -135,8 +135,8 @@ public class MFInstrumentClient implements InstrumentApi {
     }
 
     @Override
-    public void addInstrument(Instrument instrument) {
-        // not impl yet
+    public Mono<Instrument> addInstrument(Instrument instrument) {
+        return null;
     }
 
     @Override
