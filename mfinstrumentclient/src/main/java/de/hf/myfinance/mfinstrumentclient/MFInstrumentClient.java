@@ -19,6 +19,7 @@ import de.hf.framework.utils.HttpErrorInfo;
 import de.hf.myfinance.restapi.InstrumentApi;
 import de.hf.myfinance.restmodel.Instrument;
 import de.hf.myfinance.exception.MFMsgKey;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 
@@ -120,28 +121,23 @@ public class MFInstrumentClient implements InstrumentApi {
       }
 
     @Override
-    public List<Instrument> listInstruments() {
+    public Flux<Instrument> listInstruments() {
         return null;
     }
 
     @Override
-    public List<Instrument> listInstrumentsForTenant(String businesskey) {
+    public Flux<Instrument> listInstrumentsForTenant(String businesskey) {
         return null;
     }
 
     @Override
-    public List<Instrument> listTenants() {
+    public Flux<Instrument> listTenants() {
         return null;
     }
 
     @Override
-    public Mono<Instrument> addInstrument(Instrument instrument) {
+    public Mono<Instrument> saveInstrument(Instrument instrument) {
         return null;
-    }
-
-    @Override
-    public void updateInstrument(Instrument instrument) {
-        // not impl yet
     }
 
     private String getErrorMessage(HttpClientErrorException ex) {
