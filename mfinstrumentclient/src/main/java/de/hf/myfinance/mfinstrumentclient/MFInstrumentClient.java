@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
 
+import de.hf.myfinance.restmodel.InstrumentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,34 +93,6 @@ public class MFInstrumentClient implements InstrumentApi {
         }
     }
 
-
-    @Override
-    public Instrument getInstrumentBlocking(String businesskey) {
-
-        try {
-          String url = instrumentServiceUrl + "/instrumentblocking/" + businesskey;
-          LOG.debug("Will call getProduct API on URL: {}", url);
-    
-          Instrument instrument = restTemplate.getForObject(url, Instrument.class);
-          if(instrument!=null) LOG.debug("Found a instrument with businesskey: {}", instrument.getBusinesskey());
-    
-          return instrument;
-    
-        } catch (HttpClientErrorException ex) {
-
-            switch (ex.getStatusCode()) {
-                case NOT_FOUND -> throw new NotFoundException(getErrorMessage(ex));
-                case UNPROCESSABLE_ENTITY -> throw new InvalidInputException(getErrorMessage(ex));
-                case INTERNAL_SERVER_ERROR -> throw new MFException(MFMsgKey.UNSPECIFIED, getErrorMessage(ex));
-                default -> {
-                    LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
-                    LOG.warn("Error body: {}", ex.getResponseBodyAsString());
-                    throw ex;
-                }
-            }
-        }
-      }
-
     @Override
     public Flux<Instrument> listInstruments() {
         return null;
@@ -127,6 +100,16 @@ public class MFInstrumentClient implements InstrumentApi {
 
     @Override
     public Flux<Instrument> listInstrumentsForTenant(String businesskey) {
+        return null;
+    }
+
+    @Override
+    public Flux<Instrument> listActiveInstrumentsForTenant(String tenantbusinesskey) {
+        return null;
+    }
+
+    @Override
+    public Flux<Instrument> listInstrumentsByType(String tenantbusinesskey, InstrumentType instrumentType) {
         return null;
     }
 
