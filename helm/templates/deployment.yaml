@@ -14,11 +14,11 @@ spec:
     spec:
       containers:
         - name: {{ .Values.mfcomposite.mf_name }}
-          image: "{{ .Values.image.repository }}mfcomposite:{{ .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}mfcomposite:{{ .Values.image.version }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}      
           tty: true
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "k8n"
             - name: "api.common.version"
-              value: "{{ .Chart.AppVersion }}"
+              value: "{{ .Values.image.version }}"
