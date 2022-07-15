@@ -21,6 +21,7 @@ Settings, then on Webhooks:
 Payload URL is you internet URL
 Content type: Change this to application/json.
 
+
 to install the application manually with helm install the complete bundle see repo mfbundle
 
 if Database is fresh: add via gui or api-Docs: currency EUR and USD
