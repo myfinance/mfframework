@@ -24,7 +24,6 @@ US5949181045 Microsoft
 add symbols MSFT, DBK
 start import prices
 
-
 #### SNAPSHOTS ####
 
 We only use maven snapshot-versions for the local build not for the CI-Build, because each build generates a docker image and a helm chart. Both do not support Snapshots but have to distinguish the builds. So each CI-build needs a different number. We use the jenkins-build-number for that. But we loose the main advantage of Snapshots with that: not changing dependency-versions during development. For that the local SNAPSHOT build helps if one develeper changes two dependent components. If the dependency is developed by another developer, you will most of the time better develop with a stabel version an not a moving target.
