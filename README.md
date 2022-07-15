@@ -16,12 +16,6 @@ in my case it ist my local nexus where I deploy all my artifacts.
 
 start with repo mfinfra first
 
-Tekton server has be available from the internet (http) and you must configure your repo in GitHub
-Settings, then on Webhooks:
-Payload URL is you internet URL
-Content type: Change this to application/json.
-
-
 to install the application manually with helm install the complete bundle see repo mfbundle
 
 if Database is fresh: add via gui or api-Docs: currency EUR and USD
