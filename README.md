@@ -96,7 +96,6 @@ for the deployment you have to change the app version in the helm-chart of the m
 
 - on feature branches and on the master will be no ci-builds
 
-
 git log --oneline --graph --decorate
 
 ## Backend access ##
