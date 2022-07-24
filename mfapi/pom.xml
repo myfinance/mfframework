@@ -37,6 +37,20 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>io.github.zlika</groupId>
+				<artifactId>reproducible-build-maven-plugin</artifactId>
+				<version>0.11</version>
+				<executions>
+					<execution>
+						<id>run-when-packaged</id>
+						<goals>
+							<goal>strip-jar</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>
