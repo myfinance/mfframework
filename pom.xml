@@ -37,8 +37,8 @@
         <!-- properties for container image. -->
         <jib.baseimage>eclipse-temurin:17.0.1_12-jre-alpine</jib.baseimage>
         <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
-        <!-- jib.image-tag is only thedefault. the value will be set in the jenkinsfile-->
-        <jib.image-tag>192.168.100.73:31003/repository/mydockerrepo/holgerfischer/myfinance-mfinstruments:${project.version}</jib.image-tag>
+        <jib.container-repo>192.168.100.73:31003/repository/mydockerrepo/</jib.container-repo>
+        <jib.container-name>holgerfischer/myfinance-mfcomposite:</jib.container-name>
 
         <springdoc.version>1.5.9</springdoc.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>

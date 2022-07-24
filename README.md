@@ -28,22 +28,39 @@ start import prices
 
 #### SNAPSHOTS ####
 
-We only use maven snapshot-versions for the local build not for the CI-Build, because each build generates a docker image and a helm chart. Both do not support Snapshots but have to distinguish the builds. So each CI-build needs a different number. We use the jenkins-build-number for that. But we loose the main advantage of Snapshots with that: not changing dependency-versions during development. For that the local SNAPSHOT build helps if one develeper changes two dependent components. If the dependency is developed by another developer, you will most of the time better develop with a stabel version an not a moving target.
+We only use maven snapshot-versions for the local build not for the CI-Build, because each build generates a docker image and a helm chart.
+Both do not support Snapshots but have to distinguish the builds. So each CI-build needs a different number. 
+We use the commit_id for that. This brings the additional advantage of a strong binding from the artifact to the code. 
+But we loose the main advantage of Snapshots with that: not changing dependency-versions during development. 
+For that the local SNAPSHOT build helps if one develeper changes two dependent components. 
+If the dependency is developed by another developer, you will most of the time better develop with a stabel version and not a moving target.
+
 
 #### format ####
 
 the project uses semantic versioning: https://semver.org/
 
 local build with default version 0.0.0-0-SNAPSHOT
-via CI: Major, Minor-version and Patch-Version is defined in Jenkinsfile. The pre-release info seperated with"-" and contains the Jenkins-Buildnumber
+via CI: Major, Minor-version and Patch-Version is defined in version.txt. The pre-release info seperated with"-" and contains the CommitId
 EACH CI build replaced the maven version number with help of the version plugin.
-major.minor.patch-alpha.Buildnumber.
+major.minor.patch-alpha.CommitID.
 Release build has the same process but without pre-release version.
 e.g. major.minor.patch
 
 #### Branch strategy ####
 
-We allways work on feature branches and merge them to the development-branch at the end, so that you can find at the dev-branch only completed features. If you want to make a release you have to merge dev to master. So you can allways see which feature was developed in which release, what is in dev and what in test. As soon as the prod rollout was sucessfull a tag should be created in Master.
+We allways work on feature branches and merge them to the development-branch at the end, so that you can find at the dev-branch only completed features. 
+If you want to make a release you have to merge dev to master. So you can allways see which feature was developed in which release, what is in dev and what in test. 
+As soon as the prod rollout was sucessfull a tag should be created in Master.
+
+To keep it simple the CI-Build runs only on the Dev-Branch. That means that you are able to deploy only from this branch.
+This is basicly  the git flow workflow but without release branch.
+That means for hotfixes in Prod, that you have to deploy all developed features from the last release on.
+As long as this software is just for fun, and I'm the only developer and tester this will not be an issue. 
+If I test anything I'll do it allready in the featurebranch before I'll merge it to dev.
+If this changes we have to edit the filter in the tekton event-lister and parse the revision or 
+even better create an additional webhook, eventlister and pipeline to deploy the releasebranch in a different environment.
+
 
 create dev branch:
 git checkout -b dev
@@ -62,7 +79,7 @@ delete featurebranch: git branch -d  featurename
 
 make a release:
 git checkout dev
-//change and commit the version in the jenkins-file to major_minor_micro - do it in the dev branch to avoid mergeconflicts
+//change and commit the version in the version.txt to major_minor_micro - do it in the dev branch to avoid mergeconflicts
 git push origin dev
 git checkout master
 git merge dev
@@ -72,13 +89,12 @@ git push origin master --follow-tags
 
 prepare for next release:
 git checkout dev
-//change and commit the version in the jenkins-file to major_minor_micro-alpha.${BUILD_ID}
+//change and commit the version in the jenkins-file to major_minor_micro-alpha.
 commit and push
 
+for the deployment you have to change the app version in the helm-chart of the mfdeployment repository and merge the dev branch to the prod-branch
+
 - on feature branches and on the master will be no ci-builds
-
-
-This is basicly  the git flow workflow but without release branch. This is because I will never fix the production only. If I need a fix I will allways rollout the dev-branch with all completed features. This is ok because I'm the only tester and if I test anything I'll do it allready in the featurebranch before I'll merge it to dev.
 
 
 git log --oneline --graph --decorate
