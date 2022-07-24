@@ -27,14 +27,13 @@
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>jib-maven-plugin</artifactId>
-				<version>${jib-maven-plugin.version}</version>
 				<configuration>
+					<!-- we don't want jib to execute on this module -->
 					<skip>true</skip>
 				</configuration>
 			</plugin>
