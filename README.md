@@ -63,7 +63,7 @@ even better create an additional webhook, eventlister and pipeline to deploy the
 
 
 create dev branch:
-git checkout -b dev 
+git checkout -b dev
 
 create feature branch
 git checkout -b a_feature (to switch back: git checkout master)
