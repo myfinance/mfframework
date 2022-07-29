@@ -34,6 +34,5 @@ public class CompositeApiImpl  implements CompositeApi {
         catch(Exception e) {
             throw new MFException(MFMsgKey.UNSPECIFIED, e.getMessage());
         }
-
     }
 }
