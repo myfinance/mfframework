@@ -7,12 +7,14 @@ import de.hf.myfinance.mfinstrumentclient.MFInstrumentClient;
 import de.hf.myfinance.restapi.CompositeApi;
 import de.hf.myfinance.restmodel.Instrument;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CompositeApiImpl  implements CompositeApi {
     ServiceUtil serviceUtil;
     MFInstrumentClient instrumentClient;
+    @Value("${api.common.version}")         String apiVersion;
 
     @Autowired
     public CompositeApiImpl(ServiceUtil serviceUtil, MFInstrumentClient instrumentClient) {
@@ -21,7 +23,7 @@ public class CompositeApiImpl  implements CompositeApi {
     }
     @Override
     public String index() {
-        return "Hello compositeservice next version";
+        return "Hello compositeservice version:"+apiVersion;
     }
 
     @Override

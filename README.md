@@ -119,3 +119,6 @@ It is the same for Prod but with another port(for me 30042).
 I use a reversproxy for frontend. In this case the user do not have to use a special port and you don't have to add a ssl certificate to your frontend - just handle this in your reverse proxy.
 I would like to do it the same way for the backend but unfortunately my integrated Reversproxy in the firewall is only working for the root domain.
 You have to publish the backend with https as well because an https frontend is not allowed to communicate with an unsecure backend.
+
+##APIdoc
+see http://yourserviceurl/openapi/swagger-ui.html
