@@ -21,7 +21,7 @@ public class CompositeApiImpl  implements CompositeApi {
     }
     @Override
     public String index() {
-        return "Hello compositeservice";
+        return "Hello compositeservice next version";
     }
 
     @Override
