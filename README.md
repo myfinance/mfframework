@@ -16,7 +16,6 @@ in my case it ist my local nexus where I deploy all my artifacts.
 ### get started ###
 
 start with repo mfinfra first
-
 to install the application manually with helm install the complete bundle see repo mfbundle
 
 if Database is fresh: add via gui or api-Docs: currency EUR and USD
