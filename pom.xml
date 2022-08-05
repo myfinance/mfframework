@@ -59,6 +59,7 @@
         <compiler-plugin.version>3.9.0</compiler-plugin.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
         <testcontainers.version>1.17.3</testcontainers.version>
+        <springcloud.version>2021.0.3</springcloud.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -66,6 +67,13 @@
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
                 <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${springcloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
