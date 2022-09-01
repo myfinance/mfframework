@@ -20,6 +20,20 @@ api:
     title: CompositeApi
     description: the composition of alle myfinance APIs
 
+spring.cloud.stream:
+  defaultBinder: rabbit
+  default.contentType: application/json
+  bindings.instruments-out-0:
+    destination: instruments
+    producer:
+      required-groups: auditGroup
+
+spring.rabbitmq:
+  host: 192.168.100.73
+  port: 30021
+  username: user
+  password: vulkan
+
 ---
 spring.config.activate.on-profile: k8n
 

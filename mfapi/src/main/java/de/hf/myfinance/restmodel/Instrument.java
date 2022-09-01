@@ -12,6 +12,7 @@ public class Instrument {
     private LocalDate closingdate;
     private LocalDateTime treelastchanged;
     private String businesskey;
+    private String parentBusinesskey;
     private String serviceAddress;
 
     public Instrument() {
@@ -87,6 +88,14 @@ public class Instrument {
 
     public void setBusinesskey(String businesskey) {
         this.businesskey = businesskey;
+    }
+
+    public String getParentBusinesskey() {
+        return parentBusinesskey;
+    }
+
+    public void setParentBusinesskey(String parentBusinesskey) {
+        this.parentBusinesskey = parentBusinesskey;
     }
 
     public String getServiceAddress() {
