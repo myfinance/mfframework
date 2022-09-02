@@ -1,19 +1,20 @@
 package de.hf.myfinance.restmodel;
 
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Instrument {
     private InstrumentType instrumentType;
     private String description;
     private boolean isactive;
-    private LocalDate maturitydate;
-    private LocalDate closingdate;
     private LocalDateTime treelastchanged;
     private String businesskey;
     private String parentBusinesskey;
     private String serviceAddress;
+
+    private Map<AdditionalMaps, Map<String, String>> additionalMaps = new HashMap<>();
+    private Map<AdditionalProperties, String> additionalProperties = new HashMap<>();
 
     public Instrument() {
     }
@@ -58,22 +59,6 @@ public class Instrument {
         this.isactive = isactive;
     }
 
-    public LocalDate getMaturitydate() {
-        return maturitydate;
-    }
-
-    public void setMaturitydate(LocalDate maturitydate) {
-        this.maturitydate = maturitydate;
-    }
-
-    public LocalDate getClosingdate() {
-        return closingdate;
-    }
-
-    public void setClosingdate(LocalDate closingdate) {
-        this.closingdate = closingdate;
-    }
-
     public LocalDateTime getTreelastchanged() {
         return treelastchanged;
     }
@@ -105,4 +90,19 @@ public class Instrument {
     public void setServiceAddress(String serviceAddress) {
         this.serviceAddress = serviceAddress;
     }
+
+    public Map<AdditionalMaps, Map<String, String>> getAdditionalMaps() {
+        return additionalMaps;
+    }
+    public void setAdditionalMaps(Map<AdditionalMaps, Map<String, String>> additionalMaps) {
+        this.additionalMaps = additionalMaps;
+    }
+
+    public Map<AdditionalProperties, String> getAdditionalProperties() {
+        return additionalProperties;
+    }
+    public void setAdditionalProperties(Map<AdditionalProperties, String> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+
 }
