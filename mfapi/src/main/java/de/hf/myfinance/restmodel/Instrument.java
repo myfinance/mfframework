@@ -2,6 +2,7 @@ package de.hf.myfinance.restmodel;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Instrument {
@@ -15,6 +16,7 @@ public class Instrument {
 
     private Map<AdditionalMaps, Map<String, String>> additionalMaps = new HashMap<>();
     private Map<AdditionalProperties, String> additionalProperties = new HashMap<>();
+    private Map<AdditionalLists, List<String>> additionalLists = new HashMap<>();
 
     public Instrument() {
     }
@@ -103,6 +105,13 @@ public class Instrument {
     }
     public void setAdditionalProperties(Map<AdditionalProperties, String> additionalProperties) {
         this.additionalProperties = additionalProperties;
+    }
+
+    public Map<AdditionalLists, List<String>> getAdditionalLists() {
+        return additionalLists;
+    }
+    public void setAdditionalLists(Map<AdditionalLists, List<String>> additionalLists) {
+        this.additionalLists = additionalLists;
     }
 
 }
