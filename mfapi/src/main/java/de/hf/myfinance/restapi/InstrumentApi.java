@@ -42,5 +42,5 @@ public interface InstrumentApi {
 			value    = "/addinstrument",
 			consumes = "application/json",
 			produces = "application/json")
-	Mono<Instrument> saveInstrument(@RequestBody Instrument instrument);
+	Mono<String> saveInstrument(@RequestBody Instrument instrument);
 }

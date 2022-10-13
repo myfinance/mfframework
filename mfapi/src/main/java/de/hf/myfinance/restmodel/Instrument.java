@@ -37,6 +37,18 @@ public class Instrument {
         this.treelastchanged = LocalDateTime.now();
     }
 
+    public Instrument(String businesskey,
+                      String description,
+                      InstrumentType instrumentType,
+                      boolean isactive,
+                      LocalDateTime treelastchanged){
+        this.businesskey = businesskey;
+        this.description = description;
+        this.instrumentType = instrumentType;
+        this.isactive = isactive;
+        this.treelastchanged = treelastchanged;
+    }
+
     public InstrumentType getInstrumentType() {
         return instrumentType;
     }

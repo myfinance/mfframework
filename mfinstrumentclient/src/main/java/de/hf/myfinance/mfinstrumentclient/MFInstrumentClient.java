@@ -119,7 +119,7 @@ public class MFInstrumentClient implements InstrumentApi {
     }
 
     @Override
-    public Mono<Instrument> saveInstrument(Instrument instrument) {
+    public Mono<String> saveInstrument(Instrument instrument) {
         return null;
     }
 
