@@ -35,6 +35,7 @@ For that the local SNAPSHOT build helps if one develeper changes two dependent c
 If the dependency is developed by another developer, you will most of the time better develop with a stabel version and not a moving target.
 
 
+
 #### format ####
 
 the project uses semantic versioning: https://semver.org/
