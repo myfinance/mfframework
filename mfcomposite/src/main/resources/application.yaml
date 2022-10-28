@@ -23,10 +23,10 @@ api:
 spring.cloud.stream:
   defaultBinder: rabbit
   default.contentType: application/json
-  bindings.instruments-out-0:
-    destination: instruments
+  bindings.validateInstrumentRequest-out-0:
+    destination: validateInstrumentRequest
     producer:
-      required-groups: auditGroup
+      required-groups: validateInstrumentauditGroup
 
 spring.rabbitmq:
   host: 192.168.100.73

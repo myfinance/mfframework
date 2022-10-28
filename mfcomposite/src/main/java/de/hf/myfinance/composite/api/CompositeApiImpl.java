@@ -57,7 +57,7 @@ public class CompositeApiImpl  implements CompositeApi {
     public Mono<Instrument> saveInstrument(Instrument instrument){
         return Mono.fromCallable(() -> {
 
-            sendMessage("instruments-out-0",
+            sendMessage("validateInstrumentRequest-out-0",
                     new Event(CREATE, instrument.getBusinesskey().hashCode(), instrument));
             return instrument;
         }).subscribeOn(publishEventScheduler);
