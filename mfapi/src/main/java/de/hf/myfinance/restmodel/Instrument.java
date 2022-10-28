@@ -13,6 +13,7 @@ public class Instrument {
     private String businesskey;
     private String parentBusinesskey;
     private String serviceAddress;
+    private String tenantBusinesskey;
 
     private Map<AdditionalMaps, Map<String, String>> additionalMaps = new HashMap<>();
     private Map<AdditionalProperties, String> additionalProperties = new HashMap<>();
@@ -124,6 +125,13 @@ public class Instrument {
     }
     public void setAdditionalLists(Map<AdditionalLists, List<String>> additionalLists) {
         this.additionalLists = additionalLists;
+    }
+
+    public String getTenantBusinesskey() {
+        return tenantBusinesskey;
+    }
+    public void setTenantBusinesskey(String tenantBusinesskey) {
+        this.tenantBusinesskey = tenantBusinesskey;
     }
 
 }
