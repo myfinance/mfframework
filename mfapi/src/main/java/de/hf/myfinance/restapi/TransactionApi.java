@@ -5,7 +5,10 @@ import de.hf.myfinance.restmodel.Trade;
 import de.hf.myfinance.restmodel.Transaction;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDate;
 
 
 @Tag(name = "TransactionApi", description =
@@ -15,29 +18,12 @@ public interface TransactionApi {
     @GetMapping("/")
     String index();
 
-    @PostMapping(
-            value    = "/addtrade",
-            consumes = "application/json",
-            produces = "application/json")
-    Mono<String> addTrade(@RequestBody Trade trade);
-
-    @PostMapping(
-            value    = "/updatetrade",
-            consumes = "application/json",
-            produces = "application/json")
-    Mono<String> updateTrade(@RequestBody Trade trade);
-
     @DeleteMapping(
             value    = "/delrecurrenttransfer",
             consumes = "application/json",
             produces = "application/json")
     Mono<String> delRecurrentTransfer(@PathVariable String recurrentTransactionId);
 
-    @DeleteMapping(
-            value    = "/delTransfer",
-            consumes = "application/json",
-            produces = "application/json")
-    Mono<String> delTransfer(@PathVariable String transactionId);
 
     @PostMapping(
             value    = "/updateRecurrentTransaction",
@@ -51,15 +37,19 @@ public interface TransactionApi {
             produces = "application/json")
     Mono<String> addRecurrentTransaction(@RequestBody RecurrentTransaction recurrentTransaction);
 
-    @PostMapping(
-            value    = "/addTransaction",
-            consumes = "application/json",
-            produces = "application/json")
-    Mono<String> addTransaction(@RequestBody Transaction transaction);
 
     @PostMapping(
-            value    = "/updateTransaction",
+            value    = "/saveTransaction",
             consumes = "application/json",
             produces = "application/json")
-    Mono<String>  updateTransaction(@RequestBody Transaction transaction);
+    Mono<String>  saveTransaction(@RequestBody Transaction transaction);
+
+    @DeleteMapping(
+            value    = "/delTransaction",
+            consumes = "application/json",
+            produces = "application/json")
+    Mono<String> delTransaction(@PathVariable String transactionId);
+
+    @GetMapping(value = "/transactions", produces = "application/json")
+    Flux<Transaction> listTransactions(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate);
 }

@@ -1,10 +1,9 @@
 package de.hf.myfinance.restapi;
 
 import de.hf.myfinance.restmodel.Instrument;
+import de.hf.myfinance.restmodel.Transaction;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @Tag(name = "CompositeApi", description =
@@ -21,5 +20,17 @@ public interface CompositeApi {
             value    = "/addinstrument",
             consumes = "application/json",
             produces = "application/json")
-    Mono<Instrument> saveInstrument(@RequestBody Instrument instrument);
+    Mono<String> saveInstrument(@RequestBody Instrument instrument);
+
+    @PostMapping(
+            value    = "/saveTransaction",
+            consumes = "application/json",
+            produces = "application/json")
+    Mono<String>  saveTransaction(@RequestBody Transaction transaction);
+
+    @DeleteMapping(
+            value    = "/delTransaction",
+            consumes = "application/json",
+            produces = "application/json")
+    Mono<String> delTransaction(@PathVariable String transactionId);
 }

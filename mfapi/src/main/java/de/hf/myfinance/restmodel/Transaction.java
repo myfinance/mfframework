@@ -18,6 +18,8 @@ public class Transaction {
     private Map<String, Double> cashflows = new HashMap<>(0);
     private TransactionType transactionType;
 
+    private String serviceAddress;
+
     public Transaction(String transactionId) {
         this.transactionId = transactionId;
     }
@@ -82,5 +84,13 @@ public class Transaction {
 
     public void setTransactionType(TransactionType transactionType) {
         this.transactionType = transactionType;
+    }
+
+    public String getServiceAddress() {
+        return serviceAddress;
+    }
+
+    public void setServiceAddress(String serviceAddress) {
+        this.serviceAddress = serviceAddress;
     }
 }

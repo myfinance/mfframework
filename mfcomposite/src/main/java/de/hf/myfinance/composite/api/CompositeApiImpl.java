@@ -7,6 +7,7 @@ import de.hf.myfinance.exception.MFMsgKey;
 import de.hf.myfinance.mfinstrumentclient.MFInstrumentClient;
 import de.hf.myfinance.restapi.CompositeApi;
 import de.hf.myfinance.restmodel.Instrument;
+import de.hf.myfinance.restmodel.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,13 +55,28 @@ public class CompositeApiImpl  implements CompositeApi {
     }
 
     @Override
-    public Mono<Instrument> saveInstrument(Instrument instrument){
+    public Mono<String> saveInstrument(Instrument instrument){
         return Mono.fromCallable(() -> {
 
             sendMessage("validateInstrumentRequest-out-0",
-                    new Event(CREATE, instrument.getBusinesskey().hashCode(), instrument));
-            return instrument;
+                    new Event(CREATE, instrument.getBusinesskey(), instrument));
+            return "instrument saved:"+ instrument;
         }).subscribeOn(publishEventScheduler);
+    }
+
+    @Override
+    public Mono<String> saveTransaction(Transaction transaction) {
+        return Mono.fromCallable(() -> {
+
+            sendMessage("validateTransactionRequest-out-0",
+                    new Event(CREATE, transaction.hashCode(), transaction));
+            return "transaction saved:"+transaction;
+        }).subscribeOn(publishEventScheduler);
+    }
+
+    @Override
+    public Mono<String> delTransaction(String transactionId) {
+        return null;
     }
 
     private void sendMessage(String bindingName, Event event) {
