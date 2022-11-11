@@ -20,6 +20,9 @@ public class Transaction {
 
     private String serviceAddress;
 
+    public Transaction() {
+    }
+
     public Transaction(String transactionId) {
         this.transactionId = transactionId;
     }
