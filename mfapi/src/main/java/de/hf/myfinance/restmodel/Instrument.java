@@ -8,7 +8,7 @@ import java.util.Map;
 public class Instrument {
     private InstrumentType instrumentType;
     private String description;
-    private boolean isactive;
+    private boolean active;
     private LocalDateTime treelastchanged;
     private String businesskey;
     private String parentBusinesskey;
@@ -22,6 +22,10 @@ public class Instrument {
     public Instrument() {
     }
 
+    public Instrument(String businesskey) {
+        this.businesskey = businesskey;
+    }
+
     public Instrument(String description,
                       InstrumentType instrumentType){
         this("", description, instrumentType, true);
@@ -30,11 +34,11 @@ public class Instrument {
     public Instrument(String businesskey,
                       String description,
                       InstrumentType instrumentType,
-                      boolean isactive){
+                      boolean active){
         this.businesskey = businesskey;
         this.description = description;
         this.instrumentType = instrumentType;
-        this.isactive = isactive;
+        this.active = active;
         this.treelastchanged = LocalDateTime.now();
     }
 
@@ -46,7 +50,7 @@ public class Instrument {
         this.businesskey = businesskey;
         this.description = description;
         this.instrumentType = instrumentType;
-        this.isactive = isactive;
+        this.active = active;
         this.treelastchanged = treelastchanged;
     }
 
@@ -66,12 +70,12 @@ public class Instrument {
         this.description = description;
     }
 
-    public boolean isIsactive() {
-        return isactive;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setIsactive(boolean isactive) {
-        this.isactive = isactive;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public LocalDateTime getTreelastchanged() {
