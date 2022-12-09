@@ -47,6 +47,8 @@
         <h2.version>1.4.200</h2.version>
         <!--list helper-->
         <guava.version>31.0.1-jre</guava.version>
+        <!--json handling-->
+        <gson.version>2.10</gson.version>
 
         <assembly-plugin.version>3.1.0</assembly-plugin.version>
         <dependency-plugin.version>3.0.2</dependency-plugin.version>

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Instrument {
+
+    public final static String DEFAULTCURRENCY = "EUR";
     private InstrumentType instrumentType;
     private String description;
     private boolean active;
