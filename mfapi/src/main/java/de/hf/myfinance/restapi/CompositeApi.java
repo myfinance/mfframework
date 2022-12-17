@@ -1,5 +1,6 @@
 package de.hf.myfinance.restapi;
 
+import de.hf.myfinance.restmodel.EndOfDayPrices;
 import de.hf.myfinance.restmodel.Instrument;
 import de.hf.myfinance.restmodel.Transaction;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,4 +34,14 @@ public interface CompositeApi {
             consumes = "application/json",
             produces = "application/json")
     Mono<String> delTransaction(@PathVariable String transactionId);
+
+    @PostMapping(
+            value    = "/loadNewMarketData",
+            consumes = "application/json",
+            produces = "application/json")
+    Mono<String> loadNewMarketData();
+
+
+    @GetMapping(value = "/endOfDayPrices/{businesskey}", produces = "application/json")
+    Mono<EndOfDayPrices> getEndOfDayPrices(@PathVariable String businesskey);
 }

@@ -6,6 +6,7 @@ import de.hf.myfinance.event.Event;
 import de.hf.myfinance.exception.MFMsgKey;
 import de.hf.myfinance.mfinstrumentclient.MFInstrumentClient;
 import de.hf.myfinance.restapi.CompositeApi;
+import de.hf.myfinance.restmodel.EndOfDayPrices;
 import de.hf.myfinance.restmodel.Instrument;
 import de.hf.myfinance.restmodel.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,27 @@ public class CompositeApiImpl  implements CompositeApi {
         return null;
     }
 
+    @Override
+    public Mono<String> loadNewMarketData() {
+        return Mono.fromCallable(() -> {
+
+            sendMessage("loadNewMarketDataProcessor-out-0",
+                    new Event(CREATE, "load", null));
+            return "MarketData loading started:";
+        }).subscribeOn(publishEventScheduler);
+    }
+
+
+    @Override
+    public Mono<EndOfDayPrices> getEndOfDayPrices(String businesskey) {
+        return null;
+    }
+
+
+    /**
+     * Since the sendMessage() uses blocking code, when calling streamBridge,
+     * it has to be executed on a thread provided by a dedicated scheduler, publishEventScheduler
+     */
     private void sendMessage(String bindingName, Event event) {
         Message message = MessageBuilder.withPayload(event)
                 .setHeader("partitionKey", event.getKey())

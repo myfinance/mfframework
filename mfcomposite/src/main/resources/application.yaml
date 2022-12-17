@@ -27,6 +27,10 @@ spring.cloud.stream:
     destination: validateInstrumentRequest
     producer:
       required-groups: validateInstrumentauditGroup
+  bindings.loadNewMarketData-out-0:
+    destination: loadNewMarketData
+    producer:
+      required-groups: loadNewMarketDataAuditGroup
 
 spring.rabbitmq:
   host: 192.168.100.73
