@@ -1,10 +1,10 @@
 package de.hf.myfinance.restmodel;
 
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.TreeMap;
 
 public class ValueCurve {
-    private Map<LocalDate, Double> valueCurve;
+    private TreeMap<LocalDate, Double> valueCurve;
     private String serviceAddress;
     private String instrumentBusinesskey;
     private String parentBusinesskey;
@@ -17,10 +17,10 @@ public class ValueCurve {
         this.instrumentBusinesskey = instrumentBusinesskey;
     }
 
-    public Map<LocalDate, Double> getValueCurve() {
+    public TreeMap<LocalDate, Double> getValueCurve() {
         return valueCurve;
     }
-    public void setValueCurve(Map<LocalDate, Double> valueCurve) {
+    public void setValueCurve(TreeMap<LocalDate, Double> valueCurve) {
         this.valueCurve = valueCurve;
     }
 
