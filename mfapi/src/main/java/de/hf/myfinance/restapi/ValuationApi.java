@@ -39,5 +39,5 @@ public interface ValuationApi {
 	Mono<ValueCurve> getValueCurve(@PathVariable String businesskey, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate);
 
 	@GetMapping(value = "/getvalue/{businesskey}", produces = "application/json")
-	Mono<ValueCurve> getValue(@PathVariable String businesskey, @RequestParam LocalDate date);
+	Mono<Double> getValue(@PathVariable String businesskey, @RequestParam LocalDate date);
 }
