@@ -8,8 +8,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import de.hf.myfinance.restmodel.Instrument;
 import org.springframework.web.bind.annotation.RequestParam;
+import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 
@@ -36,8 +36,8 @@ public interface ValuationApi {
 					"${api.responseCodes.unprocessableEntity.description}")
 	})
 	@GetMapping(value = "/getvaluecurve/{businesskey}", produces = "application/json")
-	ValueCurve getValueCurve(@PathVariable String businesskey, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate);
+	Mono<ValueCurve> getValueCurve(@PathVariable String businesskey, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate);
 
 	@GetMapping(value = "/getvalue/{businesskey}", produces = "application/json")
-	ValueCurve getValue(@PathVariable String businesskey, @RequestParam LocalDate date);
+	Mono<ValueCurve> getValue(@PathVariable String businesskey, @RequestParam LocalDate date);
 }
