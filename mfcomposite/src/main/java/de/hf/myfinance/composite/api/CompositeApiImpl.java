@@ -9,6 +9,7 @@ import de.hf.myfinance.restapi.CompositeApi;
 import de.hf.myfinance.restmodel.EndOfDayPrices;
 import de.hf.myfinance.restmodel.Instrument;
 import de.hf.myfinance.restmodel.Transaction;
+import de.hf.myfinance.restmodel.ValueCurve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,10 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 
+import java.time.LocalDate;
+
 import static de.hf.myfinance.event.Event.Type.CREATE;
 
 @RestController
-public class CompositeApiImpl  implements CompositeApi {
+public class CompositeApiImpl implements CompositeApi {
     ServiceUtil serviceUtil;
     MFInstrumentClient instrumentClient;
     @Value("${api.common.version}")
@@ -93,6 +96,11 @@ public class CompositeApiImpl  implements CompositeApi {
 
     @Override
     public Mono<EndOfDayPrices> getEndOfDayPrices(String businesskey) {
+        return null;
+    }
+
+    @Override
+    public ValueCurve getInstrumentValues(String tenantBusinesskey, LocalDate startDate, LocalDate endDate) {
         return null;
     }
 

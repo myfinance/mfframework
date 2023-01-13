@@ -1,5 +1,6 @@
 package de.hf.myfinance.restapi;
 
+import de.hf.myfinance.restmodel.ValueCurve;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -8,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import de.hf.myfinance.restmodel.Instrument;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDate;
 
 @Tag(name = "ValuationApi", description =
 		"${api.common.description}")
@@ -18,9 +22,9 @@ public interface ValuationApi {
 
 	@Operation(
 			summary =
-					"${api.ValuationApi.helloInstrument.description}",
+					"${api.ValuationApi.getValueCurve.description}",
 			description =
-					"${api.ValuationApi.helloInstrument.notes}")
+					"${api.ValuationApi.getValueCurve.notes}")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description =
 					"${api.responseCodes.ok.description}"),
@@ -31,12 +35,9 @@ public interface ValuationApi {
 			@ApiResponse(responseCode = "422", description =
 					"${api.responseCodes.unprocessableEntity.description}")
 	})
-	@GetMapping(value = "/helloInstrument/{instrumentId}", produces = "application/json")
-	Instrument helloInstrument(@PathVariable int instrumentId);
+	@GetMapping(value = "/getvaluecurve/{businesskey}", produces = "application/json")
+	ValueCurve getValueCurve(@PathVariable String businesskey, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate);
 
-	@GetMapping("/helloException")
-	Instrument helloException();
-
-	@GetMapping("/helloInstrumentService")
-	Instrument helloInstrumentService();
+	@GetMapping(value = "/getvalue/{businesskey}", produces = "application/json")
+	ValueCurve getValue(@PathVariable String businesskey, @RequestParam LocalDate date);
 }
