@@ -27,6 +27,14 @@ spring.cloud.stream:
     destination: validateInstrumentRequest
     producer:
       required-groups: validateInstrumentauditGroup
+  bindings.validateTransactionRequest-out-0:
+    destination: validateTransactionRequest
+    producer:
+      required-groups: validateTransactionRequestAuditGroup
+  bindings.validateRecurrentTransactionRequest-out-0:
+    destination: validateRecurrentTransactionRequest
+    producer:
+      required-groups: validateRecurrentTransactionRequestAuditGroup
   bindings.loadNewMarketData-out-0:
     destination: loadNewMarketData
     producer:

@@ -1,9 +1,6 @@
 package de.hf.myfinance.restapi;
 
-import de.hf.myfinance.restmodel.EndOfDayPrices;
-import de.hf.myfinance.restmodel.Instrument;
-import de.hf.myfinance.restmodel.Transaction;
-import de.hf.myfinance.restmodel.ValueCurve;
+import de.hf.myfinance.restmodel.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -31,6 +28,12 @@ public interface CompositeApi {
             consumes = "application/json",
             produces = "application/json")
     Mono<String>  saveTransaction(@RequestBody Transaction transaction);
+
+    @PostMapping(
+            value    = "/saveRecurrentTransaction",
+            consumes = "application/json",
+            produces = "application/json")
+    Mono<String> saveRecurrentTransaction(@RequestBody RecurrentTransaction transaction);
 
     @DeleteMapping(
             value    = "/delTransaction",

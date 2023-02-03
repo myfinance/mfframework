@@ -6,10 +6,7 @@ import de.hf.myfinance.event.Event;
 import de.hf.myfinance.exception.MFMsgKey;
 import de.hf.myfinance.mfinstrumentclient.MFInstrumentClient;
 import de.hf.myfinance.restapi.CompositeApi;
-import de.hf.myfinance.restmodel.EndOfDayPrices;
-import de.hf.myfinance.restmodel.Instrument;
-import de.hf.myfinance.restmodel.Transaction;
-import de.hf.myfinance.restmodel.ValueCurve;
+import de.hf.myfinance.restmodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,7 +60,7 @@ public class CompositeApiImpl implements CompositeApi {
         return Mono.fromCallable(() -> {
 
             sendMessage("validateInstrumentRequest-out-0",
-                    new Event(CREATE, instrument.getBusinesskey(), instrument));
+                    new Event<>(CREATE, instrument.getBusinesskey(), instrument));
             return "instrument saved:"+ instrument;
         }).subscribeOn(publishEventScheduler);
     }
@@ -73,8 +70,18 @@ public class CompositeApiImpl implements CompositeApi {
         return Mono.fromCallable(() -> {
 
             sendMessage("validateTransactionRequest-out-0",
-                    new Event(CREATE, transaction.hashCode(), transaction));
+                    new Event<>(CREATE, transaction.toString(), transaction));
             return "transaction saved:"+transaction;
+        }).subscribeOn(publishEventScheduler);
+    }
+
+    @Override
+    public Mono<String> saveRecurrentTransaction(RecurrentTransaction transaction) {
+        return Mono.fromCallable(() -> {
+
+            sendMessage("validateRecurrentTransactionRequest-out-0",
+                    new Event<>(CREATE, transaction.toString(), transaction));
+            return "recurrentTransaction saved:"+transaction;
         }).subscribeOn(publishEventScheduler);
     }
 
@@ -88,7 +95,7 @@ public class CompositeApiImpl implements CompositeApi {
         return Mono.fromCallable(() -> {
 
             sendMessage("loadNewMarketDataProcessor-out-0",
-                    new Event(CREATE, "load", null));
+                    new Event<>(CREATE, "load", null));
             return "MarketData loading started:";
         }).subscribeOn(publishEventScheduler);
     }
@@ -109,8 +116,8 @@ public class CompositeApiImpl implements CompositeApi {
      * Since the sendMessage() uses blocking code, when calling streamBridge,
      * it has to be executed on a thread provided by a dedicated scheduler, publishEventScheduler
      */
-    private void sendMessage(String bindingName, Event event) {
-        Message message = MessageBuilder.withPayload(event)
+    private void sendMessage(String bindingName, Event<String, Object> event) {
+        Message<Event<String, Object>> message = MessageBuilder.withPayload(event)
                 .setHeader("partitionKey", event.getKey())
                 .build();
         streamBridge.send(bindingName, message);
