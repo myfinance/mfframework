@@ -1,46 +1,29 @@
-/** ----------------------------------------------------------------------------
- *
- * ---          HF - Application Development                       ---
- *              Copyright (c) 2014, ... All Rights Reserved
- *
- *
- *  Project     : dac
- *
- *  File        : InstrumentType.java
- *
- *  Author(s)   : hf
- *
- *  Created     : 02.02.2018
- *
- * ----------------------------------------------------------------------------
- */
-
 package de.hf.myfinance.restmodel;
 
 public enum InstrumentType {
-    GIRO(Integer.valueOf(1)),
-    MONEYATCALL(Integer.valueOf(2)),
-    TIMEDEPOSIT(Integer.valueOf(3)),
-    BUILDINGSAVINGACCOUNT(Integer.valueOf(4)),
-    BUDGET(Integer.valueOf(5)),
-    TENANT(Integer.valueOf(6)),
-    ACCOUNTPORTFOLIO(Integer.valueOf(8)),
-    ARTIFICALPORTFOLIO(Integer.valueOf(9)),
-    BUDGETGROUP(Integer.valueOf(10)),
-    DEPOT(Integer.valueOf(11)),
-    BUILDINGSAVING(Integer.valueOf(12)),
-    CURRENCY(Integer.valueOf(13)),
-    EQUITY(Integer.valueOf(14)),
-    FONDS(Integer.valueOf(15)),
-    ETF(Integer.valueOf(16)),
-    INDEX(Integer.valueOf(17)),
-    BOND(Integer.valueOf(18)),
-    LIFEINSURANCE(Integer.valueOf(19)),
-    DEPRECATIONOBJECT(Integer.valueOf(20)),
-    REALESTATE(Integer.valueOf(21)),
-    LOAN(Integer.valueOf(22)),
-    BUDGETPORTFOLIO(Integer.valueOf(23)),
-    UNKNOWN(Integer.valueOf(99));
+    GIRO(1),
+    MONEYATCALL(2),
+    TIMEDEPOSIT(3),
+    BUILDINGSAVINGACCOUNT(4),
+    BUDGET(5),
+    TENANT(6),
+    ACCOUNTPORTFOLIO(8),
+    ARTIFICALPORTFOLIO(9),
+    BUDGETGROUP(10),
+    DEPOT(11),
+    BUILDINGSAVING(12),
+    CURRENCY(13),
+    EQUITY(14),
+    FONDS(15),
+    ETF(16),
+    INDEX(17),
+    BOND(18),
+    LIFEINSURANCE(19),
+    DEPRECATIONOBJECT(20),
+    REALESTATE(21),
+    LOAN(22),
+    BUDGETPORTFOLIO(23),
+    UNKNOWN(99);
 
     public static final String GIRO_IDSTRING = "1";
     public static final String MONEYATCALL_IDSTRING = "2";
@@ -74,70 +57,64 @@ public enum InstrumentType {
     public Integer getValue() { return value; }
 
     public InstrumentTypeGroup getTypeGroup(){
-        switch(value){
-            case 6: return InstrumentTypeGroup.TENANT;
-            case 8: return InstrumentTypeGroup.PORTFOLIO;
-            case 9: return InstrumentTypeGroup.PORTFOLIO;
-            case 10: return InstrumentTypeGroup.PORTFOLIO;
-            case 11: return InstrumentTypeGroup.DEPOT;
-            case 12: return InstrumentTypeGroup.PORTFOLIO;
-            case 13: return InstrumentTypeGroup.SECURITY;
-            case 14: return InstrumentTypeGroup.SECURITY;
-            case 15: return InstrumentTypeGroup.SECURITY;
-            case 16: return InstrumentTypeGroup.SECURITY;
-            case 17: return InstrumentTypeGroup.SECURITY;
-            case 18: return InstrumentTypeGroup.SECURITY;
-            case 19: return InstrumentTypeGroup.LIVEINSURANCE;
-            case 20: return InstrumentTypeGroup.DEPRECATIONOBJECT;
-            case 21: return InstrumentTypeGroup.REALESTATE;
-            case 22: return InstrumentTypeGroup.LOAN;
-            case 23: return InstrumentTypeGroup.PORTFOLIO;
-            default: return InstrumentTypeGroup.CASHACCOUNT;
-        }
+        return switch (value) {
+            case 6 -> InstrumentTypeGroup.TENANT;
+            case 8 -> InstrumentTypeGroup.PORTFOLIO;
+            case 9 -> InstrumentTypeGroup.PORTFOLIO;
+            case 10 -> InstrumentTypeGroup.PORTFOLIO;
+            case 11 -> InstrumentTypeGroup.DEPOT;
+            case 12 -> InstrumentTypeGroup.PORTFOLIO;
+            case 13 -> InstrumentTypeGroup.SECURITY;
+            case 14 -> InstrumentTypeGroup.SECURITY;
+            case 15 -> InstrumentTypeGroup.SECURITY;
+            case 16 -> InstrumentTypeGroup.SECURITY;
+            case 17 -> InstrumentTypeGroup.SECURITY;
+            case 18 -> InstrumentTypeGroup.SECURITY;
+            case 19 -> InstrumentTypeGroup.LIVEINSURANCE;
+            case 20 -> InstrumentTypeGroup.DEPRECATIONOBJECT;
+            case 21 -> InstrumentTypeGroup.REALESTATE;
+            case 22 -> InstrumentTypeGroup.LOAN;
+            case 23 -> InstrumentTypeGroup.PORTFOLIO;
+            default -> InstrumentTypeGroup.CASHACCOUNT;
+        };
     }
 
     public static InstrumentType getInstrumentTypeById(int instrumenttypeId){
-        switch(instrumenttypeId){
-            case 1: return InstrumentType.GIRO;
-            case 2: return InstrumentType.MONEYATCALL;
-            case 3: return InstrumentType.TIMEDEPOSIT;
-            case 4: return InstrumentType.BUILDINGSAVINGACCOUNT;
-            case 5: return InstrumentType.BUDGET;
-            case 6: return InstrumentType.TENANT;
-            case 8: return InstrumentType.ACCOUNTPORTFOLIO;
-            case 9: return InstrumentType.ARTIFICALPORTFOLIO;
-            case 10: return InstrumentType.BUDGETGROUP;
-            case 11: return InstrumentType.DEPOT;
-            case 12: return InstrumentType.BUILDINGSAVING;
-            case 13: return InstrumentType.CURRENCY;
-            case 14: return InstrumentType.EQUITY;
-            case 15: return InstrumentType.FONDS;
-            case 16: return InstrumentType.ETF;
-            case 17: return InstrumentType.INDEX;
-            case 18: return InstrumentType.BOND;
-            case 19: return InstrumentType.LIFEINSURANCE;
-            case 20: return InstrumentType.DEPRECATIONOBJECT;
-            case 21: return InstrumentType.REALESTATE;
-            case 22: return InstrumentType.LOAN;
-            case 23: return InstrumentType.BUDGETPORTFOLIO;
-            default: return InstrumentType.UNKNOWN;
-        }
+        return switch (instrumenttypeId) {
+            case 1 -> InstrumentType.GIRO;
+            case 2 -> InstrumentType.MONEYATCALL;
+            case 3 -> InstrumentType.TIMEDEPOSIT;
+            case 4 -> InstrumentType.BUILDINGSAVINGACCOUNT;
+            case 5 -> InstrumentType.BUDGET;
+            case 6 -> InstrumentType.TENANT;
+            case 8 -> InstrumentType.ACCOUNTPORTFOLIO;
+            case 9 -> InstrumentType.ARTIFICALPORTFOLIO;
+            case 10 -> InstrumentType.BUDGETGROUP;
+            case 11 -> InstrumentType.DEPOT;
+            case 12 -> InstrumentType.BUILDINGSAVING;
+            case 13 -> InstrumentType.CURRENCY;
+            case 14 -> InstrumentType.EQUITY;
+            case 15 -> InstrumentType.FONDS;
+            case 16 -> InstrumentType.ETF;
+            case 17 -> InstrumentType.INDEX;
+            case 18 -> InstrumentType.BOND;
+            case 19 -> InstrumentType.LIFEINSURANCE;
+            case 20 -> InstrumentType.DEPRECATIONOBJECT;
+            case 21 -> InstrumentType.REALESTATE;
+            case 22 -> InstrumentType.LOAN;
+            case 23 -> InstrumentType.BUDGETPORTFOLIO;
+            default -> InstrumentType.UNKNOWN;
+        };
     }
 
      public LiquidityType getLiquidityType(){
-        switch(value){
-            case 1: return LiquidityType.LIQUIDE;
-            case 2: return LiquidityType.LIQUIDE;
-            case 3: return LiquidityType.CALCULATED;
-            case 4: return LiquidityType.MIDTERM;
-            case 11: return LiquidityType.MIDTERM;
-            case 12: return LiquidityType.CALCULATED;
-            case 19: return LiquidityType.CALCULATED;
-            case 20: return LiquidityType.MIDTERM;
-            case 21: return LiquidityType.LONGTERM;
-            case 22: return LiquidityType.CALCULATED;
-            default: return LiquidityType.UNKNOWN;
-        }
+         return switch (value) {
+             case 1, 2 -> LiquidityType.LIQUIDE;
+             case 3, 12, 19, 22 -> LiquidityType.CALCULATED;
+             case 4, 11, 20 -> LiquidityType.MIDTERM;
+             case 21 -> LiquidityType.LONGTERM;
+             default -> LiquidityType.UNKNOWN;
+         };
     }
 }
 
