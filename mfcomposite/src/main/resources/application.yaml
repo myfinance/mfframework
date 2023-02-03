@@ -7,6 +7,15 @@ app:
   mfinstruments:
     host: localhost
     port: 7001
+  mftransactions:
+    host: localhost
+    port: 7003
+  mfmarketdata:
+    host: localhost
+    port: 7004
+  mfvaluation:
+    host: localhost
+    port: 7002
 
 springdoc:
   swagger-ui.path: /openapi/swagger-ui.html
@@ -35,6 +44,10 @@ spring.cloud.stream:
     destination: validateRecurrentTransactionRequest
     producer:
       required-groups: validateRecurrentTransactionRequestAuditGroup
+  bindings.processRecurrentTransaction-out-0:
+    destination: processRecurrentTransaction
+    producer:
+      required-groups: processRecurrentTransactionAuditGroup
   bindings.loadNewMarketData-out-0:
     destination: loadNewMarketData
     producer:
@@ -53,3 +66,12 @@ app:
   mfinstruments:
     host: mfinstruments
     port: 30024
+  mftransactions:
+    host: mftransactions
+    port: 30025
+  mfmarketdata:
+    host: mfmarketdata
+    port: 30026
+  mfvaluation:
+    host: mfvaluation
+    port: 30027

@@ -2,9 +2,9 @@ package de.hf.myfinance.composite.api;
 
 import de.hf.framework.exceptions.MFException;
 import de.hf.framework.utils.ServiceUtil;
+import de.hf.myfinance.composite.clients.MFInstrumentClient;
 import de.hf.myfinance.event.Event;
 import de.hf.myfinance.exception.MFMsgKey;
-import de.hf.myfinance.mfinstrumentclient.MFInstrumentClient;
 import de.hf.myfinance.restapi.CompositeApi;
 import de.hf.myfinance.restmodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 
@@ -86,6 +87,16 @@ public class CompositeApiImpl implements CompositeApi {
     }
 
     @Override
+    public Mono<String> processRecurrentTransaction() {
+        return Mono.fromCallable(() -> {
+
+            sendMessage("processRecurrentTransaction-out-0",
+                    new Event<>(CREATE, "processRecurrentTransactions", null));
+            return "process recurrent Transactions started:";
+        }).subscribeOn(publishEventScheduler);
+    }
+
+    @Override
     public Mono<String> delTransaction(String transactionId) {
         return null;
     }
@@ -108,6 +119,11 @@ public class CompositeApiImpl implements CompositeApi {
 
     @Override
     public ValueCurve getInstrumentValues(String tenantBusinesskey, LocalDate startDate, LocalDate endDate) {
+        return null;
+    }
+
+    @Override
+    public Flux<RecurrentTransaction> listRecurrentTransactions() {
         return null;
     }
 

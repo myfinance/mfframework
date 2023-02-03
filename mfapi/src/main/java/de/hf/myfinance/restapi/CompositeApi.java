@@ -3,6 +3,7 @@ package de.hf.myfinance.restapi;
 import de.hf.myfinance.restmodel.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
@@ -35,6 +36,11 @@ public interface CompositeApi {
             produces = "application/json")
     Mono<String> saveRecurrentTransaction(@RequestBody RecurrentTransaction transaction);
 
+    @PostMapping(
+            value    = "/processRecurrentTransaction",
+            produces = "application/json")
+    Mono<String> processRecurrentTransaction();
+
     @DeleteMapping(
             value    = "/delTransaction",
             consumes = "application/json",
@@ -53,4 +59,7 @@ public interface CompositeApi {
 
     @GetMapping(value = "/getinstrumentvalues/{tenantBusinesskey}", produces = "application/json")
     ValueCurve getInstrumentValues(@PathVariable String tenantBusinesskey, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate);
+
+    @GetMapping(value = "/recurrenttransactions", produces = "application/json")
+    Flux<RecurrentTransaction> listRecurrentTransactions();
 }

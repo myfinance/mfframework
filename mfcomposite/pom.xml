@@ -42,11 +42,6 @@
 
         <dependency>
             <groupId>de.hf.myfinance</groupId>
-            <artifactId>mfinstrumentclient</artifactId>
-            <version>${parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.hf.myfinance</groupId>
             <artifactId>mfapi</artifactId>
             <version>${parent.version}</version>
             <scope>compile</scope>

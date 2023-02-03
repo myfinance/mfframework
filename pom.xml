@@ -16,7 +16,6 @@
     <modules>
         <module>mfframework</module>
         <module>mfapi</module>
-        <module>mfinstrumentclient</module>
         <module>mfcomposite</module>
         <module>mftesthelper</module>
     </modules>
