@@ -38,7 +38,7 @@ public class AuditServiceImpl implements AuditService {
     }
 
     @Override
-    public Mono handleMonoError(String message, String messagetype, MsgKey msgKey) {
+    public Mono<Object> handleMonoError(String message, String messagetype, MsgKey msgKey) {
         saveMessage(message, Severity.ERROR, messagetype, "NA");
         return Mono.error(new MFException(msgKey, message));
     }
