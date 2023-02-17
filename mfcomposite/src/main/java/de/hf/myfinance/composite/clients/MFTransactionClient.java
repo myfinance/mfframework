@@ -46,7 +46,7 @@ public class MFTransactionClient implements TransactionApi {
     }
 
     @Override
-    public Mono<String> addRecurrentTransaction(RecurrentTransaction recurrentTransaction) {
+    public Mono<String> saveRecurrentTransaction(RecurrentTransaction recurrentTransaction) {
         return null;
     }
 

@@ -1,7 +1,6 @@
 package de.hf.myfinance.restapi;
 
 import de.hf.myfinance.restmodel.RecurrentTransaction;
-import de.hf.myfinance.restmodel.Trade;
 import de.hf.myfinance.restmodel.Transaction;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +27,7 @@ public interface TransactionApi {
             value    = "/addRecurrentTransaction",
             consumes = "application/json",
             produces = "application/json")
-    Mono<String> addRecurrentTransaction(@RequestBody RecurrentTransaction recurrentTransaction);
+    Mono<String> saveRecurrentTransaction(@RequestBody RecurrentTransaction recurrentTransaction);
 
     @PostMapping(
             value    = "/processRecurrentTransaction",
