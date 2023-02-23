@@ -13,6 +13,7 @@ public class RecurrentTransaction {
     private double value;
     private LocalDate nextTransactionDate;
     private RecurrentTransactionType recurrentTransactionType;
+    private String description;
 
 
     public String getRecurrentTransactionId() {
@@ -69,6 +70,13 @@ public class RecurrentTransaction {
     }
     public void setRecurrentTransactionType(RecurrentTransactionType recurrentTransactionType) {
         this.recurrentTransactionType = recurrentTransactionType;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }
