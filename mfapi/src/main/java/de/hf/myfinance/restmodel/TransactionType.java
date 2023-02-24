@@ -13,7 +13,7 @@ package de.hf.myfinance.restmodel;
 
 public enum TransactionType {
     INCOME,
-    EXPENSES,
+    EXPENSE,
     TRANSFER,
     BUDGETTRANSFER,
     LINKEDINCOMEEXPENSES,
