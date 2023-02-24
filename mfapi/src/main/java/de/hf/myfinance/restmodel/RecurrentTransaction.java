@@ -12,7 +12,7 @@ public class RecurrentTransaction {
     private RecurrentFrequency recurrentFrequency;
     private double value;
     private LocalDate nextTransactionDate;
-    private RecurrentTransactionType recurrentTransactionType;
+    private TransactionType recurrentTransactionType;
     private String description;
 
 
@@ -65,10 +65,10 @@ public class RecurrentTransaction {
         this.nextTransactionDate = nextTransactionDate;
     }
 
-    public RecurrentTransactionType getRecurrentTransactionType() {
+    public TransactionType getRecurrentTransactionType() {
         return recurrentTransactionType;
     }
-    public void setRecurrentTransactionType(RecurrentTransactionType recurrentTransactionType) {
+    public void setRecurrentTransactionType(TransactionType recurrentTransactionType) {
         this.recurrentTransactionType = recurrentTransactionType;
     }
 
