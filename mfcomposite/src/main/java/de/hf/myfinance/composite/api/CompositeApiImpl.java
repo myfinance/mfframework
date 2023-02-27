@@ -21,6 +21,7 @@ import reactor.core.scheduler.Scheduler;
 import java.time.LocalDate;
 
 import static de.hf.myfinance.event.Event.Type.CREATE;
+import static de.hf.myfinance.event.Event.Type.START;
 
 @RestController
 public class CompositeApiImpl implements CompositeApi {
@@ -91,7 +92,7 @@ public class CompositeApiImpl implements CompositeApi {
         return Mono.fromCallable(() -> {
 
             sendMessage("processRecurrentTransaction-out-0",
-                    new Event<>(CREATE, "processRecurrentTransactions", null));
+                    new Event<>(START, "processRecurrentTransactions", null));
             return "process recurrent Transactions started:";
         }).subscribeOn(publishEventScheduler);
     }
@@ -106,7 +107,7 @@ public class CompositeApiImpl implements CompositeApi {
         return Mono.fromCallable(() -> {
 
             sendMessage("loadNewMarketDataProcessor-out-0",
-                    new Event<>(CREATE, "load", null));
+                    new Event<>(START, "load", null));
             return "MarketData loading started:";
         }).subscribeOn(publishEventScheduler);
     }
