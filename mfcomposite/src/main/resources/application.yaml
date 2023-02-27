@@ -1,4 +1,4 @@
-server.port: 7005
+server.port: 7009
 logging:
   level:
     root: INFO
@@ -58,20 +58,3 @@ spring.rabbitmq:
   port: 30021
   username: user
   password: vulkan
-
----
-spring.config.activate.on-profile: k8n
-
-app:
-  mfinstruments:
-    host: mfinstruments
-    port: 30024
-  mftransactions:
-    host: mftransactions
-    port: 30025
-  mfmarketdata:
-    host: mfmarketdata
-    port: 30026
-  mfvaluation:
-    host: mfvaluation
-    port: 30027
