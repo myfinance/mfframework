@@ -50,8 +50,7 @@ public class MFInstrumentClient implements InstrumentApi {
 
     @Override
     public Flux<Instrument> listInstruments() {
-        //return webClient.get().uri(instrumentServiceUrl + "/instruments").retrieve().bodyToFlux(Instrument.class);
-        return webClient.get().uri("http://192.168.100.73:30034/instruments").retrieve().bodyToFlux(Instrument.class);
+        return webClient.get().uri(instrumentServiceUrl + "/instruments").retrieve().bodyToFlux(Instrument.class);
     }
 
     @Override
