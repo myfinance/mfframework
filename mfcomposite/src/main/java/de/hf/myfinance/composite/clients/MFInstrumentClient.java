@@ -55,7 +55,7 @@ public class MFInstrumentClient implements InstrumentApi {
 
     @Override
     public Flux<Instrument> listInstrumentsForTenant(String businesskey) {
-        return webClient.get().uri(instrumentServiceUrl + "/instrumentsfortenant?businesskey=" + businesskey)
+        return webClient.get().uri(instrumentServiceUrl + "/instrumentsfortenant?tenantbusinesskey=" + businesskey)
                 .retrieve().bodyToFlux(Instrument.class);
     }
 
