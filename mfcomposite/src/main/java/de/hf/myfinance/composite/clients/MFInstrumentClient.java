@@ -1,6 +1,8 @@
 package de.hf.myfinance.composite.clients;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.hf.framework.audit.AuditService;
+import de.hf.framework.audit.Severity;
 import de.hf.framework.exceptions.InvalidInputException;
 import de.hf.framework.exceptions.MFException;
 import de.hf.framework.exceptions.NotFoundException;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -24,98 +27,61 @@ import java.io.IOException;
 
 @Component
 public class MFInstrumentClient implements InstrumentApi {
-    private static final Logger LOG = LoggerFactory.getLogger(MFInstrumentClient.class);
-    private final RestTemplate restTemplate;
+    private final AuditService auditService;
+    private final WebClient webClient;
+    protected static final String AUDIT_MSG_TYPE="MFInstrumentClient_User_Event";
     private final ObjectMapper mapper;
     private final String instrumentServiceUrl;
 
     @Autowired
-    public MFInstrumentClient(
-      RestTemplate restTemplate,
-      ObjectMapper mapper,
-      @Value("${app.mfinstruments.host}") String instrumentServiceHost,
-      @Value("${app.mfinstruments.port}") int instrumentServicePort) {
-  
-      this.restTemplate = restTemplate;
-      this.mapper = mapper;
-  
-      instrumentServiceUrl = "http://" + instrumentServiceHost + ":" + instrumentServicePort;
+    public MFInstrumentClient(AuditService auditService,
+                              WebClient.Builder webClient,
+                              ObjectMapper mapper,
+                              @Value("${app.mfinstruments.host}") String instrumentServiceHost,
+                              @Value("${app.mfinstruments.port}") int instrumentServicePort) {
+        this.webClient = webClient.build();
+        this.mapper = mapper;
+        this.auditService = auditService;
+        instrumentServiceUrl = "http://" + instrumentServiceHost + ":" + instrumentServicePort;
     }
 
     public String index(){
-        try {
-            LOG.debug("Will call getProduct API on URL: {}", instrumentServiceUrl);
-      
-            String aString = restTemplate.getForObject(instrumentServiceUrl, String.class);
-            LOG.debug("Found a string:{}", aString);
-      
-            return aString;
-      
-          } catch (HttpClientErrorException ex) {
-
-            switch (ex.getStatusCode()) {
-                case NOT_FOUND -> throw new NotFoundException(getErrorMessage(ex));
-                case UNPROCESSABLE_ENTITY -> throw new InvalidInputException(getErrorMessage(ex));
-                case INTERNAL_SERVER_ERROR -> throw new MFException(MFMsgKey.UNSPECIFIED, getErrorMessage(ex));
-                default -> {
-                    LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
-                    LOG.warn("Error body: {}", ex.getResponseBodyAsString());
-                    throw ex;
-                }
-            }
-          }       
+        throw new MFException(MFMsgKey.UNSPECIFIED, "not implemented yet");
     }
 
     @Override
     public Mono<Instrument> getInstrument(String businesskey) {
-        try {
-            String url = instrumentServiceUrl + "/instrumentblocking/" + businesskey;
-            LOG.debug("Will call getProduct API on URL: {}", url);
-
-            Mono<Instrument> instrument = restTemplate.getForObject(url, Mono.class);
-
-            return instrument;
-
-        } catch (HttpClientErrorException ex) {
-
-            switch (ex.getStatusCode()) {
-                case NOT_FOUND -> throw new NotFoundException(getErrorMessage(ex));
-                case UNPROCESSABLE_ENTITY -> throw new InvalidInputException(getErrorMessage(ex));
-                case INTERNAL_SERVER_ERROR -> throw new MFException(MFMsgKey.UNSPECIFIED, getErrorMessage(ex));
-                default -> {
-                    LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
-                    LOG.warn("Error body: {}", ex.getResponseBodyAsString());
-                    throw ex;
-                }
-            }
-        }
+        throw new MFException(MFMsgKey.UNSPECIFIED, "not implemented yet");
     }
 
     @Override
     public Flux<Instrument> listInstruments() {
-        return restTemplate.getForObject(instrumentServiceUrl + "/instruments", Flux.class);
+        return webClient.get().uri(instrumentServiceUrl + "/instruments").retrieve().bodyToFlux(Instrument.class);
     }
 
     @Override
     public Flux<Instrument> listInstrumentsForTenant(String businesskey) {
-        return restTemplate.getForObject(instrumentServiceUrl + "/instrumentsfortenant/" + businesskey, Flux.class);
+        return webClient.get().uri(instrumentServiceUrl + "/instrumentsfortenant?businesskey=" + businesskey)
+                .retrieve().bodyToFlux(Instrument.class);
     }
 
     @Override
     public Flux<Instrument> listActiveInstrumentsForTenant(String tenantbusinesskey) {
-        return restTemplate.getForObject(instrumentServiceUrl + "/activeinstrumentsfortenant/" + tenantbusinesskey, Flux.class);
+        return webClient.get().uri(instrumentServiceUrl + "/activeinstrumentsfortenant?tenantbusinesskey=" + tenantbusinesskey)
+                .retrieve().bodyToFlux(Instrument.class);
     }
 
     @Override
     public Flux<Instrument> listInstrumentsByType(String tenantbusinesskey, InstrumentType instrumentType) {
-        return restTemplate.getForObject(instrumentServiceUrl + "/instrumentsbytype/"
-                + tenantbusinesskey + "?instrumentType="
-                + instrumentType, Flux.class);
+        return webClient.get().uri(instrumentServiceUrl + "/instrumentsbytype?tenantbusinesskey="
+                + tenantbusinesskey + "&instrumentType="
+                + instrumentType)
+                .retrieve().bodyToFlux(Instrument.class);
     }
 
     @Override
     public Flux<Instrument> listTenants() {
-        return restTemplate.getForObject(instrumentServiceUrl + "/tenants", Flux.class);
+        return webClient.get().uri(instrumentServiceUrl + "/tenants").retrieve().bodyToFlux(Instrument.class);
     }
 
     @Override

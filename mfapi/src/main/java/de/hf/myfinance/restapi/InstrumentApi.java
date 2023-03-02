@@ -17,20 +17,20 @@ public interface InstrumentApi {
 	@GetMapping("/")
 	String index();
 
-	@GetMapping(value = "/instrument/{businesskey}", produces = "application/json")
-	Mono<Instrument> getInstrument(@PathVariable String businesskey);
+	@GetMapping(value = "/instrument", produces = "application/json")
+	Mono<Instrument> getInstrument(@RequestParam String businesskey);
 
 	@GetMapping(value = "/instruments", produces = "application/json")
 	Flux<Instrument> listInstruments();
 
-	@GetMapping(value = "/instrumentsfortenant/{tenantbusinesskey}", produces = "application/json")
-	Flux<Instrument> listInstrumentsForTenant(@PathVariable String tenantbusinesskey);
+	@GetMapping(value = "/instrumentsfortenant", produces = "application/json")
+	Flux<Instrument> listInstrumentsForTenant(@RequestParam String tenantbusinesskey);
 
-	@GetMapping(value = "/activeinstrumentsfortenant/{tenantbusinesskey}", produces = "application/json")
-	Flux<Instrument> listActiveInstrumentsForTenant(@PathVariable String tenantbusinesskey);
+	@GetMapping(value = "/activeinstrumentsfortenant", produces = "application/json")
+	Flux<Instrument> listActiveInstrumentsForTenant(@RequestParam String tenantbusinesskey);
 
-	@GetMapping(value = "/instrumentsbytype/{tenantbusinesskey}", produces = "application/json")
-	Flux<Instrument> listInstrumentsByType(@PathVariable String tenantbusinesskey, @RequestParam InstrumentType instrumentType);
+	@GetMapping(value = "/instrumentsbytype", produces = "application/json")
+	Flux<Instrument> listInstrumentsByType(@RequestParam String tenantbusinesskey, @RequestParam InstrumentType instrumentType);
 
 	@GetMapping(value = "/tenants", produces = "application/json")
 	Flux<Instrument> listTenants();

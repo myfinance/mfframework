@@ -54,11 +54,11 @@ public interface CompositeApi {
     Mono<String> loadNewMarketData();
 
 
-    @GetMapping(value = "/endOfDayPrices/{businesskey}", produces = "application/json")
-    Mono<EndOfDayPrices> getEndOfDayPrices(@PathVariable String businesskey);
+    @GetMapping(value = "/endOfDayPrices", produces = "application/json")
+    Mono<EndOfDayPrices> getEndOfDayPrices(@RequestParam String businesskey);
 
-    @GetMapping(value = "/getinstrumentvalues/{tenantBusinesskey}", produces = "application/json")
-    ValueCurve getInstrumentValues(@PathVariable String tenantBusinesskey, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate);
+    @GetMapping(value = "/getinstrumentvalues", produces = "application/json")
+    ValueCurve getInstrumentValues(@RequestParam String tenantBusinesskey, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate);
 
     @GetMapping(value = "/recurrenttransactions", produces = "application/json")
     Flux<RecurrentTransaction> listRecurrentTransactions();
@@ -67,13 +67,13 @@ public interface CompositeApi {
     Flux<Instrument> listInstruments();
 
     @GetMapping(value = "/instrumentsfortenant", produces = "application/json")
-    Flux<Instrument> listInstrumentsForTenant(@PathVariable String tenantbusinesskey);
+    Flux<Instrument> listInstrumentsForTenant(@RequestParam String tenantbusinesskey);
 
     @GetMapping(value = "/activeinstrumentsfortenant", produces = "application/json")
-    Flux<Instrument> listActiveInstrumentsForTenant(@PathVariable String tenantbusinesskey);
+    Flux<Instrument> listActiveInstrumentsForTenant(@RequestParam String tenantbusinesskey);
 
     @GetMapping(value = "/instrumentsbytype", produces = "application/json")
-    Flux<Instrument> listInstrumentsByType(@PathVariable String tenantbusinesskey, @PathVariable InstrumentType instrumentType);
+    Flux<Instrument> listInstrumentsByType(@RequestParam String tenantbusinesskey, @RequestParam InstrumentType instrumentType);
 
     @GetMapping(value = "/tenants", produces = "application/json")
     Flux<Instrument> listTenants();
