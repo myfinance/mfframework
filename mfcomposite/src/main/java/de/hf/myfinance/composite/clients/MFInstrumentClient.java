@@ -2,22 +2,16 @@ package de.hf.myfinance.composite.clients;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hf.framework.audit.AuditService;
-import de.hf.framework.audit.Severity;
-import de.hf.framework.exceptions.InvalidInputException;
 import de.hf.framework.exceptions.MFException;
-import de.hf.framework.exceptions.NotFoundException;
 import de.hf.framework.utils.HttpErrorInfo;
 import de.hf.myfinance.exception.MFMsgKey;
 import de.hf.myfinance.restapi.InstrumentApi;
 import de.hf.myfinance.restmodel.Instrument;
 import de.hf.myfinance.restmodel.InstrumentType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -56,7 +50,8 @@ public class MFInstrumentClient implements InstrumentApi {
 
     @Override
     public Flux<Instrument> listInstruments() {
-        return webClient.get().uri(instrumentServiceUrl + "/instruments").retrieve().bodyToFlux(Instrument.class);
+        //return webClient.get().uri(instrumentServiceUrl + "/instruments").retrieve().bodyToFlux(Instrument.class);
+        return webClient.get().uri("http://192.168.100.73:30034/instruments").retrieve().bodyToFlux(Instrument.class);
     }
 
     @Override
