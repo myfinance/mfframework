@@ -23,13 +23,13 @@ public interface InstrumentApi {
 	@GetMapping(value = "/instruments", produces = "application/json")
 	Flux<Instrument> listInstruments();
 
-	@GetMapping(value = "/instrumentsfortenant", produces = "application/json")
+	@GetMapping(value = "/instrumentsfortenant/{tenantbusinesskey}", produces = "application/json")
 	Flux<Instrument> listInstrumentsForTenant(@PathVariable String tenantbusinesskey);
 
-	@GetMapping(value = "/activeinstrumentsfortenant", produces = "application/json")
+	@GetMapping(value = "/activeinstrumentsfortenant/{tenantbusinesskey}", produces = "application/json")
 	Flux<Instrument> listActiveInstrumentsForTenant(@PathVariable String tenantbusinesskey);
 
-	@GetMapping(value = "/instrumentsbytype", produces = "application/json")
+	@GetMapping(value = "/instrumentsbytype/{tenantbusinesskey}", produces = "application/json")
 	Flux<Instrument> listInstrumentsByType(@PathVariable String tenantbusinesskey, @RequestParam InstrumentType instrumentType);
 
 	@GetMapping(value = "/tenants", produces = "application/json")
