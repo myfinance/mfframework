@@ -62,4 +62,19 @@ public interface CompositeApi {
 
     @GetMapping(value = "/recurrenttransactions", produces = "application/json")
     Flux<RecurrentTransaction> listRecurrentTransactions();
+
+    @GetMapping(value = "/instruments", produces = "application/json")
+    Flux<Instrument> listInstruments();
+
+    @GetMapping(value = "/instrumentsfortenant", produces = "application/json")
+    Flux<Instrument> listInstrumentsForTenant(@PathVariable String tenantbusinesskey);
+
+    @GetMapping(value = "/activeinstrumentsfortenant", produces = "application/json")
+    Flux<Instrument> listActiveInstrumentsForTenant(@PathVariable String tenantbusinesskey);
+
+    @GetMapping(value = "/instrumentsbytype", produces = "application/json")
+    Flux<Instrument> listInstrumentsByType(@PathVariable String tenantbusinesskey, @PathVariable InstrumentType instrumentType);
+
+    @GetMapping(value = "/tenants", produces = "application/json")
+    Flux<Instrument> listTenants();
 }

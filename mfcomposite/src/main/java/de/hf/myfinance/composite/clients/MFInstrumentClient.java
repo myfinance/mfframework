@@ -93,27 +93,29 @@ public class MFInstrumentClient implements InstrumentApi {
 
     @Override
     public Flux<Instrument> listInstruments() {
-        return null;
+        return restTemplate.getForObject(instrumentServiceUrl + "/instruments", Flux.class);
     }
 
     @Override
     public Flux<Instrument> listInstrumentsForTenant(String businesskey) {
-        return null;
+        return restTemplate.getForObject(instrumentServiceUrl + "/instrumentsfortenant/" + businesskey, Flux.class);
     }
 
     @Override
     public Flux<Instrument> listActiveInstrumentsForTenant(String tenantbusinesskey) {
-        return null;
+        return restTemplate.getForObject(instrumentServiceUrl + "/activeinstrumentsfortenant/" + tenantbusinesskey, Flux.class);
     }
 
     @Override
     public Flux<Instrument> listInstrumentsByType(String tenantbusinesskey, InstrumentType instrumentType) {
-        return null;
+        return restTemplate.getForObject(instrumentServiceUrl + "/instrumentsbytype/"
+                + tenantbusinesskey + "?instrumentType="
+                + instrumentType, Flux.class);
     }
 
     @Override
     public Flux<Instrument> listTenants() {
-        return null;
+        return restTemplate.getForObject(instrumentServiceUrl + "/tenants", Flux.class);
     }
 
     @Override

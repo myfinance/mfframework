@@ -128,6 +128,31 @@ public class CompositeApiImpl implements CompositeApi {
         return null;
     }
 
+    @Override
+    public Flux<Instrument> listInstruments() {
+        return instrumentClient.listInstruments();
+    }
+
+    @Override
+    public Flux<Instrument> listInstrumentsForTenant(String tenantbusinesskey) {
+        return instrumentClient.listInstrumentsForTenant(tenantbusinesskey);
+    }
+
+    @Override
+    public Flux<Instrument> listActiveInstrumentsForTenant(String tenantbusinesskey) {
+        return instrumentClient.listActiveInstrumentsForTenant(tenantbusinesskey);
+    }
+
+    @Override
+    public Flux<Instrument> listInstrumentsByType(String tenantbusinesskey, InstrumentType instrumentType) {
+        return instrumentClient.listInstrumentsByType(tenantbusinesskey, instrumentType);
+    }
+
+    @Override
+    public Flux<Instrument> listTenants() {
+        return instrumentClient.listTenants();
+    }
+
 
     /**
      * Since the sendMessage() uses blocking code, when calling streamBridge,

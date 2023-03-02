@@ -2,12 +2,9 @@ package de.hf.myfinance.restapi;
 
 import de.hf.myfinance.restmodel.InstrumentType;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import de.hf.myfinance.restmodel.Instrument;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -33,7 +30,7 @@ public interface InstrumentApi {
 	Flux<Instrument> listActiveInstrumentsForTenant(@PathVariable String tenantbusinesskey);
 
 	@GetMapping(value = "/instrumentsbytype", produces = "application/json")
-	Flux<Instrument> listInstrumentsByType(@PathVariable String tenantbusinesskey, @PathVariable InstrumentType instrumentType);
+	Flux<Instrument> listInstrumentsByType(@PathVariable String tenantbusinesskey, @RequestParam InstrumentType instrumentType);
 
 	@GetMapping(value = "/tenants", produces = "application/json")
 	Flux<Instrument> listTenants();
