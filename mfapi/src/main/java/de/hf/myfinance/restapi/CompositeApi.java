@@ -97,9 +97,9 @@ public interface CompositeApi {
 
     /** Valuation: **/
 
-    @GetMapping(value = "/getvaluecurve/{businesskey}", produces = "application/json")
-    Mono<ValueCurve> getValueCurve(@PathVariable String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
+    @GetMapping(value = "/getvaluecurve", produces = "application/json")
+    Mono<ValueCurve> getValueCurve(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
 
-    @GetMapping(value = "/getvalue/{businesskey}", produces = "application/json")
-    Mono<Double> getValue(@PathVariable String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
+    @GetMapping(value = "/getvalue", produces = "application/json")
+    Mono<Double> getValue(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
 }
