@@ -52,6 +52,10 @@ spring.cloud.stream:
     destination: loadNewMarketData
     producer:
       required-groups: loadNewMarketDataAuditGroup
+  bindings.recurrentTransactionApproved-out-0:
+    destination: recurrentTransactionApproved
+    producer:
+      required-groups: recurrentTransactionApprovedAuditGroup
 
 spring.rabbitmq:
   host: 192.168.100.73

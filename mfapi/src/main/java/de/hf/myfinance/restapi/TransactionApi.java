@@ -17,6 +17,19 @@ public interface TransactionApi {
     @GetMapping("/")
     String index();
 
+    @PostMapping(
+            value    = "/saveTransaction",
+            consumes = "application/json",
+            produces = "application/json")
+    Mono<String>  saveTransaction(@RequestBody Transaction transaction);
+
+    @DeleteMapping(
+            value    = "/delTransaction",
+            consumes = "application/json",
+            produces = "application/json")
+    Mono<String> delTransaction(@PathVariable String transactionId);
+
+
     @DeleteMapping(
             value    = "/delrecurrenttransfer",
             consumes = "application/json",
@@ -34,17 +47,6 @@ public interface TransactionApi {
             produces = "application/json")
     Mono<String> processRecurrentTransaction();
 
-    @PostMapping(
-            value    = "/saveTransaction",
-            consumes = "application/json",
-            produces = "application/json")
-    Mono<String>  saveTransaction(@RequestBody Transaction transaction);
-
-    @DeleteMapping(
-            value    = "/delTransaction",
-            consumes = "application/json",
-            produces = "application/json")
-    Mono<String> delTransaction(@PathVariable String transactionId);
 
     @GetMapping(value = "/transactions", produces = "application/json")
     Flux<Transaction> listTransactions(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate);
