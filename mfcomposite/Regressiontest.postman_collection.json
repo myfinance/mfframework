@@ -1,0 +1,521 @@
+{
+	"info": {
+		"_postman_id": "292203c4-43e5-4866-9a46-e29b781547e0",
+		"name": "Regressiontest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "add tenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"instrumentType\": \"TENANT\",\r\n  \"description\": \"TestTenant\",\r\n  \"active\": true,\r\n  \"treelastchanged\": \"2023-02-27T13:18:33.075Z\",\r\n  \"businesskey\": \"\",\r\n  \"parentBusinesskey\": \"\",\r\n  \"serviceAddress\": \"string\",\r\n  \"tenantBusinesskey\": \"\",\r\n  \"additionalMaps\": {\r\n  },\r\n  \"additionalProperties\": {\r\n  },\r\n  \"additionalLists\": {\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.73:30039/addinstrument",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"73"
+					],
+					"port": "30039",
+					"path": [
+						"addinstrument"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add giro",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"instrumentType\": \"GIRO\",\r\n  \"description\": \"TestGiro\",\r\n  \"active\": true,\r\n  \"treelastchanged\": \"2023-02-27T13:18:33.075Z\",\r\n  \"businesskey\": \"\",\r\n  \"parentBusinesskey\": \"accPf_TestTenant@8\",\r\n  \"serviceAddress\": \"string\",\r\n  \"tenantBusinesskey\": \"\",\r\n  \"additionalMaps\": {\r\n  },\r\n  \"additionalProperties\": {\r\n  },\r\n  \"additionalLists\": {\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.73:30039/addinstrument",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"73"
+					],
+					"port": "30039",
+					"path": [
+						"addinstrument"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add budget",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"instrumentType\": \"BUDGET\",\r\n  \"description\": \"TestBudget\",\r\n  \"active\": true,\r\n  \"treelastchanged\": \"2023-02-27T13:18:33.075Z\",\r\n  \"businesskey\": \"\",\r\n  \"parentBusinesskey\": \"bgtGrp_bgtPf_TestTenant@10\",\r\n  \"serviceAddress\": \"string\",\r\n  \"tenantBusinesskey\": \"\",\r\n  \"additionalMaps\": {\r\n  },\r\n  \"additionalProperties\": {\r\n  },\r\n  \"additionalLists\": {\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.73:30039/addinstrument",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"73"
+					],
+					"port": "30039",
+					"path": [
+						"addinstrument"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add Currency",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"instrumentType\": \"CURRENCY\",\r\n  \"description\": \"test currency\",\r\n  \"active\": true,\r\n  \"treelastchanged\": \"2023-02-27T13:18:33.075Z\",\r\n  \"businesskey\": \"\",\r\n  \"parentBusinesskey\": \"\",\r\n  \"serviceAddress\": \"string\",\r\n  \"tenantBusinesskey\": \"\",\r\n  \"additionalMaps\": {\r\n  },\r\n  \"additionalProperties\": {\r\n    \"CURRENCYCODE\": \"USD\"\r\n  },\r\n  \"additionalLists\": {\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.73:30039/addinstrument",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"73"
+					],
+					"port": "30039",
+					"path": [
+						"addinstrument"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add Equity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"instrumentType\": \"EQUITY\",\r\n  \"description\": \"TestEquity\",\r\n  \"active\": true,\r\n  \"treelastchanged\": \"2023-02-27T13:18:33.075Z\",\r\n  \"businesskey\": \"\",\r\n  \"parentBusinesskey\": \"\",\r\n  \"serviceAddress\": \"string\",\r\n  \"tenantBusinesskey\": \"\",\r\n  \"additionalMaps\": {\r\n    \"EQUITYSYMBOLS\": {\r\n      \"MYSYMBOL\": \"USD@13\"\r\n    }\r\n  },\r\n  \"additionalProperties\": {\r\n    \"ISIN\": \"TESTISIN0001\"\r\n  },\r\n  \"additionalLists\": {\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.73:30039/addinstrument",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"73"
+					],
+					"port": "30039",
+					"path": [
+						"addinstrument"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllInstruments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Number of istruments\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.eql(9);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.100.73:30039/instruments",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"73"
+					],
+					"port": "30039",
+					"path": [
+						"instruments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add transaction",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"transactionId\": \"\",\r\n  \"description\": \"testincome\",\r\n  \"transactiondate\": \"2023-01-01\",\r\n  \"lastchanged\": \"2023-03-03T09:40:24.241Z\",\r\n  \"trades\": [],\r\n  \"cashflows\": {\r\n    \"TestGiro@1\": 100,\r\n    \"TestBudget@5\": 100\r\n  },\r\n  \"transactionType\": \"INCOME\",\r\n  \"serviceAddress\": \"string\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.73:30039/saveTransaction",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"73"
+					],
+					"port": "30039",
+					"path": [
+						"saveTransaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "gettransactions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Number of istruments\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.eql(1);\r",
+							"});\r",
+							"pm.test(\"Number of istruments\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].description).to.eql(\"testincome\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.100.73:30039/transactions?startDate=2022-12-31&endDate=2023-01-02",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"73"
+					],
+					"port": "30039",
+					"path": [
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2022-12-31"
+						},
+						{
+							"key": "endDate",
+							"value": "2023-01-02"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add recurrent transaction",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"recurrentTransactionId\": \"\",\r\n  \"serviceAddress\": \"string\",\r\n  \"firstInstrumentBusinessKey\": \"TestGiro@1\",\r\n  \"secondInstrumentBusinessKey\": \"TestBudget@5\",\r\n  \"recurrentFrequency\": \"MONTHLY\",\r\n  \"value\": 50,\r\n  \"nextTransactionDate\": \"2044-01-03\",\r\n  \"transactionType\": \"INCOME\",\r\n  \"description\": \"testrecurrentincome\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.73:30039/saveRecurrentTransaction",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"73"
+					],
+					"port": "30039",
+					"path": [
+						"saveRecurrentTransaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRecurrentTransactions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Number of istruments\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.eql(1);\r",
+							"});\r",
+							"pm.test(\"Number of istruments\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].description).to.eql(\"testrecurrentincome\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.100.73:30039/recurrenttransactions",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"73"
+					],
+					"port": "30039",
+					"path": [
+						"recurrenttransactions"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2022-12-31",
+							"disabled": true
+						},
+						{
+							"key": "endDate",
+							"value": "2023-01-02",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getGiroValues",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Number of istruments\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.eql(1);\r",
+							"});\r",
+							"pm.test(\"Number of istruments\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].description).to.eql(\"testrecurrentincome\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.100.73:30039/getvaluecurve?businesskey=TestGiro@1&startDate=2023-01-01&endDate=2023-01-04",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"73"
+					],
+					"port": "30039",
+					"path": [
+						"getvaluecurve"
+					],
+					"query": [
+						{
+							"key": "businesskey",
+							"value": "TestGiro@1"
+						},
+						{
+							"key": "startDate",
+							"value": "2023-01-01"
+						},
+						{
+							"key": "endDate",
+							"value": "2023-01-04"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
