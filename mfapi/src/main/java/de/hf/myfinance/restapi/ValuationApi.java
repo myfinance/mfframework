@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -36,8 +37,8 @@ public interface ValuationApi {
 					"${api.responseCodes.unprocessableEntity.description}")
 	})
 	@GetMapping(value = "/getvaluecurve", produces = "application/json")
-	Mono<ValueCurve> getValueCurve(@RequestParam String businesskey, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate);
+	Mono<ValueCurve> getValueCurve(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
 
 	@GetMapping(value = "/getvalue", produces = "application/json")
-	Mono<Double> getValue(@RequestParam String businesskey, @RequestParam LocalDate date);
+	Mono<Double> getValue(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
 }

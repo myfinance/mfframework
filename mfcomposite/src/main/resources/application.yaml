@@ -9,13 +9,13 @@ app:
     port: 7001
   mftransactions:
     host: localhost
-    port: 7003
+    port: 7002
   mfmarketdata:
     host: localhost
-    port: 7004
+    port: 7003
   mfvaluation:
     host: localhost
-    port: 7002
+    port: 7004
 
 springdoc:
   swagger-ui.path: /openapi/swagger-ui.html

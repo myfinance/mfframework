@@ -2,6 +2,7 @@ package de.hf.myfinance.restapi;
 
 import de.hf.myfinance.restmodel.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -75,7 +76,7 @@ public interface CompositeApi {
     Mono<String> processRecurrentTransaction();
 
     @GetMapping(value = "/transactions", produces = "application/json")
-    Flux<Transaction> listTransactions(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate);
+    Flux<Transaction> listTransactions(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
     @GetMapping(value = "/recurrenttransactions", produces = "application/json")
     Flux<RecurrentTransaction> listRecurrentTransactions();
 
@@ -97,8 +98,8 @@ public interface CompositeApi {
     /** Valuation: **/
 
     @GetMapping(value = "/getvaluecurve/{businesskey}", produces = "application/json")
-    Mono<ValueCurve> getValueCurve(@PathVariable String businesskey, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate);
+    Mono<ValueCurve> getValueCurve(@PathVariable String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
 
     @GetMapping(value = "/getvalue/{businesskey}", produces = "application/json")
-    Mono<Double> getValue(@PathVariable String businesskey, @RequestParam LocalDate date);
+    Mono<Double> getValue(@PathVariable String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
 }
