@@ -62,6 +62,7 @@
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
         <testcontainers.version>1.17.3</testcontainers.version>
         <springcloud.version>2021.0.4</springcloud.version>
+        <springshell.version>3.0.1</springshell.version>
     </properties>
     <dependencyManagement>
         <dependencies>
