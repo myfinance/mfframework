@@ -155,7 +155,7 @@ public class CompositeApiImpl implements CompositeApi {
     public Mono<String> processRecurrentTransaction() {
         return Mono.fromCallable(() -> {
 
-            sendMessage("processRecurrentTransaction-out-0",
+            sendMessage("processRecurrentTransactions-out-0",
                     new Event<>(START, "processRecurrentTransactions", null));
             return "process recurrent Transactions started:";
         }).subscribeOn(publishEventScheduler);
