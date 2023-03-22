@@ -44,10 +44,10 @@ spring.cloud.stream:
     destination: validateRecurrentTransactionRequest
     producer:
       required-groups: validateRecurrentTransactionRequestAuditGroup
-  bindings.processRecurrentTransaction-out-0:
-    destination: processRecurrentTransaction
+  bindings.processRecurrentTransactions-out-0:
+    destination: processRecurrentTransactions
     producer:
-      required-groups: processRecurrentTransactionAuditGroup
+      required-groups: processRecurrentTransactionsAuditGroup
   bindings.loadNewMarketData-out-0:
     destination: loadNewMarketData
     producer:

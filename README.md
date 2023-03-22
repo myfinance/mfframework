@@ -22,7 +22,7 @@ to install the application manually with helm install the complete bundle see re
 if Database is fresh: add via gui or api-Docs: currency EUR and USD
 then add equities for example DE0005140008 deutsche Bank
 US5949181045 Microsoft
-add symbols MSFT, DBK
+add symbols MSFT, DB
 start import prices
 
 #### SNAPSHOTS ####
