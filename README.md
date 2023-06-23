@@ -98,6 +98,14 @@ git log --oneline --graph --decorate
 
 ## Backend access ##
 
+### local development ###
+
+to create the envirnment on your local maschine install kubernetes (Docker desktop, minikube etc)
+Then run kubectl apply -f .\devenv_deploy.yaml
+install Studio 3T Free to query the mongodb
+
+### development with gitpod ###
+
 for the development of the frontend with the gitpod ide it is necessary to have a dev backend available. For this the backend will publish via ci after every commit at my server https://babcom.myds.me:30022/dac/rest.
 SSL usage is important or other wise no connection is allowed from an gitpod envirmonment.
 to create a certificate I've used my synology:
@@ -123,3 +131,5 @@ You have to publish the backend with https as well because an https frontend is 
 
 ##APIdoc
 see http://yourserviceurl/openapi/swagger-ui.html
+
+

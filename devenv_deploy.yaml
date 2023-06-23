@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mymongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mymongo
+  template:
+    metadata:
+      labels:
+        app: mymongo
+    spec:
+      containers:
+        - name: mymongo
+          image: "mongo:5.0"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: "vulkan"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mymongo
+spec:
+  #this defines which pod is going to be presented by this service
+  selector:
+    app: mymongo
+  ports:
+    - name: mymongo
+      port: 27017
+      nodePort: 30023
+  type: NodePort
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mfrabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mfrabbitmq
+  template:
+    metadata:
+      labels:
+        app: mfrabbitmq
+    spec:
+      containers:
+        - name: mfrabbitmq
+          image: rabbitmq:3.10.5-management
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: "user"
+            - name: RABBITMQ_DEFAULT_PASS
+              value: "vulkan"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mfrabbitmq
+spec:
+  #this defines which pod is going to be presented by this service
+  selector:
+    app: mfrabbitmq
+  ports:
+    - name: mfrabbitmq
+      port: 5672
+      nodePort: 30021
+    - name: mfrabbitmqadmin
+      port: 15672
+      nodePort: 30022
+  type: NodePort
