@@ -22,7 +22,7 @@ public interface CompositeApi {
     Instrument helloInstrumentService();
 
     @PostMapping(
-            value    = "/addinstrument",
+            value    = "/saveinstrument",
             consumes = "application/json",
             produces = "application/json")
     Mono<String> saveInstrument(@RequestBody Instrument instrument);

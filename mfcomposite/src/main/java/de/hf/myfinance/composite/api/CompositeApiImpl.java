@@ -79,7 +79,7 @@ public class CompositeApiImpl implements CompositeApi {
 
             sendMessage("validateInstrumentRequest-out-0",
                     new Event<>(CREATE, instrument.getBusinesskey(), instrument));
-            return "instrument saved:"+ instrument;
+            return "{\"success\": \"Tenant"+instrument.getDescription() +" saved\"}";
         }).subscribeOn(publishEventScheduler);
     }
 
