@@ -18,8 +18,8 @@
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-webflux-ui</artifactId>
-            <version>${springdoc.version}</version>
+            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+            <version>${openapistarter.version}</version>
         </dependency>
 
         <dependency>
