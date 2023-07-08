@@ -15,31 +15,31 @@ public interface CompositeApi {
 
     /** Instruments: **/
 
-    @GetMapping("/")
+    @GetMapping("/mf/index")
     String index();
 
-    @GetMapping("/helloInstrumentService")
+    @GetMapping("/mf/helloInstrumentService")
     Instrument helloInstrumentService();
 
     @PostMapping(
-            value    = "/saveinstrument",
+            value    = "/mf/saveinstrument",
             consumes = "application/json",
             produces = "application/json")
     Mono<String> saveInstrument(@RequestBody Instrument instrument);
 
-    @GetMapping(value = "/instruments", produces = "application/json")
+    @GetMapping(value = "/mf/instruments", produces = "application/json")
     Flux<Instrument> listInstruments();
 
-    @GetMapping(value = "/instrumentsfortenant", produces = "application/json")
+    @GetMapping(value = "/mf/instrumentsfortenant", produces = "application/json")
     Flux<Instrument> listInstrumentsForTenant(@RequestParam String tenantbusinesskey);
 
-    @GetMapping(value = "/activeinstrumentsfortenant", produces = "application/json")
+    @GetMapping(value = "/mf/activeinstrumentsfortenant", produces = "application/json")
     Flux<Instrument> listActiveInstrumentsForTenant(@RequestParam String tenantbusinesskey);
 
-    @GetMapping(value = "/instrumentsbytype", produces = "application/json")
+    @GetMapping(value = "/mf/instrumentsbytype", produces = "application/json")
     Flux<Instrument> listInstrumentsByType(@RequestParam String tenantbusinesskey, @RequestParam InstrumentType instrumentType);
 
-    @GetMapping(value = "/tenants", produces = "application/json")
+    @GetMapping(value = "/mf/tenants", produces = "application/json")
     Flux<Instrument> listTenants();
 
 
@@ -48,36 +48,36 @@ public interface CompositeApi {
     /** Transactions: **/
 
     @PostMapping(
-            value    = "/saveTransaction",
+            value    = "/mf/saveTransaction",
             consumes = "application/json",
             produces = "application/json")
     Mono<String>  saveTransaction(@RequestBody Transaction transaction);
     @DeleteMapping(
-            value    = "/delTransaction",
+            value    = "/mf/delTransaction",
             consumes = "application/json",
             produces = "application/json")
     Mono<String> delTransaction(@PathVariable String transactionId);
 
     @PostMapping(
-            value    = "/saveRecurrentTransaction",
+            value    = "/mf/saveRecurrentTransaction",
             consumes = "application/json",
             produces = "application/json")
     Mono<String> saveRecurrentTransaction(@RequestBody RecurrentTransaction transaction);
 
     @DeleteMapping(
-            value    = "/delrecurrenttransfer",
+            value    = "/mf/delrecurrenttransfer",
             consumes = "application/json",
             produces = "application/json")
     Mono<String> delRecurrentTransfer(@PathVariable String recurrentTransactionId);
 
     @PostMapping(
-            value    = "/processRecurrentTransaction",
+            value    = "/mf/processRecurrentTransaction",
             produces = "application/json")
     Mono<String> processRecurrentTransaction();
 
-    @GetMapping(value = "/transactions", produces = "application/json")
+    @GetMapping(value = "/mf/transactions", produces = "application/json")
     Flux<Transaction> listTransactions(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
-    @GetMapping(value = "/recurrenttransactions", produces = "application/json")
+    @GetMapping(value = "/mf/recurrenttransactions", produces = "application/json")
     Flux<RecurrentTransaction> listRecurrentTransactions();
 
 
@@ -86,20 +86,20 @@ public interface CompositeApi {
     /** MarketData: **/
 
     @PostMapping(
-            value    = "/loadNewMarketData",
+            value    = "/mf/loadNewMarketData",
             consumes = "application/json",
             produces = "application/json")
     Mono<String> loadNewMarketData();
 
-    @GetMapping(value = "/endOfDayPrices", produces = "application/json")
+    @GetMapping(value = "/mf/endOfDayPrices", produces = "application/json")
     Mono<EndOfDayPrices> getEndOfDayPrices(@RequestParam String businesskey);
 
 
     /** Valuation: **/
 
-    @GetMapping(value = "/getvaluecurve", produces = "application/json")
+    @GetMapping(value = "/mf/getvaluecurve", produces = "application/json")
     Mono<ValueCurve> getValueCurve(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
 
-    @GetMapping(value = "/getvalue", produces = "application/json")
+    @GetMapping(value = "/mf/getvalue", produces = "application/json")
     Mono<Double> getValue(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
 }
