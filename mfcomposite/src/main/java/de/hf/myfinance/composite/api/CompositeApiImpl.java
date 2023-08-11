@@ -21,6 +21,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 
+import java.security.Principal;
 import java.time.LocalDate;
 
 import static de.hf.myfinance.event.Event.Type.*;
@@ -57,6 +58,11 @@ public class CompositeApiImpl implements CompositeApi {
     @Override
     public String index() {
         return "Hello compositeservice version:"+apiVersion;
+    }
+
+    @Override
+    public Principal user(Principal user) {
+        return user;
     }
 
     /** Instruments: **/

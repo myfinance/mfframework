@@ -63,3 +63,11 @@ spring.rabbitmq:
   port: 30021
   username: user
   password: vulkan
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:30024/auth/realms/myfinance
+          jwk-set-uri: http://localhost:8083/auth/realms/myfinance/protocol/openid-connect/certs

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.security.Principal;
 import java.time.LocalDate;
 
 @Tag(name = "CompositeApi", description =
@@ -17,6 +18,10 @@ public interface CompositeApi {
 
     @GetMapping("/mf/index")
     String index();
+
+    @GetMapping("/user")
+    @ResponseBody
+    public Principal user(Principal user);
 
     @GetMapping("/mf/helloInstrumentService")
     Instrument helloInstrumentService();

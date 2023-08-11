@@ -82,3 +82,81 @@ spec:
       port: 15672
       nodePort: 30022
   type: NodePort
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: keycloakpvc
+spec:
+  storageClassName: keycloakstorage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: localkeycloakstorage
+spec:
+  storageClassName: keycloakstorage
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /mnt/data/keycloak
+    type: DirectoryOrCreate
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: quay.io/keycloak/keycloak:22.0.1
+          imagePullPolicy: IfNotPresent
+          args: ["start-dev"]
+          volumeMounts:
+            - name: keycloakdata
+              mountPath: /conf
+          env:
+            - name: KEYCLOAK_ADMIN
+              value: "admin"
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: "admin"
+      volumes:
+        - name: keycloakdata
+          persistentVolumeClaim:
+            claimName: keycloakpvc
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak
+spec:
+  #this defines which pod is going to be presented by this service
+  selector:
+    app: keycloak
+  ports:
+    - name: keycloak
+      port: 8080
+      nodePort: 30024
+  type: NodePort
