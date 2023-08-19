@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
@@ -21,7 +22,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
+    /*@Bean
     public MapReactiveUserDetailsService userDetailsService() {
         UserDetails user = User.withDefaultPasswordEncoder()
                 .username("user")
@@ -29,35 +30,48 @@ public class SecurityConfig {
                 .roles("USER")
                 .build();
         return new MapReactiveUserDetailsService(user);
-    }
+    }*/
 
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(
             ServerHttpSecurity http) {
 
-        http.cors(withDefaults())
+        http
+                //.cors(config->config.configurationSource(corsConfigurationSource()))
+                .cors(cors -> cors.disable())
                 .authorizeExchange((authorize) -> authorize
-                        .pathMatchers(HttpMethod.GET, "/mf/**").hasAuthority("SCOPE_read")
-                        .pathMatchers(HttpMethod.POST, "/mf/**").hasAuthority("SCOPE_write")
+                        //.pathMatchers(HttpMethod.GET, "/mf/**").hasAuthority("SCOPE_read")
+                        //.pathMatchers(HttpMethod.POST, "/mf/**").hasAuthority("SCOPE_write")
+                        // the browser makes a prerequest with options but with no Authorization header, so this has to be permitted
+                        .pathMatchers(HttpMethod.OPTIONS, "/mf/**").permitAll()
+                        //.pathMatchers(HttpMethod.GET, "/mf/**").permitAll()
                         .anyExchange().authenticated()
                 )
-                //.oauth2ResourceServer((resourceserver) -> resourceserver
-                //    .jwt(withDefaults())
-                //);
-                .httpBasic(withDefaults())
-                .formLogin(withDefaults());
+                .oauth2ResourceServer((resourceserver) -> resourceserver
+                    .jwt(withDefaults())
+                );
         return http.build();
+
     }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedHeader("Requestor-Type");
+        configuration.addExposedHeader("X-Get-Header");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+    @Bean
+    public CorsWebFilter corsWebFilter() {
+        return new CorsWebFilter(corsConfigurationSource());
+    }
+
 }
 
 

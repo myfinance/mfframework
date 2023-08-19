@@ -2,7 +2,7 @@ server.port: 7009
 server.host: localhost
 logging:
   level:
-    root: INFO
+    root: DEBUG
     de.hf.myfinance: DEBUG
 app:
   mfinstruments:
@@ -69,5 +69,5 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:30024/auth/realms/myfinance
-          jwk-set-uri: http://localhost:8083/auth/realms/myfinance/protocol/openid-connect/certs
+          issuer-uri: http://localhost:30024/realms/myfinance
+          jwk-set-uri: http://localhost:30024/realms/myfinance/protocol/openid-connect/certs
