@@ -12,7 +12,7 @@ in my case it ist my local nexus where I deploy all my artifacts.
 </mirror>
 ```
 
-### get started ###
+## get started ##
 
 start with repo mfinfra first
 
@@ -24,7 +24,19 @@ US5949181045 Microsoft
 add symbols MSFT, DB
 start import prices
 
-#### SNAPSHOTS ####
+### setup keycloak ###
+
+for each environment you have to setup keycloak initialy. 
+To do so you have to go to the admin-page and create the Realm myfinance
+Create all Users adn passwords
+Export config: kubectl exec -n mfdev --stdin kubectl exec -n mfdev --stdin --tty pod/keycloak-55c6f45f7d-7mtvt -- /bin/bash
+/opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm myfinance --users realm_file
+
+create client: mfclient (set valid redirecturl: http://localhost:4200/* and weborigins http://localhost:4200)
+
+## development ##
+
+### SNAPSHOTS ###
 
 We only use maven snapshot-versions for the local build not for the CI-Build, because each build generates a docker image and a helm chart.
 Both do not support Snapshots but have to distinguish the builds. So each CI-build needs a different number. 
@@ -35,7 +47,7 @@ If the dependency is developed by another developer, you will most of the time b
 
 
 
-#### format ####
+### format ###
 
 the project uses semantic versioning: https://semver.org/
 
@@ -46,7 +58,7 @@ major.minor.patch-alpha.CommitID.
 Release build has the same process but without pre-release version.
 e.g. major.minor.patch
 
-#### Branch strategy ####
+### Branch strategy ###
 
 We allways work on feature branches and merge them to the development-branch at the end, so that you can find at the dev-branch only completed features. 
 If you want to make a release you have to merge dev to master. So you can allways see which feature was developed in which release, what is in dev and what in test. 
@@ -96,15 +108,15 @@ for the deployment you have to change the app version in the helm-chart of the m
 
 git log --oneline --graph --decorate
 
-## Backend access ##
+### Backend access ###
 
-### local development ###
+#### local development ####
 
 to create the envirnment on your local maschine install kubernetes (Docker desktop, minikube etc)
 Then run kubectl apply -f .\devenv_deploy.yaml
 install Studio 3T Free to query the mongodb
 
-### development with gitpod ###
+#### development with gitpod ####
 
 for the development of the frontend with the gitpod ide it is necessary to have a dev backend available. For this the backend will publish via ci after every commit at my server https://babcom.myds.me:30022/dac/rest.
 SSL usage is important or other wise no connection is allowed from an gitpod envirmonment.
