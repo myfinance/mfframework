@@ -9,7 +9,7 @@
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.1</version>
+		<version>3.1.3</version>
 		<relativePath/> 
 	</parent>
 
@@ -40,10 +40,9 @@
         <jib.container-repo>192.168.100.73:31003/repository/mydockerrepo/</jib.container-repo>
         <jib.container-name>holgerfischer/myfinance-mfcomposite:</jib.container-name>
 
-        <springdoc.version>1.5.9</springdoc.version>
+        <springdoc.version>1.7.0</springdoc.version>
+        <openapistarter.version>2.0.2</openapistarter.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
-        <postgresql.version>42.2.2</postgresql.version>
-        <h2.version>1.4.200</h2.version>
         <!--list helper-->
         <guava.version>31.0.1-jre</guava.version>
         <!--json handling-->
@@ -61,7 +60,7 @@
         <compiler-plugin.version>3.9.0</compiler-plugin.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
         <testcontainers.version>1.17.3</testcontainers.version>
-        <springcloud.version>2021.0.4</springcloud.version>
+        <springcloud.version>4.0.3</springcloud.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -72,12 +71,23 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
+            <!--<dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${springcloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+                <version>${springcloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-stream-test-binder</artifactId>
+                <version>${springcloud.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -210,6 +220,24 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>mac</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+                <dependencies>
+                    <!--needed for mac m-chips only-->
+                    <dependency>
+                        <groupId>io.netty</groupId>
+                        <artifactId>netty-resolver-dns-native-macos</artifactId>
+                        <classifier>osx-aarch_64</classifier>
+                    </dependency>
+                </dependencies>
+        </profile>
+
     </profiles>
 
 </project>

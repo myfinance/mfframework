@@ -1,21 +1,26 @@
-server.port: 7009
+server.port: 30030
+server.host: localhost
+# in case you want to run rabbitMq and keycloak on a dev server and not on your local machine like the software componentens(MFcomposite, mfinstrument...)
+#env.host: ${server.host}
+env.host: 192.168.100.73
+openid.port: 30024
 logging:
   level:
     root: INFO
     de.hf.myfinance: DEBUG
 app:
   mfinstruments:
-    host: localhost
-    port: 7001
+    host: ${server.host}
+    port: 30031
   mftransactions:
-    host: localhost
-    port: 7002
+    host: ${server.host}
+    port: 30032
   mfmarketdata:
-    host: localhost
-    port: 7003
+    host: ${server.host}
+    port: 30033
   mfvaluation:
-    host: localhost
-    port: 7004
+    host: ${server.host}
+    port: 30034
 
 springdoc:
   swagger-ui.path: /openapi/swagger-ui.html
@@ -58,7 +63,15 @@ spring.cloud.stream:
       required-groups: recurrentTransactionApprovedAuditGroup
 
 spring.rabbitmq:
-  host: 192.168.100.73
+  host: ${env.host}
   port: 30021
   username: user
   password: vulkan
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://${env.host}:${openid.port}/realms/myfinance
+          jwk-set-uri: http://${env.host}:${openid.port}/realms/myfinance/protocol/openid-connect/certs

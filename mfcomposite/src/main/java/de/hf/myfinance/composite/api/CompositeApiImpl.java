@@ -21,7 +21,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 
+import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static de.hf.myfinance.event.Event.Type.*;
 
@@ -56,7 +58,12 @@ public class CompositeApiImpl implements CompositeApi {
     }
     @Override
     public String index() {
-        return "Hello compositeservice version:"+apiVersion;
+        return "{Hello compositeservice version:"+apiVersion + "}";
+    }
+
+    @Override
+    public Principal user(Principal user) {
+        return user;
     }
 
     /** Instruments: **/
@@ -105,6 +112,18 @@ public class CompositeApiImpl implements CompositeApi {
 
     @Override
     public Flux<Instrument> listTenants() {
+        /*var tenantlist = new ArrayList<Instrument>();
+        var instrument = new Instrument();
+        instrument.setActive(true);
+        instrument.setDescription("test1");
+        instrument.setInstrumentType(InstrumentType.TENANT);
+        tenantlist.add(instrument);
+        var instrument2 = new Instrument();
+        instrument2.setActive(true);
+        instrument2.setDescription("test2");
+        instrument2.setInstrumentType(InstrumentType.TENANT);
+        tenantlist.add(instrument2);
+        return Mono.just(tenantlist).flatMapMany(Flux::fromIterable);*/
         return instrumentClient.listTenants();
     }
 
