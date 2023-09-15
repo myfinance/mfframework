@@ -112,7 +112,7 @@ public class CompositeApiImpl implements CompositeApi {
 
     @Override
     public Flux<Instrument> listTenants() {
-        var tenantlist = new ArrayList<Instrument>();
+        /*var tenantlist = new ArrayList<Instrument>();
         var instrument = new Instrument();
         instrument.setActive(true);
         instrument.setDescription("test1");
@@ -123,8 +123,8 @@ public class CompositeApiImpl implements CompositeApi {
         instrument2.setDescription("test2");
         instrument2.setInstrumentType(InstrumentType.TENANT);
         tenantlist.add(instrument2);
-        return Mono.just(tenantlist).flatMapMany(Flux::fromIterable);
-        //return instrumentClient.listTenants();
+        return Mono.just(tenantlist).flatMapMany(Flux::fromIterable);*/
+        return instrumentClient.listTenants();
     }
 
 
