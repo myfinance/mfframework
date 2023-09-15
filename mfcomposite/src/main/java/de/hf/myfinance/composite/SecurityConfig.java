@@ -40,7 +40,7 @@ public class SecurityConfig {
                 //.cors(config->config.configurationSource(corsConfigurationSource()))
                 .cors(cors -> cors.disable())
                 .authorizeExchange((authorize) -> authorize
-                        //.pathMatchers(HttpMethod.GET, "/mf/**").hasAuthority("SCOPE_read")
+                        //.pathMatchers(HttpMethod.GET, "/mf/**").hasRole("SCOPE_read")
                         //.pathMatchers(HttpMethod.POST, "/mf/**").hasAuthority("SCOPE_write")
                         // the browser makes a prerequest with options but with no Authorization header, so this has to be permitted
                         .pathMatchers(HttpMethod.OPTIONS, "/mf/**").permitAll()
@@ -57,7 +57,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.addAllowedHeader("*");
         configuration.addAllowedHeader("Requestor-Type");
