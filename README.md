@@ -88,7 +88,6 @@ merge to dev:
 do that via github frontend and create and merge a pullrequest
 delete featurebranch: git branch -d  featurename
 
-
 make a release:
 git checkout dev
 //change and commit the version in the version.txt to major_minor_micro - do it in the dev branch to avoid mergeconflicts
