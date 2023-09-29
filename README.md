@@ -146,7 +146,6 @@ You have to publish the backend with https as well because an https frontend is 
 ##APIdoc
 see http://yourserviceurl/openapi/swagger-ui.html
 
-
 #test api request with oauth2
 
 request the token:
