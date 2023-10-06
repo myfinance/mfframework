@@ -112,7 +112,6 @@ git log --oneline --graph --decorate
 
 ### Backend access ###
 
-
 #### local development ####
 
 to create the envirnment on your local maschine install kubernetes (Docker desktop, minikube etc)
