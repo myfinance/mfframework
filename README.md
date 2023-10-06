@@ -29,12 +29,13 @@ start import prices
 for each environment you have to setup keycloak initialy. 
 To do so you have to go to the admin-page and create the Realm myfinance
 Create all Users and passwords
+create client: mfclient (set valid redirecturl: http://localhost:4200/* and weborigins http://localhost:4200)
 realm settings - sessions: set SSO Session idle to 5h
 realm settings - tokens: set access token lifespan to 4h
-Export config: kubectl exec -n mfdev --stdin kubectl exec -n mfdev --stdin --tty pod/keycloak-55c6f45f7d-7mtvt -- /bin/bash
+Export config: kubectl exec -n mfdev --stdin --tty pod/keycloak-55c6f45f7d-7mtvt -- /bin/bash
 /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm myfinance --users realm_file
 
-create client: mfclient (set valid redirecturl: http://localhost:4200/* and weborigins http://localhost:4200)
+
 
 ## development ##
 
