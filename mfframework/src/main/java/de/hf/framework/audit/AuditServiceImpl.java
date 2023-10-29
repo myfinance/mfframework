@@ -10,6 +10,11 @@ import reactor.core.publisher.Mono;
 @Component
 public class AuditServiceImpl implements AuditService {
     private static final Logger LOG = LoggerFactory.getLogger(AuditServiceImpl.class);
+    PublishLogEventHandler eventHandler;
+
+    public AuditServiceImpl(PublishLogEventHandler eventHandler) {
+        this.eventHandler = eventHandler;
+    }
 
     @Override
     public void saveMessage(String message, Severity severity, String messagetype, String user) {
@@ -24,6 +29,7 @@ public class AuditServiceImpl implements AuditService {
             case WARN -> LOG.warn(combineMsg);
             case ERROR -> LOG.error(combineMsg);
         }
+        eventHandler.sendPublishLogEvent(message,severity.toString());
     }
 
     @Override
