@@ -3,7 +3,6 @@ package de.hf.framework.audit;
 import de.hf.framework.exceptions.MFException;
 import de.hf.framework.exceptions.MsgKey;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.slf4j.Logger;
@@ -53,8 +52,12 @@ public class AuditServiceImpl implements AuditService {
 
     @Override
     public Mono<Object> handleMonoError(String message, String messagetype, MsgKey msgKey) {
-        saveMessage(message, Severity.ERROR, messagetype, "NA");
-        return Mono.error(new MFException(msgKey, message));
+        return Mono.fromCallable(() -> logAndCreateException(message, messagetype, "NA")).flatMap(e->Mono.error(new MFException(msgKey, message)));
+    }
+    
+    private String logAndCreateException(String message, String messagetype, String user){
+        saveMessage(message, Severity.ERROR, messagetype, user);
+        return "";
     }
 
     private void log4jMsg(String message, Severity severity, String messagetype, String user) {
