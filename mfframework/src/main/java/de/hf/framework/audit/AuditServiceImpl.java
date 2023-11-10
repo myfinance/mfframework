@@ -2,6 +2,10 @@ package de.hf.framework.audit;
 
 import de.hf.framework.exceptions.MFException;
 import de.hf.framework.exceptions.MsgKey;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -66,7 +70,7 @@ public class AuditServiceImpl implements AuditService {
 
     private void publishLogToWebSocket(AuditType auditType, String message, String user){
         if(!auditType.equals(AuditType.DEBUG)) {
-            eventHandler.sendPublishLogEvent(user+":"+message, auditType.name() );
+            eventHandler.sendPublishLogEvent(LocalDateTime.now()+" : "+message+" by user " +user, auditType.name() );
         }
     }
 }
