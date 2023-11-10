@@ -91,7 +91,7 @@ delete featurebranch: git branch -d  featurename
 
 make a release:
 git checkout dev
-//change and commit the version in the version.txt to major_minor_micro - do it in the dev branch to avoid mergeconflicts
+//change and commit the version in the version.txt to major_minor_micro+build. - do it in the dev branch to avoid mergeconflicts
 git push origin dev
 git checkout master
 git merge dev
@@ -104,7 +104,7 @@ git checkout dev
 //change and commit the version in the jenkins-file to major_minor_micro-alpha.
 commit and push
 
-for the deployment you have to change the app version in the helm-chart of the mfdeployment repository and merge the dev branch to the prod-branch
+for the Prod-deployment you have to all versios form test to Prod-folder in the Deployment-Repo
 
 - on feature branches and on the master will be no ci-builds
 
