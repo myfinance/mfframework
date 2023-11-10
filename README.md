@@ -91,7 +91,7 @@ delete featurebranch: git branch -d  featurename
 
 make a release:
 git checkout dev
-//change and commit the version in the version.txt to major_minor_micro+build. - do it in the dev branch to avoid mergeconflicts
+//change and commit the version in the version.txt to major_minor_micro- (do it in the dev branch to avoid mergeconflicts)
 git push origin dev
 git checkout master
 git merge dev
