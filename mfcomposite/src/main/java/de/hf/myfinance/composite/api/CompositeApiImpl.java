@@ -23,7 +23,6 @@ import reactor.core.scheduler.Scheduler;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import static de.hf.myfinance.event.Event.Type.*;
 
