@@ -45,7 +45,7 @@ public class AuditServiceImpl implements AuditService {
     }
 
     @Override
-    public void throwException(String message, String messagetype, MsgKey msgKey) {
+    public void throwException(String message, String messagetype, MsgKey msgKey) throws MFException{
         saveMessage(message, Severity.ERROR, messagetype, "NA");
         throw new MFException(msgKey, message);
     }
