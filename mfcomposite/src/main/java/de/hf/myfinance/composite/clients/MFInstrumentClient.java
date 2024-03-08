@@ -79,6 +79,20 @@ public class MFInstrumentClient implements InstrumentApi {
     }
 
     @Override
+    public Flux<Instrument> listAccounts(String tenantbusinesskey) {
+        return webClient.get().uri(instrumentServiceUrl + "/accounts?tenantbusinesskey="
+        + tenantbusinesskey)
+        .retrieve().bodyToFlux(Instrument.class);
+    }
+
+    @Override
+    public Flux<Instrument> listBudgets(String tenantbusinesskey) {
+        return webClient.get().uri(instrumentServiceUrl + "/budgets?tenantbusinesskey="
+        + tenantbusinesskey)
+        .retrieve().bodyToFlux(Instrument.class);
+    }
+
+    @Override
     public Mono<String> saveInstrument(Instrument instrument) {
         return null;
     }

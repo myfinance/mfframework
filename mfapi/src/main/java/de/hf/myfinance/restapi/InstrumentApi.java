@@ -8,8 +8,6 @@ import de.hf.myfinance.restmodel.Instrument;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 @Tag(name = "InstrumentApi", description =
 		"${api.common.description}")
 public interface InstrumentApi {
@@ -34,6 +32,12 @@ public interface InstrumentApi {
 
 	@GetMapping(value = "/tenants", produces = "application/json")
 	Flux<Instrument> listTenants();
+
+	@GetMapping(value = "/accounts", produces = "application/json")
+	Flux<Instrument> listAccounts(@RequestParam String tenantbusinesskey);
+
+	@GetMapping(value = "/budgets", produces = "application/json")
+	Flux<Instrument> listBudgets(@RequestParam String tenantbusinesskey);
 
 	@PostMapping(
 			value    = "/addinstrument",
