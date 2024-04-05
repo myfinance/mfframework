@@ -1,18 +1,48 @@
 package de.hf.myfinance.restmodel;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
 
+/**
+ * Contains all the data to an Instrument, which is needed for ALL Instruments to fill the asset-Dashboard 
+ */
 public class InstrumentDetails {
     private String businesskey;
-    private InstrumentType instrumentType;
     private String description;
-    private Double value;
-    private LocalDate valueDiffDate;
-    private Double valueChange;
+    private double value;
+    private double valueChange;
     private LiquidityType liquiditytype;
-    private Map<String, Double> additionalValues;
-    private List<Cashflow> expensesLastMonth;
-    private List<Cashflow> incomeLastMonth;
+
+    public String getBusinesskey() {
+        return businesskey;
+    }
+    public void setBusinesskey(String businesskey) {
+        this.businesskey = businesskey;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getValue() {
+        return value;
+    }
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public double getValueChange() {
+        return valueChange;
+    }
+    public void setValueChange(double valueChange) {
+        this.valueChange = valueChange;
+    }
+
+    public LiquidityType getLiquiditytype() {
+        return liquiditytype;
+    }
+    public void setLiquiditytype(LiquidityType liquiditytype) {
+        this.liquiditytype = liquiditytype;
+    }
 }

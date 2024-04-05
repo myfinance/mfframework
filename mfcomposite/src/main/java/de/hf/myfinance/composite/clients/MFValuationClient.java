@@ -4,18 +4,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hf.framework.exceptions.MFException;
 import de.hf.myfinance.exception.MFMsgKey;
 import de.hf.myfinance.restapi.ValuationApi;
-import de.hf.myfinance.restmodel.EndOfDayPrices;
 import de.hf.myfinance.restmodel.ValueCurve;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class MFValuationClient implements ValuationApi {
@@ -55,6 +58,20 @@ public class MFValuationClient implements ValuationApi {
     @Override
     public String index() {
         throw new MFException(MFMsgKey.UNSPECIFIED, "not implemented yet");
+    }
+
+    @Override
+    public Flux<Map<String,Double>> getValues(List<String> businesskey, LocalDate date) {
+        StringBuilder uriBuilder = new StringBuilder(valuationServiceUrl + "/getvalues?");
+        businesskey.forEach(b -> uriBuilder.append("businesskey=").append(b).append("&"));
+        uriBuilder.append("date=").append(date);
+        String uri = uriBuilder.toString();
+        if(uri!=null) {
+            return webClient.get()
+                .uri(uri)
+                .retrieve().bodyToFlux(new ParameterizedTypeReference<Map<String, Double>>() {});
+        } 
+        throw new MFException(MFMsgKey.ILLEGAL_ARGUMENTS, "the uri ist not allowed to be null");  
     }
 
 

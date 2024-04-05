@@ -9,6 +9,7 @@ import reactor.core.publisher.Mono;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Tag(name = "CompositeApi", description =
         "${api.common.description}")
@@ -113,4 +114,14 @@ public interface CompositeApi {
 
     @GetMapping(value = "/mf/getvalue", produces = "application/json")
     Mono<Double> getValue(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
+
+    @GetMapping(value = "/mf/listdetailedaccounts", produces = "application/json")
+    Mono<List<InstrumentDetails>> listDetailedAccounts(@RequestParam String tenantbusinesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate duedate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate referencedate);
+
+    @GetMapping(value = "/mf/listdetailedbudgets", produces = "application/json")
+    Mono<List<InstrumentDetails>> listDetailedBudets(@RequestParam String tenantbusinesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate duedate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate referencedate);
+
+    @GetMapping(value = "/mf/instrumentdetails", produces = "application/json")
+    Mono<InstrumentFullDetails> getInstrumentDetails(@RequestParam String businesskey);
+
 }

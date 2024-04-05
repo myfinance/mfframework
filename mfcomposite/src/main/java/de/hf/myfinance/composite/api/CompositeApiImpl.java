@@ -23,6 +23,8 @@ import reactor.core.scheduler.Scheduler;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static de.hf.myfinance.event.Event.Type.*;
 
@@ -229,6 +231,38 @@ public class CompositeApiImpl implements CompositeApi {
         return valuationClient.getValue(businesskey, date);
     }
 
+    @Override
+    public Mono<List<InstrumentDetails>> listDetailedAccounts(String tenantbusinesskey, LocalDate duedate,
+            LocalDate referencedate) {
+        return listAccounts(tenantbusinesskey).collectList().flatMap(a->collectDetails(a,duedate,referencedate));
+    }
+    @Override
+    public Mono<List<InstrumentDetails>> listDetailedBudets(String tenantbusinesskey, LocalDate duedate,
+            LocalDate referencedate) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'listDetailedBudets'");
+    }
+
+    private Mono<List<InstrumentDetails>> collectDetails(List<Instrument> instruments, LocalDate duedate,
+    LocalDate referencedate) {
+        var instrumentDetailList = new ArrayList<InstrumentDetails>();
+        instruments.forEach(i->{
+            var instrumentDetails = new InstrumentDetails();
+            instrumentDetails.setBusinesskey(i.getBusinesskey());
+            instrumentDetails.setDescription(i.getDescription());
+
+            //instrumentDetails.se
+            //instrumentDetailList.add(instrumentDetails);
+        });
+        return Mono.just(instrumentDetailList);
+    }
+
+    @Override
+    public Mono<InstrumentFullDetails> getInstrumentDetails(String businesskey) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getInstrumentDetails'");
+    }
+
     /**
      * Since the sendMessage() uses blocking code, when calling streamBridge,
      * it has to be executed on a thread provided by a dedicated scheduler, publishEventScheduler
@@ -239,4 +273,5 @@ public class CompositeApiImpl implements CompositeApi {
                 .build();
         streamBridge.send(bindingName, message);
     }
+
 }

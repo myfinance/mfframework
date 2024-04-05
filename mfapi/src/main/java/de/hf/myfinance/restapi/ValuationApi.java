@@ -7,12 +7,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestParam;
+
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 @Tag(name = "ValuationApi", description =
 		"${api.common.description}")
@@ -41,4 +44,7 @@ public interface ValuationApi {
 
 	@GetMapping(value = "/getvalue", produces = "application/json")
 	Mono<Double> getValue(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
+
+	@GetMapping(value = "/getvalues", produces = "application/json")
+	Flux<Map<String,Double>> getValues(@RequestParam List<String> businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
 }

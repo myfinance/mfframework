@@ -52,7 +52,7 @@ public class Instrument {
         this.businesskey = businesskey;
         this.description = description;
         this.instrumentType = instrumentType;
-        this.active = active;
+        this.active = isactive;
         this.treelastchanged = treelastchanged;
     }
 
