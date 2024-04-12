@@ -252,6 +252,7 @@ public class CompositeApiImpl implements CompositeApi {
             var instrumentDetails = new InstrumentDetails();
             instrumentDetails.setBusinesskey(i.getBusinesskey());
             instrumentDetails.setDescription(i.getDescription());
+            instrumentDetails.setLiquiditytype(i.getLiquidityType());
             businesskeys.add(i.getBusinesskey());
             instrumentDetailMap.put(i.getBusinesskey(), instrumentDetails);
         });
