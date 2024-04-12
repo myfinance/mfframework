@@ -24,6 +24,7 @@ import reactor.core.scheduler.Scheduler;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static de.hf.myfinance.event.Event.Type.*;
@@ -239,22 +240,44 @@ public class CompositeApiImpl implements CompositeApi {
     @Override
     public Mono<List<InstrumentDetails>> listDetailedBudets(String tenantbusinesskey, LocalDate duedate,
             LocalDate referencedate) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listDetailedBudets'");
+
+        return listBudgets(tenantbusinesskey).collectList().flatMap(a->collectDetails(a,duedate,referencedate));
     }
 
     private Mono<List<InstrumentDetails>> collectDetails(List<Instrument> instruments, LocalDate duedate,
     LocalDate referencedate) {
-        var instrumentDetailList = new ArrayList<InstrumentDetails>();
+        var businesskeys = new ArrayList<String>();
+        var instrumentDetailMap = new HashMap<String, InstrumentDetails>();
         instruments.forEach(i->{
             var instrumentDetails = new InstrumentDetails();
             instrumentDetails.setBusinesskey(i.getBusinesskey());
             instrumentDetails.setDescription(i.getDescription());
-
-            //instrumentDetails.se
-            //instrumentDetailList.add(instrumentDetails);
+            businesskeys.add(i.getBusinesskey());
+            instrumentDetailMap.put(i.getBusinesskey(), instrumentDetails);
         });
-        return Mono.just(instrumentDetailList);
+
+        //request the values for alle instruments,collect the flux and reduce it to one mono
+        Mono<HashMap<String, Double>> valuesForDueday = valuationClient.getValues(businesskeys, duedate)
+        .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
+            accumulator.putAll(next);
+            return accumulator; // Return the modified accumulator
+        });
+        Mono<HashMap<String, Double>> valuesForReferencedate = valuationClient.getValues(businesskeys, referencedate)
+        .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
+            accumulator.putAll(next);
+            return accumulator; // Return the modified accumulator
+        });
+
+
+        return Mono.zip(valuesForDueday, valuesForReferencedate).map(tuple ->{
+            tuple.getT1().keySet().forEach(x->{
+                var details = instrumentDetailMap.get(x);
+                details.setValue(tuple.getT1().get(x));
+                details.setReferenceValue(tuple.getT2().get(x));
+                instrumentDetailMap.put(x, details);
+            });
+            return new ArrayList<>(instrumentDetailMap.values()); 
+        });
     }
 
     @Override

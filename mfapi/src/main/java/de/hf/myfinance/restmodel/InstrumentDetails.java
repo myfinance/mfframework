@@ -8,7 +8,7 @@ public class InstrumentDetails {
     private String businesskey;
     private String description;
     private double value;
-    private double valueChange;
+    private double referenceValue;
     private LiquidityType liquiditytype;
 
     public String getBusinesskey() {
@@ -32,12 +32,13 @@ public class InstrumentDetails {
         this.value = value;
     }
 
-    public double getValueChange() {
-        return valueChange;
+    public double getReferenceValue() {
+        return referenceValue;
     }
-    public void setValueChange(double valueChange) {
-        this.valueChange = valueChange;
+    public void setReferenceValue(double referenceValue) {
+        this.referenceValue = referenceValue;
     }
+
 
     public LiquidityType getLiquiditytype() {
         return liquiditytype;

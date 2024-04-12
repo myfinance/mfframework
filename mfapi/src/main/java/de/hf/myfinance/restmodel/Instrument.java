@@ -16,6 +16,7 @@ public class Instrument {
     private String parentBusinesskey;
     private String serviceAddress;
     private String tenantBusinesskey;
+    private LiquidityType liquidityType;
 
     private Map<AdditionalMaps, Map<String, String>> additionalMaps = new HashMap<>();
     private Map<AdditionalProperties, String> additionalProperties = new HashMap<>();
@@ -138,6 +139,13 @@ public class Instrument {
     }
     public void setTenantBusinesskey(String tenantBusinesskey) {
         this.tenantBusinesskey = tenantBusinesskey;
+    }
+
+    public LiquidityType getLiquidityType() {
+        return liquidityType;
+    }
+    public void setLiquidityType(LiquidityType liquidityType) {
+        this.liquidityType = liquidityType;
     }
 
 }
