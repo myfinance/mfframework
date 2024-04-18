@@ -122,6 +122,6 @@ public interface CompositeApi {
     Mono<List<InstrumentDetails>> listDetailedBudets(@RequestParam String tenantbusinesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate duedate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate referencedate);
 
     @GetMapping(value = "/mf/instrumentdetails", produces = "application/json")
-    Mono<InstrumentFullDetails> getInstrumentDetails(@RequestParam String businesskey);
+    Mono<InstrumentFullDetails> getInstrumentDetails(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate duedate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate referencedate);
 
 }

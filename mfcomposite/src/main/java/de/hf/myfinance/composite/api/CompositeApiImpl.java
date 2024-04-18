@@ -282,7 +282,7 @@ public class CompositeApiImpl implements CompositeApi {
     }
 
     @Override
-    public Mono<InstrumentFullDetails> getInstrumentDetails(String businesskey) {
+    public Mono<InstrumentFullDetails> getInstrumentDetails(String businesskey, LocalDate duedate, LocalDate referencedate) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getInstrumentDetails'");
     }

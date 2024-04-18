@@ -1,5 +1,6 @@
 package de.hf.myfinance.restmodel;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -9,17 +10,25 @@ import java.util.Map;
 public class InstrumentFullDetails {
     
     private String businesskey;
+    private String description;
     private InstrumentType instrumentType;
     private Map<String, Double> additionalValues;
-    private List<Cashflow> expensesLastMonth;
-    private List<Cashflow> incomeLastMonth;
-    private ValueCurve valueCurve;
+    private List<Transaction> expensesLastMonth;
+    private List<Transaction> incomeLastMonth;
+    private Map<LocalDate, Double> valueCurve;
 
     public String getBusinesskey() {
         return businesskey;
     }
     public void setBusinesskey(String businesskey) {
         this.businesskey = businesskey;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public InstrumentType getInstrumentType() {
@@ -36,24 +45,24 @@ public class InstrumentFullDetails {
         this.additionalValues = additionalValues;
     }
 
-    public List<Cashflow> getExpensesLastMonth() {
+    public List<Transaction> getExpensesLastMonth() {
         return expensesLastMonth;
     }
-    public void setExpensesLastMonth(List<Cashflow> expensesLastMonth) {
+    public void setExpensesLastMonth(List<Transaction> expensesLastMonth) {
         this.expensesLastMonth = expensesLastMonth;
     }
 
-    public List<Cashflow> getIncomeLastMonth() {
+    public List<Transaction> getIncomeLastMonth() {
         return incomeLastMonth;
     }
-    public void setIncomeLastMonth(List<Cashflow> incomeLastMonth) {
+    public void setIncomeLastMonth(List<Transaction> incomeLastMonth) {
         this.incomeLastMonth = incomeLastMonth;
     }
 
-    public ValueCurve getValueCurve() {
+    public Map<LocalDate, Double> getValueCurve() {
         return valueCurve;
     }
-    public void setValueCurve(ValueCurve valueCurve) {
+    public void setValueCurve(Map<LocalDate, Double> valueCurve) {
         this.valueCurve = valueCurve;
     }
 }
