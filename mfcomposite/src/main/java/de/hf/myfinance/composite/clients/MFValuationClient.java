@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -62,17 +63,24 @@ public class MFValuationClient implements ValuationApi {
 
     @Override
     public Flux<Map<String,Double>> getValues(List<String> businesskey, LocalDate date) {
-        StringBuilder uriBuilder = new StringBuilder(valuationServiceUrl + "/getvalues?");
-        businesskey.forEach(b -> uriBuilder.append("businesskey=").append(b).append("&"));
+        StringBuilder uriBuilder = new StringBuilder("/getvalues?");
+        businesskey.forEach(b -> uriBuilder.append("businesskeys=").append(b).append("&"));
         uriBuilder.append("date=").append(date);
         String uri = uriBuilder.toString();
         if(uri!=null) {
             return webClient.get()
-                .uri(uri)
+                .uri(valuationServiceUrl + uri)
                 .retrieve().bodyToFlux(new ParameterizedTypeReference<Map<String, Double>>() {});
         } 
         throw new MFException(MFMsgKey.ILLEGAL_ARGUMENTS, "the uri ist not allowed to be null");  
     }
 
+    private String encodeUriParameters( String parameterName, String parameterValue){
 
+        return UriComponentsBuilder.fromPath("")
+                                        .queryParam(parameterName, parameterValue)
+                                        .build()
+                                        .encode()
+                                        .toUriString();
+    }
 }
