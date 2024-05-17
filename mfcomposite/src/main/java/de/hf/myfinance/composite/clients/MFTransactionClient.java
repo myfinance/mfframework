@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hf.framework.exceptions.MFException;
 import de.hf.myfinance.exception.MFMsgKey;
 import de.hf.myfinance.restapi.TransactionApi;
+import de.hf.myfinance.restmodel.Cashflow;
 import de.hf.myfinance.restmodel.RecurrentTransaction;
 import de.hf.myfinance.restmodel.Transaction;
 import org.slf4j.Logger;
@@ -84,15 +85,15 @@ public class MFTransactionClient implements TransactionApi {
     }
 
     @Override
-    public Flux<Transaction> listTransactions4Instrument(String businesskey, LocalDate startDate, LocalDate endDate) {
-        return webClient.get().uri(transactionServiceUrl + "/transactions4instrument?businesskeybusinesskey="+businesskey+"&startDate="+startDate+"&endDate="+endDate)
-                .retrieve().bodyToFlux(Transaction.class);
+    public Flux<Cashflow> listCashflows4Instrument(String businesskey, LocalDate startDate, LocalDate endDate) {
+        return webClient.get().uri(transactionServiceUrl + "/cashflows4instrument?businesskeybusinesskey="+businesskey+"&startDate="+startDate+"&endDate="+endDate)
+                .retrieve().bodyToFlux(Cashflow.class);
     }
 
     @Override
-    public Mono<Map<String, Double>> getTransactionProfile4Instrument(String businesskey) {
-        return webClient.get().uri(transactionServiceUrl + "/transactionProfile4instrument?businesskeybusinesskey="+businesskey)
-                .retrieve().bodyToMono(new ParameterizedTypeReference<Map<String, Double>>() {});
+    public Mono<Double> getAvgExpensesOfLastYear(String businesskey) {
+        return webClient.get().uri(transactionServiceUrl + "/avgexpensesoflastyear?businesskeybusinesskey="+businesskey)
+                .retrieve().bodyToMono(Double.class);
     }
 
 

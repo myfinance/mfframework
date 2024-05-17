@@ -1,5 +1,6 @@
 package de.hf.myfinance.restapi;
 
+import de.hf.myfinance.restmodel.Cashflow;
 import de.hf.myfinance.restmodel.RecurrentTransaction;
 import de.hf.myfinance.restmodel.Transaction;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -53,11 +54,11 @@ public interface TransactionApi {
     @GetMapping(value = "/transactions", produces = "application/json")
     Flux<Transaction> listTransactions(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
 
-    @GetMapping(value = "/transactions4instrument", produces = "application/json")
-    Flux<Transaction> listTransactions4Instrument(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
+    @GetMapping(value = "/cashflows4instrument", produces = "application/json")
+    Flux<Cashflow> listCashflows4Instrument(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
 
-    @GetMapping(value = "/transactionProfile4instrument", produces = "application/json")
-    Mono<Map<String, Double>> getTransactionProfile4Instrument(@RequestParam String businesskey);
+    @GetMapping(value = "/avgexpensesoflastyear", produces = "application/json")
+    Mono<Double> getAvgExpensesOfLastYear(@RequestParam String businesskey);
 
     @GetMapping(value = "/recurrenttransactions", produces = "application/json")
     Flux<RecurrentTransaction> listRecurrentTransactions();
