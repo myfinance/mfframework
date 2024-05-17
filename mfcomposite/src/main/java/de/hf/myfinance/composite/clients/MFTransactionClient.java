@@ -4,13 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hf.framework.exceptions.MFException;
 import de.hf.myfinance.exception.MFMsgKey;
 import de.hf.myfinance.restapi.TransactionApi;
-import de.hf.myfinance.restmodel.Instrument;
 import de.hf.myfinance.restmodel.RecurrentTransaction;
 import de.hf.myfinance.restmodel.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,6 +18,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 @Component
 public class MFTransactionClient implements TransactionApi {
@@ -80,6 +81,18 @@ public class MFTransactionClient implements TransactionApi {
     @Override
     public Mono<String> delTransaction(String transactionId) {
         throw new MFException(MFMsgKey.UNSPECIFIED, "not implemented yet");
+    }
+
+    @Override
+    public Flux<Transaction> listTransactions4Instrument(String businesskey, LocalDate startDate, LocalDate endDate) {
+        return webClient.get().uri(transactionServiceUrl + "/transactions4instrument?businesskeybusinesskey="+businesskey+"&startDate="+startDate+"&endDate="+endDate)
+                .retrieve().bodyToFlux(Transaction.class);
+    }
+
+    @Override
+    public Mono<Map<String, Double>> getTransactionProfile4Instrument(String businesskey) {
+        return webClient.get().uri(transactionServiceUrl + "/transactionProfile4instrument?businesskeybusinesskey="+businesskey)
+                .retrieve().bodyToMono(new ParameterizedTypeReference<Map<String, Double>>() {});
     }
 
 

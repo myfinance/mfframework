@@ -282,9 +282,27 @@ public class CompositeApiImpl implements CompositeApi {
     }
 
     @Override
-    public Mono<InstrumentFullDetails> getInstrumentDetails(String businesskey, LocalDate duedate, LocalDate referencedate) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getInstrumentDetails'");
+    public Mono<InstrumentFullDetails> getInstrumentDetails(String businesskey, LocalDate duedate, LocalDate referencedate, LocalDate startTimeSeries, LocalDate endTimeSeries) {
+        return instrumentClient.getInstrument(businesskey).flatMap(i-> collectInstrumentFullDetails(i, duedate, referencedate, startTimeSeries, endTimeSeries));
+
+    }
+
+    private Mono<InstrumentFullDetails> collectInstrumentFullDetails(Instrument instrument, LocalDate duedate, LocalDate referencedate, LocalDate startTimeSeries, LocalDate endTimeSeries){
+        var valueDuedate = valuationClient.getValue(instrument.getBusinesskey(), duedate);
+        var valueReferencedate = valuationClient.getValue(instrument.getBusinesskey(), referencedate);
+        //transactionClient.listTransactions()
+
+        return Mono.zip(valueDuedate, valueReferencedate).map(tuple ->{
+            var fullDetails = new InstrumentFullDetails();
+            fullDetails.setBusinesskey(instrument.getBusinesskey());
+            fullDetails.setDescription(instrument.getDescription());
+            fullDetails.setInstrumentType(instrument.getInstrumentType());
+            fullDetails.addAdditionalValue("valueDuedate", tuple.getT1());
+            fullDetails.addAdditionalValue("valueReferencedate", tuple.getT2());
+            fullDetails.addAdditionalValue("valueChangeAbs", tuple.getT1()-tuple.getT2());
+            fullDetails.addAdditionalValue("valueChangeRel", ((tuple.getT1()/tuple.getT2())-1)*100);
+            return fullDetails; 
+        });
     }
 
     /**

@@ -9,6 +9,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 
 @Tag(name = "TransactionApi", description =
@@ -51,6 +52,12 @@ public interface TransactionApi {
 
     @GetMapping(value = "/transactions", produces = "application/json")
     Flux<Transaction> listTransactions(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
+
+    @GetMapping(value = "/transactions4instrument", produces = "application/json")
+    Flux<Transaction> listTransactions4Instrument(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
+
+    @GetMapping(value = "/transactionProfile4instrument", produces = "application/json")
+    Mono<Map<String, Double>> getTransactionProfile4Instrument(@RequestParam String businesskey);
 
     @GetMapping(value = "/recurrenttransactions", produces = "application/json")
     Flux<RecurrentTransaction> listRecurrentTransactions();

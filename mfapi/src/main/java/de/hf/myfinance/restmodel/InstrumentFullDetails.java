@@ -1,6 +1,7 @@
 package de.hf.myfinance.restmodel;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +44,12 @@ public class InstrumentFullDetails {
     }
     public void setAdditionalValues(Map<String, Double> additionalValues) {
         this.additionalValues = additionalValues;
+    }
+    public void addAdditionalValue(String key, Double value) {
+        if(this.additionalValues == null) {
+            this.additionalValues = new HashMap<String, Double>();
+        }
+        this.additionalValues.put(key, value);
     }
 
     public List<Transaction> getExpensesLastMonth() {
