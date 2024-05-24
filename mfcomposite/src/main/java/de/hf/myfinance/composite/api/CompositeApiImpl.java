@@ -26,6 +26,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static de.hf.myfinance.event.Event.Type.*;
 
@@ -282,12 +283,37 @@ public class CompositeApiImpl implements CompositeApi {
     }
 
     @Override
-    public Mono<InstrumentFullDetails> getInstrumentDetails(String businesskey, LocalDate duedate, LocalDate referencedate, LocalDate startTimeSeries, LocalDate endTimeSeries) {
-        return instrumentClient.getInstrument(businesskey).flatMap(i-> collectInstrumentFullDetails(i, duedate, referencedate, startTimeSeries, endTimeSeries));
+    public Mono<InstrumentFullDetails> getInstrumentDetails(String businesskey, LocalDate duedate, LocalDate referencedate, LocalDate startTimeSeries, LocalDate endTimeSeries, LocalDate firstCashflowDate, LocalDate lastCashflowDate) {
+        var instrumentFullDetails = instrumentClient.getInstrument(businesskey).flatMap(i-> collectInstrumentFullDetails(i, duedate, referencedate));
+        var valueCurve = valuationClient.getValueCurve(businesskey, startTimeSeries, endTimeSeries);
+        var avgExpensesOfLastYear = transactionClient.getAvgExpensesOfLastYear(businesskey);
+        var cashflows = transactionClient.listCashflows4Instrument(businesskey, firstCashflowDate, lastCashflowDate);
+
+        var result = Mono.zip(instrumentFullDetails, valueCurve).map(tuple ->{
+            var  details  = tuple.getT1();
+            details.setValueCurve(tuple.getT2().getValueCurve());
+            return details; 
+        }).zipWith(avgExpensesOfLastYear).map(tuple -> {
+            var  details  = tuple.getT1();
+            details.addAdditionalValue("avgExpensesOfLastYear", tuple.getT2());
+            return details; 
+        }).zipWith(cashflows.collectList()).map(tuple -> {
+            var  details  = tuple.getT1();
+            var expenses = tuple.getT2().stream().filter(c->c.getValue()<0).toList();
+            var incomes = tuple.getT2().stream().filter(c->c.getValue()>0).toList();
+            details.setExpensesInPeriod(expenses);
+            details.setIncomeInPeriod(incomes);
+            details.addAdditionalValue("sumOfIncome", incomes.stream().map(c->c.getValue()).reduce(0.0, Double::sum));
+            details.addAdditionalValue("sumOfExpense", expenses.stream().map(c->c.getValue()).reduce(0.0, Double::sum));
+            return details; 
+        });
+
+
+        return result;
 
     }
 
-    private Mono<InstrumentFullDetails> collectInstrumentFullDetails(Instrument instrument, LocalDate duedate, LocalDate referencedate, LocalDate startTimeSeries, LocalDate endTimeSeries){
+    private Mono<InstrumentFullDetails> collectInstrumentFullDetails(Instrument instrument, LocalDate duedate, LocalDate referencedate){
         var valueDuedate = valuationClient.getValue(instrument.getBusinesskey(), duedate);
         var valueReferencedate = valuationClient.getValue(instrument.getBusinesskey(), referencedate);
         //transactionClient.listTransactions()
@@ -304,6 +330,8 @@ public class CompositeApiImpl implements CompositeApi {
             return fullDetails; 
         });
     }
+
+
 
     /**
      * Since the sendMessage() uses blocking code, when calling streamBridge,

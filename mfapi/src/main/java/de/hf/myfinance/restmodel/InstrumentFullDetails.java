@@ -14,8 +14,8 @@ public class InstrumentFullDetails {
     private String description;
     private InstrumentType instrumentType;
     private Map<String, Double> additionalValues;
-    private List<Transaction> expensesLastMonth;
-    private List<Transaction> incomeLastMonth;
+    private List<Cashflow> expensesInPeriod;
+    private List<Cashflow> incomeInPeriod;
     private Map<LocalDate, Double> valueCurve;
 
     public String getBusinesskey() {
@@ -52,18 +52,18 @@ public class InstrumentFullDetails {
         this.additionalValues.put(key, value);
     }
 
-    public List<Transaction> getExpensesLastMonth() {
-        return expensesLastMonth;
+    public List<Cashflow> getExpensesInPeriod() {
+        return expensesInPeriod;
     }
-    public void setExpensesLastMonth(List<Transaction> expensesLastMonth) {
-        this.expensesLastMonth = expensesLastMonth;
+    public void setExpensesInPeriod(List<Cashflow> expensesInPeriod) {
+        this.expensesInPeriod = expensesInPeriod;
     }
 
-    public List<Transaction> getIncomeLastMonth() {
-        return incomeLastMonth;
+    public List<Cashflow> getIncomeInPeriod() {
+        return incomeInPeriod;
     }
-    public void setIncomeLastMonth(List<Transaction> incomeLastMonth) {
-        this.incomeLastMonth = incomeLastMonth;
+    public void setIncomeInPeriod(List<Cashflow> incomeInPeriod) {
+        this.incomeInPeriod = incomeInPeriod;
     }
 
     public Map<LocalDate, Double> getValueCurve() {
