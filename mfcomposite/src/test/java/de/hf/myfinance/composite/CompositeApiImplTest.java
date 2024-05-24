@@ -14,7 +14,6 @@ import de.hf.myfinance.composite.clients.MFValuationClient;
 import de.hf.myfinance.restmodel.Cashflow;
 import de.hf.myfinance.restmodel.Instrument;
 import de.hf.myfinance.restmodel.InstrumentDetails;
-import de.hf.myfinance.restmodel.InstrumentFullDetails;
 import de.hf.myfinance.restmodel.InstrumentType;
 import de.hf.myfinance.restmodel.ValueCurve;
 
@@ -30,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
