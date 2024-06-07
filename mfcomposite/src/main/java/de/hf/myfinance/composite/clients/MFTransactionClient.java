@@ -86,13 +86,13 @@ public class MFTransactionClient implements TransactionApi {
 
     @Override
     public Flux<Cashflow> listCashflows4Instrument(String businesskey, LocalDate startDate, LocalDate endDate) {
-        return webClient.get().uri(transactionServiceUrl + "/cashflows4instrument?businesskeybusinesskey="+businesskey+"&startDate="+startDate+"&endDate="+endDate)
+        return webClient.get().uri(transactionServiceUrl + "/cashflows4instrument?businesskey="+businesskey+"&startDate="+startDate+"&endDate="+endDate)
                 .retrieve().bodyToFlux(Cashflow.class);
     }
 
     @Override
     public Mono<Double> getAvgExpensesOfLastYear(String businesskey) {
-        return webClient.get().uri(transactionServiceUrl + "/avgexpensesoflastyear?businesskeybusinesskey="+businesskey)
+        return webClient.get().uri(transactionServiceUrl + "/avgexpensesoflastyear?businesskey="+businesskey)
                 .retrieve().bodyToMono(Double.class);
     }
 

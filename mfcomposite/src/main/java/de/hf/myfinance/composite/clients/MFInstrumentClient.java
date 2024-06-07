@@ -45,7 +45,7 @@ public class MFInstrumentClient implements InstrumentApi {
 
     @Override
     public Mono<Instrument> getInstrument(String businesskey) {
-        throw new MFException(MFMsgKey.UNSPECIFIED, "not implemented yet");
+        return webClient.get().uri(instrumentServiceUrl + "/instrument?businesskey=" + businesskey).retrieve().bodyToMono(Instrument.class);
     }
 
     @Override

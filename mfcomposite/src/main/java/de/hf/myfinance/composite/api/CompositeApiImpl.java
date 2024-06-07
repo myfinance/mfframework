@@ -26,7 +26,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static de.hf.myfinance.event.Event.Type.*;
 
@@ -283,11 +282,11 @@ public class CompositeApiImpl implements CompositeApi {
     }
 
     @Override
-    public Mono<InstrumentFullDetails> getInstrumentDetails(String businesskey, LocalDate duedate, LocalDate referencedate, LocalDate startTimeSeries, LocalDate endTimeSeries, LocalDate firstCashflowDate, LocalDate lastCashflowDate) {
+    public Mono<InstrumentFullDetails> getInstrumentDetails(String businesskey, LocalDate duedate, LocalDate referencedate, LocalDate starttimeseries, LocalDate endtimeseries, LocalDate firstcashflowdate, LocalDate lastcashflowdate) {
         var instrumentFullDetails = instrumentClient.getInstrument(businesskey).flatMap(i-> collectInstrumentFullDetails(i, duedate, referencedate));
-        var valueCurve = valuationClient.getValueCurve(businesskey, startTimeSeries, endTimeSeries);
+        var valueCurve = valuationClient.getValueCurve(businesskey, starttimeseries, endtimeseries);
         var avgExpensesOfLastYear = transactionClient.getAvgExpensesOfLastYear(businesskey);
-        var cashflows = transactionClient.listCashflows4Instrument(businesskey, firstCashflowDate, lastCashflowDate);
+        var cashflows = transactionClient.listCashflows4Instrument(businesskey, firstcashflowdate, lastcashflowdate);
 
         var result = Mono.zip(instrumentFullDetails, valueCurve).map(tuple ->{
             var  details  = tuple.getT1();
