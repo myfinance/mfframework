@@ -64,6 +64,11 @@ public interface CompositeApi {
             consumes = "application/json",
             produces = "application/json")
     Mono<String>  saveTransaction(@RequestBody Transaction transaction);
+    @PostMapping(
+        value    = "/mf/saveTransactions",
+        consumes = "application/json",
+        produces = "application/json")
+    Mono<String>  saveTransactions(@RequestBody List<Transaction> transactions);
     @DeleteMapping(
             value    = "/mf/delTransaction/{transactionId}",
             consumes = "application/json",

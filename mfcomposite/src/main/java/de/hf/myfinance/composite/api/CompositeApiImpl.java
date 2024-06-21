@@ -152,6 +152,19 @@ public class CompositeApiImpl implements CompositeApi {
     }
 
     @Override
+    public Mono<String> saveTransactions(List<Transaction> transactions) {
+
+        return Mono.fromCallable(() -> {
+            transactions.forEach(t->{
+                sendMessage("validateTransactionRequest-out-0",
+                new Event<>(CREATE, t.toString(), t));
+            });
+
+            return "transactions saved:";
+        }).subscribeOn(publishEventScheduler);
+    }
+
+    @Override
     public Mono<String> delTransaction(String transactionId) {
         return Mono.fromCallable(() -> {
 
