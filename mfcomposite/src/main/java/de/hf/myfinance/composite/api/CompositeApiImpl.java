@@ -147,7 +147,7 @@ public class CompositeApiImpl implements CompositeApi {
 
             sendMessage("validateTransactionRequest-out-0",
                     new Event<>(CREATE, transaction.toString(), transaction));
-            return "transaction saved:"+transaction;
+            return "{\"success\": \"transaction"+transaction.getDescription() +" saved\"}";
         }).subscribeOn(publishEventScheduler);
     }
 
@@ -160,7 +160,7 @@ public class CompositeApiImpl implements CompositeApi {
                 new Event<>(CREATE, t.toString(), t));
             });
 
-            return "transactions saved:";
+            return "{\"success\": \"transactions saved\"}";
         }).subscribeOn(publishEventScheduler);
     }
 
@@ -170,7 +170,7 @@ public class CompositeApiImpl implements CompositeApi {
 
             sendMessage("validateTransactionRequest-out-0",
                     new Event<>(DELETE, transactionId, transactionId));
-            return "delete transaction queued:"+transactionId;
+            return "{\"success\": \"delete transaction queued:"+transactionId +" \"}";
         }).subscribeOn(publishEventScheduler);
     }
 
@@ -180,7 +180,7 @@ public class CompositeApiImpl implements CompositeApi {
 
             sendMessage("validateRecurrentTransactionRequest-out-0",
                     new Event<>(CREATE, transaction.toString(), transaction));
-            return "recurrentTransaction saved:"+transaction;
+            return "{\"success\": \"recurrentTransaction"+transaction.getDescription() +" saved\"}";
         }).subscribeOn(publishEventScheduler);
     }
 
@@ -190,7 +190,7 @@ public class CompositeApiImpl implements CompositeApi {
 
             sendMessage("recurrentTransactionaAproved-out-0",
                     new Event<>(DELETE, recurrentTransactionId, recurrentTransactionId));
-            return "delete recurrentTransaction queued:"+recurrentTransactionId;
+            return "{\"success\": \"delete recurrentTransaction queued:"+recurrentTransactionId +" \"}";
         }).subscribeOn(publishEventScheduler);
     }
 
@@ -200,7 +200,7 @@ public class CompositeApiImpl implements CompositeApi {
 
             sendMessage("processRecurrentTransactions-out-0",
                     new Event<>(START, "processRecurrentTransactions", null));
-            return "process recurrent Transactions started:";
+            return "{\"success\": \"process recurrent Transactions started \"}";
         }).subscribeOn(publishEventScheduler);
     }
 
@@ -223,7 +223,7 @@ public class CompositeApiImpl implements CompositeApi {
 
             sendMessage("loadNewMarketDataProcessor-out-0",
                     new Event<>(START, "load", null));
-            return "MarketData loading started:";
+            return "{\"success\": \"MarketData loading started \"}";
         }).subscribeOn(publishEventScheduler);
     }
 
