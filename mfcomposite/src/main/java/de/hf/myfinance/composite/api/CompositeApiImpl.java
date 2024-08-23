@@ -103,6 +103,14 @@ public class CompositeApiImpl implements CompositeApi {
     }
 
     @Override
+    public Flux<Instrument> listSecuritiesAndInstrumentsForTenant(String tenantbusinesskey) {
+        var securities = instrumentClient.listSecurities();
+        var instrumentsForTenant = instrumentClient.listInstrumentsForTenant(tenantbusinesskey);
+        return Flux.merge(securities, instrumentsForTenant);
+    }
+
+
+    @Override
     public Flux<Instrument> listActiveInstrumentsForTenant(String tenantbusinesskey) {
         return instrumentClient.listActiveInstrumentsForTenant(tenantbusinesskey);
     }
@@ -114,18 +122,6 @@ public class CompositeApiImpl implements CompositeApi {
 
     @Override
     public Flux<Instrument> listTenants() {
-        /*var tenantlist = new ArrayList<Instrument>();
-        var instrument = new Instrument();
-        instrument.setActive(true);
-        instrument.setDescription("test1");
-        instrument.setInstrumentType(InstrumentType.TENANT);
-        tenantlist.add(instrument);
-        var instrument2 = new Instrument();
-        instrument2.setActive(true);
-        instrument2.setDescription("test2");
-        instrument2.setInstrumentType(InstrumentType.TENANT);
-        tenantlist.add(instrument2);
-        return Mono.just(tenantlist).flatMapMany(Flux::fromIterable);*/
         return instrumentClient.listTenants();
     }
 

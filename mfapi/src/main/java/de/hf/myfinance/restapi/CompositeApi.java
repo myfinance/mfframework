@@ -39,6 +39,10 @@ public interface CompositeApi {
     @GetMapping(value = "/mf/instrumentsfortenant", produces = "application/json")
     Flux<Instrument> listInstrumentsForTenant(@RequestParam String tenantbusinesskey);
 
+    /* this return all editable instruments for a tenant. That means all instruments of this tenant and all securities which are not connected to a special tenant */
+    @GetMapping(value = "/mf/securitiesandinstrumentsfortenant", produces = "application/json")
+    Flux<Instrument> listSecuritiesAndInstrumentsForTenant(@RequestParam String tenantbusinesskey);
+
     @GetMapping(value = "/mf/activeinstrumentsfortenant", produces = "application/json")
     Flux<Instrument> listActiveInstrumentsForTenant(@RequestParam String tenantbusinesskey);
 
