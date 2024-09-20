@@ -291,6 +291,48 @@ public class CompositeApiImpl implements CompositeApi {
     }
 
     @Override
+    public Mono<List<SecurityDetails>> listDetailedSecurities(LocalDate duedate, LocalDate referencedate) {
+        return instrumentClient.listSecurities().collectList().flatMap(a->collectSecurityDetails(a,duedate,referencedate));
+    }
+
+    private Mono<List<SecurityDetails>> collectSecurityDetails(List<Instrument> instruments, LocalDate duedate,
+    LocalDate referencedate) {
+        var businesskeys = new ArrayList<String>();
+        var instrumentDetailMap = new HashMap<String, SecurityDetails>();
+        instruments.forEach(i->{
+            var securityDetails = new SecurityDetails();
+            securityDetails.setBusinesskey(i.getBusinesskey());
+            securityDetails.setDescription(i.getDescription());
+            securityDetails.setInstrumentType(i.getInstrumentType());
+            businesskeys.add(i.getBusinesskey());
+            instrumentDetailMap.put(i.getBusinesskey(), securityDetails);
+        });
+
+        //request the values for alle instruments,collect the flux and reduce it to one mono
+        Mono<HashMap<String, Double>> valuesForDueday = valuationClient.getValues(businesskeys, duedate)
+        .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
+            accumulator.putAll(next);
+            return accumulator; // Return the modified accumulator
+        });
+        Mono<HashMap<String, Double>> valuesForReferencedate = valuationClient.getValues(businesskeys, referencedate)
+        .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
+            accumulator.putAll(next);
+            return accumulator; // Return the modified accumulator
+        });
+
+
+        return Mono.zip(valuesForDueday, valuesForReferencedate).map(tuple ->{
+            tuple.getT1().keySet().forEach(x->{
+                var details = instrumentDetailMap.get(x);
+                details.setValue(tuple.getT1().get(x));
+                details.setReferenceValue(tuple.getT2().get(x));
+                instrumentDetailMap.put(x, details);
+            });
+            return new ArrayList<>(instrumentDetailMap.values()); 
+        });
+    }
+
+    @Override
     public Mono<InstrumentFullDetails> getInstrumentDetails(String businesskey, LocalDate duedate, LocalDate referencedate, LocalDate starttimeseries, LocalDate endtimeseries, LocalDate firstcashflowdate, LocalDate lastcashflowdate) {
         var instrumentFullDetails = instrumentClient.getInstrument(businesskey).flatMap(i-> collectInstrumentFullDetails(i, duedate, referencedate));
         var valueCurve = valuationClient.getValueCurve(businesskey, starttimeseries, endtimeseries);
@@ -351,5 +393,6 @@ public class CompositeApiImpl implements CompositeApi {
                 .build();
         streamBridge.send(bindingName, message);
     }
+
 
 }

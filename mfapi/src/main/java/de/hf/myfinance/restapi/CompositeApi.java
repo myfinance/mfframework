@@ -139,4 +139,9 @@ public interface CompositeApi {
                                                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstcashflowdate, 
                                                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastcashflowdate);
 
+    @GetMapping(value = "/mf/listdetailedsecurities", produces = "application/json")
+    Mono<List<SecurityDetails>> listDetailedSecurities(
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate duedate, 
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate referencedate);
+                                                    
 }
