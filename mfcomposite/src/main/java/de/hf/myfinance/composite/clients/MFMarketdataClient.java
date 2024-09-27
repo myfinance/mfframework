@@ -54,11 +54,6 @@ public class MFMarketdataClient implements MarketDataApi {
     }
 
     @Override
-    public Mono<Void> savePrices(EndOfDayPrices endOfDayPrices) {
-        throw new MFException(MFMsgKey.UNSPECIFIED, "not implemented yet");
-    }
-
-    @Override
     public Mono<String> validatePrices(EndOfDayPrices endOfDayPrices) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'savePrice'");
