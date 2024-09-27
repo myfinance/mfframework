@@ -119,7 +119,7 @@ public interface CompositeApi {
             value    = "/mf/validateSinglePrice",
             consumes = "application/json",
             produces = "application/json")
-    Mono<String>  validateSinglePrice(@RequestBody EndOfDayPrice endOfDayPrice);
+    Mono<String>  validatePrices(@RequestBody EndOfDayPrices endOfDayPrices);
 
 
     /** Valuation: **/

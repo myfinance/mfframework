@@ -3,7 +3,6 @@ package de.hf.myfinance.restmodel;
 public class EndOfDayPrice {
     private double value;
     private String currencyKey;
-    private String instrumentBusinesskey;
 
     public EndOfDayPrice(double value, String currencyKey) {
         this.value = value;
@@ -22,12 +21,5 @@ public class EndOfDayPrice {
     }
     public void setCurrencyKey(String currencyKey) {
         this.currencyKey = currencyKey;
-    }
-
-    public String getInstrumentBusinesskey() {
-        return instrumentBusinesskey;
-    }
-    public void setInstrumentBusinesskey(String instrumentBusinesskey) {
-        this.instrumentBusinesskey = instrumentBusinesskey;
     }
 }

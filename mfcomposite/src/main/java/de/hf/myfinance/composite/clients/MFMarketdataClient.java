@@ -59,7 +59,7 @@ public class MFMarketdataClient implements MarketDataApi {
     }
 
     @Override
-    public Mono<String> validateSinglePrice(EndOfDayPrice endOfDayPrice) {
+    public Mono<String> validatePrices(EndOfDayPrices endOfDayPrices) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'savePrice'");
     }

@@ -28,9 +28,9 @@ public interface MarketDataApi {
     Mono<EndOfDayPrices> getEndOfDayPrices(@RequestParam String businesskey);
 
     @PostMapping(
-            value    = "/mf/savePrice",
+            value    = "/mf/validatePrices",
             consumes = "application/json",
             produces = "application/json")
-    Mono<String>  validateSinglePrice(@RequestBody EndOfDayPrice endOfDayPrice);
+    Mono<String>  validatePrices(@RequestBody EndOfDayPrices endOfDayPrices);
 }
 
