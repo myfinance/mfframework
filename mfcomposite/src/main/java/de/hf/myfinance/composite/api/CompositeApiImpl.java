@@ -228,6 +228,16 @@ public class CompositeApiImpl implements CompositeApi {
         return marketdataClient.getEndOfDayPrices(businesskey);
     }
 
+    @Override
+    public Mono<String> validateSinglePrice(EndOfDayPrice endOfDayPrice){
+        return Mono.fromCallable(() -> {
+
+            sendMessage("validateSinglePriceRequest-out-0",
+                    new Event<>(CREATE, endOfDayPrice.getInstrumentBusinesskey(), endOfDayPrice));
+            return "{\"success\": \"price validation started for instrument:"+endOfDayPrice.getInstrumentBusinesskey() +" \"}";
+        }).subscribeOn(publishEventScheduler);
+    }
+
 
     /** Valuation: **/
 

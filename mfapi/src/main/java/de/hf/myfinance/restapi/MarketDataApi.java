@@ -1,5 +1,6 @@
 package de.hf.myfinance.restapi;
 
+import de.hf.myfinance.restmodel.EndOfDayPrice;
 import de.hf.myfinance.restmodel.EndOfDayPrices;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -25,5 +26,11 @@ public interface MarketDataApi {
 
     @GetMapping(value = "/endOfDayPrices", produces = "application/json")
     Mono<EndOfDayPrices> getEndOfDayPrices(@RequestParam String businesskey);
+
+    @PostMapping(
+            value    = "/mf/savePrice",
+            consumes = "application/json",
+            produces = "application/json")
+    Mono<String>  validateSinglePrice(@RequestBody EndOfDayPrice endOfDayPrice);
 }
 

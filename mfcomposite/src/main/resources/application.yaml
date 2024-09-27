@@ -61,6 +61,10 @@ spring.cloud.stream:
     destination: recurrentTransactionApproved
     producer:
       required-groups: recurrentTransactionApprovedAuditGroup
+  bindings.validateSinglePriceRequest-out-0:
+    destination: validateSinglePriceRequest
+    producer:
+      required-groups: validateSinglePriceAuditGroup      
 
 spring.rabbitmq:
   host: ${env.host}

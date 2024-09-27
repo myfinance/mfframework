@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hf.framework.exceptions.MFException;
 import de.hf.myfinance.exception.MFMsgKey;
 import de.hf.myfinance.restapi.MarketDataApi;
+import de.hf.myfinance.restmodel.EndOfDayPrice;
 import de.hf.myfinance.restmodel.EndOfDayPrices;
 import de.hf.myfinance.restmodel.Transaction;
 import org.slf4j.Logger;
@@ -55,5 +56,11 @@ public class MFMarketdataClient implements MarketDataApi {
     @Override
     public Mono<Void> savePrices(EndOfDayPrices endOfDayPrices) {
         throw new MFException(MFMsgKey.UNSPECIFIED, "not implemented yet");
+    }
+
+    @Override
+    public Mono<String> validateSinglePrice(EndOfDayPrice endOfDayPrice) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'savePrice'");
     }
 }

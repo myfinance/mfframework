@@ -115,6 +115,12 @@ public interface CompositeApi {
     @GetMapping(value = "/mf/endOfDayPrices", produces = "application/json")
     Mono<EndOfDayPrices> getEndOfDayPrices(@RequestParam String businesskey);
 
+    @PostMapping(
+            value    = "/mf/validateSinglePrice",
+            consumes = "application/json",
+            produces = "application/json")
+    Mono<String>  validateSinglePrice(@RequestBody EndOfDayPrice endOfDayPrice);
+
 
     /** Valuation: **/
 
