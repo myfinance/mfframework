@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Instrument {
 
-    public final static String DEFAULTCURRENCY = "EUR";
+    public final static String DEFAULTCURRENCY = "EUR@"+InstrumentType.CURRENCY.getValue();
     private InstrumentType instrumentType;
     private String description;
     private boolean active;
