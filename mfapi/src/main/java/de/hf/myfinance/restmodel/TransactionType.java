@@ -17,5 +17,6 @@ public enum TransactionType {
     TRANSFER,
     BUDGETTRANSFER,
     LINKEDINCOMEEXPENSES,
-    TRADE
+    BUY,
+    SELL
 }
