@@ -1,12 +1,12 @@
 package de.hf.myfinance.restmodel;
 
-public class Trade {
+public class Position {
 
     private String depotBusinessKey;
     private String securityBusinessKey;
     private double amount;
 
-    public Trade(String depotBusinessKey, String securityBusinessKey, double amount) {
+    public Position(String depotBusinessKey, String securityBusinessKey, double amount) {
         this.depotBusinessKey = depotBusinessKey;
         this.securityBusinessKey = securityBusinessKey;
         this.amount = amount;
