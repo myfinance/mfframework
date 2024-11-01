@@ -3,9 +3,7 @@ package de.hf.myfinance.restmodel;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class Transaction {
 
@@ -13,7 +11,7 @@ public class Transaction {
     private String description;
     private LocalDate transactiondate;
     private LocalDateTime lastchanged;
-    private Set<Trade> trades = new HashSet<>(0);
+    private Position tradeInfo;
     // map of instrumentBusinesskey and value
     private Map<String, Double> cashflows = new HashMap<>(0);
     private TransactionType transactionType;
@@ -65,12 +63,12 @@ public class Transaction {
         this.lastchanged = lastchanged;
     }
 
-    public Set<Trade> getTrades() {
-        return trades;
+    public Position getTradeInfo() {
+        return tradeInfo;
     }
 
-    public void setTrades(Set<Trade> trades) {
-        this.trades = trades;
+    public void setTradeInfo(Position tradeInfo) {
+        this.tradeInfo = tradeInfo;
     }
 
     public Map<String, Double> getCashflows() {
