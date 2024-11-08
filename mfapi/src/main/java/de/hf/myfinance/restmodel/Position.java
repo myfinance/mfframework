@@ -1,15 +1,18 @@
 package de.hf.myfinance.restmodel;
 
+import java.time.LocalDate;
+import java.util.Map;
+
 public class Position {
 
     private String depotBusinessKey;
     private String securityBusinessKey;
-    private double amount;
+    private Map<LocalDate, Double> positionCurve;
 
-    public Position(String depotBusinessKey, String securityBusinessKey, double amount) {
+    public Position(String depotBusinessKey, String securityBusinessKey, Map<LocalDate, Double> positionCurve) {
         this.depotBusinessKey = depotBusinessKey;
         this.securityBusinessKey = securityBusinessKey;
-        this.amount = amount;
+        this.positionCurve = positionCurve;
     }
 
     public String getDepotBusinessKey() {
@@ -28,11 +31,15 @@ public class Position {
         this.securityBusinessKey = securityBusinessKey;
     }
 
-    public double getAmount() {
-        return amount;
-    }
+     public Map<LocalDate, Double> getPositionCurve() {
+        return this.positionCurve;
+     }
+  
+     public void setPositionCurve(Map<LocalDate, Double> positionCurve) {
+        this.positionCurve = positionCurve;
+     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
+     public Double getPosition(LocalDate date) {
+        return positionCurve.get(date);
+     }
 }
