@@ -28,11 +28,11 @@ public class Trade {
             this.securityBusinessKey = securityBusinessKey;
         }
     
-         public Double getPositionCurve() {
+         public Double getAmount() {
             return this.amount;
          }
       
-         public void setPositionCurve(Double amount) {
+         public void setAmount(Double amount) {
             this.amount = amount;
          }
     }
