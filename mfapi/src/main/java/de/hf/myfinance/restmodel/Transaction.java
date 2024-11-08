@@ -11,7 +11,7 @@ public class Transaction {
     private String description;
     private LocalDate transactiondate;
     private LocalDateTime lastchanged;
-    private Position tradeInfo;
+    private Trade tradeInfo;
     // map of instrumentBusinesskey and value
     private Map<String, Double> cashflows = new HashMap<>(0);
     private TransactionType transactionType;
@@ -63,11 +63,11 @@ public class Transaction {
         this.lastchanged = lastchanged;
     }
 
-    public Position getTradeInfo() {
+    public Trade getTradeInfo() {
         return tradeInfo;
     }
 
-    public void setTradeInfo(Position tradeInfo) {
+    public void setTradeInfo(Trade tradeInfo) {
         this.tradeInfo = tradeInfo;
     }
 

@@ -3,13 +3,13 @@ package de.hf.myfinance.restmodel;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class Position {
+public class PositionCurve {
 
     private String depotBusinessKey;
     private String securityBusinessKey;
     private Map<LocalDate, Double> positionCurve;
 
-    public Position(String depotBusinessKey, String securityBusinessKey, Map<LocalDate, Double> positionCurve) {
+    public PositionCurve(String depotBusinessKey, String securityBusinessKey, Map<LocalDate, Double> positionCurve) {
         this.depotBusinessKey = depotBusinessKey;
         this.securityBusinessKey = securityBusinessKey;
         this.positionCurve = positionCurve;
