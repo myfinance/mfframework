@@ -4,7 +4,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +15,6 @@ public class ServiceUtil {
 
   private String serviceAddress = null;
 
-  @Autowired
   public ServiceUtil(@Value("${server.port:0000}") String port) {
 
     this.port = port;
