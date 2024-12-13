@@ -6,6 +6,7 @@ public enum AdditionalProperties {
     REALESTATEBUDGETGROUPID,
     MATURITYDATE,
     CURRENCYCODE,
+    VALUEBUDGETID,
     ISIN,
     IBAN;
 }
