@@ -24,6 +24,7 @@ US5949181045 Microsoft
 add symbols MSFT, DB
 start import prices
 
+
 ### Backend access ###
 
 #### local development ####
