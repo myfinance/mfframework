@@ -8,6 +8,7 @@ public class ValueCurve {
     private String serviceAddress;
     private String instrumentBusinesskey;
     private String parentBusinesskey;
+    private String linkedInstrumentKey;
 
     public ValueCurve(){
 
@@ -44,4 +45,13 @@ public class ValueCurve {
     public void setParentBusinesskey(String parentBusinesskey) {
         this.parentBusinesskey = parentBusinesskey;
     }
+
+    public String getLinkedInstrumentKey() {
+        return this.linkedInstrumentKey;
+    }
+
+    public void setLinkedInstrumentKey(String linkedInstrumentKey) {
+        this.linkedInstrumentKey = linkedInstrumentKey;
+    }
+
 }
