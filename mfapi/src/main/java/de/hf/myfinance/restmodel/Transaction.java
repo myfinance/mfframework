@@ -15,6 +15,8 @@ public class Transaction {
     // map of instrumentBusinesskey and value
     private Map<String, Double> cashflows = new HashMap<>(0);
     private TransactionType transactionType;
+    private String depotId;
+    private String securityId;
 
     private String serviceAddress;
 
@@ -29,6 +31,22 @@ public class Transaction {
         this.description = description;
         this.transactiondate = transactiondate;
         this.transactionType = transactionType;
+    }
+
+    public String getDepotId() {
+        return this.depotId;
+    }
+
+    public void setDepotId(String depotId) {
+        this.depotId = depotId;
+    }
+
+    public String getSecurityId() {
+        return this.securityId;
+    }
+
+    public void setSecurityId(String securityId) {
+        this.securityId = securityId;
     }
 
     public String getTransactionId() {

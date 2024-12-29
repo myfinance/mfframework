@@ -16,7 +16,7 @@ public enum TransactionType {
     EXPENSE,
     TRANSFER,
     BUDGETTRANSFER,
-    LINKEDINCOMEEXPENSES,
+    DEPOTCASHFLOW,
     BUY,
     SELL
 }
