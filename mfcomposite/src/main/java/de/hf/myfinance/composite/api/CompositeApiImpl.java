@@ -10,7 +10,6 @@ import de.hf.myfinance.event.Event;
 import de.hf.myfinance.exception.MFMsgKey;
 import de.hf.myfinance.restapi.CompositeApi;
 import de.hf.myfinance.restmodel.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.stream.function.StreamBridge;
@@ -42,7 +41,6 @@ public class CompositeApiImpl implements CompositeApi {
     private final StreamBridge streamBridge;
     private final Scheduler publishEventScheduler;
 
-    @Autowired
     public CompositeApiImpl(ServiceUtil serviceUtil,
                             MFInstrumentClient instrumentClient,
                             MFTransactionClient transactionClient,

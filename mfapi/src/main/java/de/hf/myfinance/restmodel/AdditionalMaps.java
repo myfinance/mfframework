@@ -4,5 +4,6 @@ public enum AdditionalMaps {
     KEYVALUE,
     YIELDGOAL,
     REALESTATEPROFITS,
-    EQUITYSYMBOLS
+    EQUITYSYMBOLS,
+    SURRENDERVALUES
 }
