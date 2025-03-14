@@ -38,6 +38,7 @@ public class SecurityConfig {
 
         http
                 //.cors(config->config.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable()) 
                 .cors(cors -> cors.disable())
                 .authorizeExchange((authorize) -> authorize
                         //.pathMatchers(HttpMethod.GET, "/mf/**").hasRole("SCOPE_read")
