@@ -106,16 +106,6 @@ public enum InstrumentType {
             default -> InstrumentType.UNKNOWN;
         };
     }
-
-     public LiquidityType getLiquidityType(){
-         return switch (value) {
-             case 1, 2 -> LiquidityType.LIQUIDE;
-             case 3, 12, 19, 22 -> LiquidityType.CALCULATED;
-             case 4, 11, 20 -> LiquidityType.MIDTERM;
-             case 21 -> LiquidityType.LONGTERM;
-             default -> LiquidityType.UNKNOWN;
-         };
-    }
 }
 
 

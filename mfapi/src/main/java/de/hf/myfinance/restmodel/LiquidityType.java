@@ -5,6 +5,5 @@ public enum LiquidityType {
     SHORTTERM,
     MIDTERM,
     LONGTERM,
-    CALCULATED,
     UNKNOWN;
 }

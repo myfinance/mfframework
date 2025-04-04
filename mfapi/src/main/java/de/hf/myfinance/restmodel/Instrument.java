@@ -17,6 +17,7 @@ public class Instrument {
     private String serviceAddress;
     private String tenantBusinesskey;
     private LiquidityType liquidityType;
+    private Boolean liquidityTypeCalculated=false;
 
     private Map<AdditionalMaps, Map<String, String>> additionalMaps = new HashMap<>();
     private Map<AdditionalProperties, String> additionalProperties = new HashMap<>();
@@ -146,6 +147,13 @@ public class Instrument {
     }
     public void setLiquidityType(LiquidityType liquidityType) {
         this.liquidityType = liquidityType;
+    }
+
+    public Boolean getLiquidityTypeCalculated() {
+        return liquidityTypeCalculated;
+    }
+    public void setLiquidityTypeCalculated(Boolean liquidityTypeCalculated) {
+        this.liquidityTypeCalculated = liquidityTypeCalculated;
     }
 
 }
