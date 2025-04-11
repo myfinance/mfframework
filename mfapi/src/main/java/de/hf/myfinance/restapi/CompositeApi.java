@@ -33,6 +33,12 @@ public interface CompositeApi {
             produces = "application/json")
     Mono<String> saveInstrument(@RequestBody Instrument instrument);
 
+    @PostMapping(
+        value    = "/mf/saveinstruments",
+        consumes = "application/json",
+        produces = "application/json")
+    Mono<String> saveInstruments(@RequestBody Instrument[] instruments);
+
     @GetMapping(value = "/mf/instruments", produces = "application/json")
     Flux<Instrument> listInstruments();
 

@@ -23,6 +23,7 @@ import reactor.core.scheduler.Scheduler;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -88,6 +89,49 @@ public class CompositeApiImpl implements CompositeApi {
                     new Event<>(CREATE, instrument.getBusinesskey(), instrument));
             return "{\"success\": \"Tenant"+instrument.getDescription() +" saved\"}";
         }).subscribeOn(publishEventScheduler);
+    }
+
+    @Override
+    public Mono<String> saveInstruments(Instrument[] instruments) {
+       Arrays.stream(instruments)
+            .filter(instrument -> instrument.getInstrumentType().equals(InstrumentType.TENANT))
+            .forEach(tenant -> {
+                tenant.setBusinesskey("");
+                sendMessage("validateInstrumentRequest-out-0",
+                new Event<>(CREATE, tenant.getDescription(), tenant));
+            });
+        // wait a second until the tenant is created, because it is needed as reference for all other instruments
+        try {
+            Thread.sleep(1000); // 1000 milliseconds = 1 second
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // good pract
+        }
+        // create the realestates first because that automaticly generates a new budgetgroup which ist potentily referenced by other budgets
+        Arrays.stream(instruments)
+            .filter(instrument -> instrument.getInstrumentType().equals(InstrumentType.REALESTATE))
+            .forEach(instrument -> {
+                instrument.setBusinesskey("");
+                sendMessage("validateInstrumentRequest-out-0",
+             new Event<>(CREATE, instrument.getDescription(), instrument));
+            });
+        try {
+            Thread.sleep(1000); // 1000 milliseconds = 1 second
+        } catch (InterruptedException e) {
+             Thread.currentThread().interrupt(); // good pract
+        }
+        Arrays.stream(instruments)
+            .filter(instrument -> !instrument.getInstrumentType().equals(InstrumentType.REALESTATE)
+                                    && !instrument.getInstrumentType().equals(InstrumentType.TENANT)
+                                    && !instrument.getInstrumentType().equals(InstrumentType.ACCOUNTPORTFOLIO)
+                                    && !instrument.getInstrumentType().equals(InstrumentType.BUDGETPORTFOLIO)
+                                    && !instrument.getInstrumentType().equals(InstrumentType.BUDGETGROUP)
+            )
+            .forEach(instrument -> {
+                instrument.setBusinesskey("");
+                sendMessage("validateInstrumentRequest-out-0",
+            new Event<>(CREATE, instrument.getDescription(), instrument));
+        });
+        return Mono.just("success");
     }
 
     @Override
@@ -401,6 +445,7 @@ public class CompositeApiImpl implements CompositeApi {
                 .build();
         streamBridge.send(bindingName, message);
     }
+
 
 
 }
