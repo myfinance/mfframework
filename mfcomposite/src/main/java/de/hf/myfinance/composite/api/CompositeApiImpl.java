@@ -43,12 +43,12 @@ public class CompositeApiImpl implements CompositeApi {
     private final Scheduler publishEventScheduler;
 
     public CompositeApiImpl(ServiceUtil serviceUtil,
-                            MFInstrumentClient instrumentClient,
-                            MFTransactionClient transactionClient,
-                            MFMarketdataClient marketdataClient,
-                            MFValuationClient valuationClient,
-                            StreamBridge streamBridge,
-                            @Qualifier("publishEventScheduler") Scheduler publishEventScheduler) {
+            MFInstrumentClient instrumentClient,
+            MFTransactionClient transactionClient,
+            MFMarketdataClient marketdataClient,
+            MFValuationClient valuationClient,
+            StreamBridge streamBridge,
+            @Qualifier("publishEventScheduler") Scheduler publishEventScheduler) {
         this.serviceUtil = serviceUtil;
         this.instrumentClient = instrumentClient;
         this.transactionClient = transactionClient;
@@ -57,9 +57,10 @@ public class CompositeApiImpl implements CompositeApi {
         this.streamBridge = streamBridge;
         this.publishEventScheduler = publishEventScheduler;
     }
+
     @Override
     public String index() {
-        return "{Hello compositeservice version:"+apiVersion + "}";
+        return "{Hello compositeservice version:" + apiVersion + "}";
     }
 
     @Override
@@ -71,66 +72,82 @@ public class CompositeApiImpl implements CompositeApi {
 
     @Override
     public Instrument helloInstrumentService() {
-        try{
+        try {
             return instrumentClient.getInstrument("1").block();
-        } catch(MFException e) {
+        } catch (MFException e) {
             throw e;
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             throw new MFException(MFMsgKey.UNSPECIFIED, e.getMessage());
         }
     }
 
     @Override
-    public Mono<String> saveInstrument(Instrument instrument){
+    public Mono<String> saveInstrument(Instrument instrument) {
         return Mono.fromCallable(() -> {
 
             sendMessage("validateInstrumentRequest-out-0",
                     new Event<>(CREATE, instrument.getBusinesskey(), instrument));
-            return "{\"success\": \"Tenant"+instrument.getDescription() +" saved\"}";
+            return "{\"success\": \"Tenant" + instrument.getDescription() + " saved\"}";
         }).subscribeOn(publishEventScheduler);
     }
 
     @Override
     public Mono<String> saveInstruments(Instrument[] instruments) {
-       Arrays.stream(instruments)
-            .filter(instrument -> instrument.getInstrumentType().equals(InstrumentType.TENANT))
-            .forEach(tenant -> {
-                tenant.setBusinesskey("");
-                sendMessage("validateInstrumentRequest-out-0",
-                new Event<>(CREATE, tenant.getDescription(), tenant));
-            });
-        // wait a second until the tenant is created, because it is needed as reference for all other instruments
+        Arrays.stream(instruments)
+                .filter(instrument -> instrument.getInstrumentType().equals(InstrumentType.TENANT))
+                .forEach(tenant -> {
+                    tenant.setBusinesskey("");
+                    sendMessage("validateInstrumentRequest-out-0",
+                            new Event<>(CREATE, tenant.getDescription(), tenant));
+                });
+        // wait a second until the tenant is created, because it is needed as reference
+        // for all other instruments
         try {
             Thread.sleep(1000); // 1000 milliseconds = 1 second
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // good pract
         }
-        // create the realestates first because that automaticly generates a new budgetgroup which ist potentily referenced by other budgets
+        //create budgets with default budget group first because realestates need a valuebudget
+        // there will be error msg for all other budgets
         Arrays.stream(instruments)
-            .filter(instrument -> instrument.getInstrumentType().equals(InstrumentType.REALESTATE))
-            .forEach(instrument -> {
-                instrument.setBusinesskey("");
-                sendMessage("validateInstrumentRequest-out-0",
-             new Event<>(CREATE, instrument.getDescription(), instrument));
-            });
+                .filter(instrument -> instrument.getInstrumentType().equals(InstrumentType.BUDGET))
+                .forEach(budget -> {
+                    budget.setBusinesskey("");
+                    sendMessage("validateInstrumentRequest-out-0",
+                            new Event<>(CREATE, budget.getDescription(), budget));
+                });
+        // wait a second until the tenant is created, because it is needed as reference
+        // for all other instruments
         try {
             Thread.sleep(1000); // 1000 milliseconds = 1 second
         } catch (InterruptedException e) {
-             Thread.currentThread().interrupt(); // good pract
+            Thread.currentThread().interrupt(); // good pract
+        }
+        // create the realestates first because that automaticly generates a new
+        // budgetgroup which ist potentily referenced by other budgets
+        Arrays.stream(instruments)
+                .filter(instrument -> instrument.getInstrumentType().equals(InstrumentType.REALESTATE))
+                .forEach(instrument -> {
+                    instrument.setBusinesskey("");
+                    sendMessage("validateInstrumentRequest-out-0",
+                            new Event<>(CREATE, instrument.getDescription(), instrument));
+                });
+        try {
+            Thread.sleep(1000); // 1000 milliseconds = 1 second
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // good pract
         }
         Arrays.stream(instruments)
-            .filter(instrument -> !instrument.getInstrumentType().equals(InstrumentType.REALESTATE)
-                                    && !instrument.getInstrumentType().equals(InstrumentType.TENANT)
-                                    && !instrument.getInstrumentType().equals(InstrumentType.ACCOUNTPORTFOLIO)
-                                    && !instrument.getInstrumentType().equals(InstrumentType.BUDGETPORTFOLIO)
-                                    && !instrument.getInstrumentType().equals(InstrumentType.BUDGETGROUP)
-            )
-            .forEach(instrument -> {
-                instrument.setBusinesskey("");
-                sendMessage("validateInstrumentRequest-out-0",
-            new Event<>(CREATE, instrument.getDescription(), instrument));
-        });
+                .filter(instrument -> !instrument.getInstrumentType().equals(InstrumentType.REALESTATE)
+                        && !instrument.getInstrumentType().equals(InstrumentType.TENANT)
+                        && !instrument.getInstrumentType().equals(InstrumentType.ACCOUNTPORTFOLIO)
+                        && !instrument.getInstrumentType().equals(InstrumentType.BUDGETPORTFOLIO)
+                        && !instrument.getInstrumentType().equals(InstrumentType.BUDGETGROUP))
+                .forEach(instrument -> {
+                    instrument.setBusinesskey("");
+                    sendMessage("validateInstrumentRequest-out-0",
+                            new Event<>(CREATE, instrument.getDescription(), instrument));
+                });
         return Mono.just("success");
     }
 
@@ -151,7 +168,6 @@ public class CompositeApiImpl implements CompositeApi {
         return Flux.merge(securities, instrumentsForTenant);
     }
 
-
     @Override
     public Flux<Instrument> listActiveInstrumentsForTenant(String tenantbusinesskey) {
         return instrumentClient.listActiveInstrumentsForTenant(tenantbusinesskey);
@@ -171,11 +187,11 @@ public class CompositeApiImpl implements CompositeApi {
     public Flux<Instrument> listAccounts(String tenantbusinesskey) {
         return instrumentClient.listAccounts(tenantbusinesskey);
     }
+
     @Override
     public Flux<Instrument> listBudgets(String tenantbusinesskey) {
         return instrumentClient.listBudgets(tenantbusinesskey);
     }
-
 
     /** Transactions: **/
 
@@ -185,7 +201,7 @@ public class CompositeApiImpl implements CompositeApi {
 
             sendMessage("validateTransactionRequest-out-0",
                     new Event<>(CREATE, transaction.toString(), transaction));
-            return "{\"success\": \"transaction"+transaction.getDescription() +" saved\"}";
+            return "{\"success\": \"transaction" + transaction.getDescription() + " saved\"}";
         }).subscribeOn(publishEventScheduler);
     }
 
@@ -193,9 +209,9 @@ public class CompositeApiImpl implements CompositeApi {
     public Mono<String> saveTransactions(List<Transaction> transactions) {
 
         return Mono.fromCallable(() -> {
-            transactions.forEach(t->{
+            transactions.forEach(t -> {
                 sendMessage("validateTransactionRequest-out-0",
-                new Event<>(CREATE, t.toString(), t));
+                        new Event<>(CREATE, t.toString(), t));
             });
 
             return "{\"success\": \"transactions saved\"}";
@@ -208,7 +224,7 @@ public class CompositeApiImpl implements CompositeApi {
 
             sendMessage("validateTransactionRequest-out-0",
                     new Event<>(DELETE, transactionId, transactionId));
-            return "{\"success\": \"delete transaction queued:"+transactionId +" \"}";
+            return "{\"success\": \"delete transaction queued:" + transactionId + " \"}";
         }).subscribeOn(publishEventScheduler);
     }
 
@@ -218,7 +234,7 @@ public class CompositeApiImpl implements CompositeApi {
 
             sendMessage("validateRecurrentTransactionRequest-out-0",
                     new Event<>(CREATE, transaction.toString(), transaction));
-            return "{\"success\": \"recurrentTransaction"+transaction.getDescription() +" saved\"}";
+            return "{\"success\": \"recurrentTransaction" + transaction.getDescription() + " saved\"}";
         }).subscribeOn(publishEventScheduler);
     }
 
@@ -228,7 +244,7 @@ public class CompositeApiImpl implements CompositeApi {
 
             sendMessage("recurrentTransactionaAproved-out-0",
                     new Event<>(DELETE, recurrentTransactionId, recurrentTransactionId));
-            return "{\"success\": \"delete recurrentTransaction queued:"+recurrentTransactionId +" \"}";
+            return "{\"success\": \"delete recurrentTransaction queued:" + recurrentTransactionId + " \"}";
         }).subscribeOn(publishEventScheduler);
     }
 
@@ -246,12 +262,11 @@ public class CompositeApiImpl implements CompositeApi {
     public Flux<Transaction> listTransactions(LocalDate startDate, LocalDate endDate) {
         return transactionClient.listTransactions(startDate, endDate);
     }
+
     @Override
     public Flux<RecurrentTransaction> listRecurrentTransactions() {
         return transactionClient.listRecurrentTransactions();
     }
-
-
 
     /** MarketData: **/
 
@@ -271,15 +286,15 @@ public class CompositeApiImpl implements CompositeApi {
     }
 
     @Override
-    public Mono<String> validatePrices(EndOfDayPrices endOfDayPrices){
+    public Mono<String> validatePrices(EndOfDayPrices endOfDayPrices) {
         return Mono.fromCallable(() -> {
 
             sendMessage("validateSinglePriceRequest-out-0",
                     new Event<>(CREATE, endOfDayPrices.getInstrumentBusinesskey(), endOfDayPrices));
-            return "{\"success\": \"price validation started for instrument:"+endOfDayPrices.getInstrumentBusinesskey() +" \"}";
+            return "{\"success\": \"price validation started for instrument:"
+                    + endOfDayPrices.getInstrumentBusinesskey() + " \"}";
         }).subscribeOn(publishEventScheduler);
     }
-
 
     /** Valuation: **/
 
@@ -296,62 +311,66 @@ public class CompositeApiImpl implements CompositeApi {
     @Override
     public Mono<List<InstrumentDetails>> listDetailedAccounts(String tenantbusinesskey, LocalDate duedate,
             LocalDate referencedate) {
-        return listAccounts(tenantbusinesskey).collectList().flatMap(a->collectDetails(a,duedate,referencedate));
+        return listAccounts(tenantbusinesskey).collectList().flatMap(a -> collectDetails(a, duedate, referencedate));
     }
+
     @Override
     public Mono<List<InstrumentDetails>> listDetailedBudets(String tenantbusinesskey, LocalDate duedate,
             LocalDate referencedate) {
 
-        return listBudgets(tenantbusinesskey).collectList().flatMap(a->collectDetails(a,duedate,referencedate));
+        return listBudgets(tenantbusinesskey).collectList().flatMap(a -> collectDetails(a, duedate, referencedate));
     }
 
     private Mono<List<InstrumentDetails>> collectDetails(List<Instrument> instruments, LocalDate duedate,
-    LocalDate referencedate) {
+            LocalDate referencedate) {
         var businesskeys = new ArrayList<String>();
         var instrumentDetailMap = new HashMap<String, InstrumentDetails>();
-        instruments.forEach(i->{
+        instruments.forEach(i -> {
             var instrumentDetails = new InstrumentDetails();
             instrumentDetails.setBusinesskey(i.getBusinesskey());
             instrumentDetails.setDescription(i.getDescription());
+            instrumentDetails.setActive(i.isActive());
+            instrumentDetails.setInstrumentType(i.getInstrumentType());
             instrumentDetails.setLiquiditytype(i.getLiquidityType());
             businesskeys.add(i.getBusinesskey());
             instrumentDetailMap.put(i.getBusinesskey(), instrumentDetails);
         });
 
-        //request the values for alle instruments,collect the flux and reduce it to one mono
+        // request the values for alle instruments,collect the flux and reduce it to one
+        // mono
         Mono<HashMap<String, Double>> valuesForDueday = valuationClient.getValues(businesskeys, duedate)
-        .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
-            accumulator.putAll(next);
-            return accumulator; // Return the modified accumulator
-        });
+                .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
+                    accumulator.putAll(next);
+                    return accumulator; // Return the modified accumulator
+                });
         Mono<HashMap<String, Double>> valuesForReferencedate = valuationClient.getValues(businesskeys, referencedate)
-        .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
-            accumulator.putAll(next);
-            return accumulator; // Return the modified accumulator
-        });
+                .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
+                    accumulator.putAll(next);
+                    return accumulator; // Return the modified accumulator
+                });
 
-
-        return Mono.zip(valuesForDueday, valuesForReferencedate).map(tuple ->{
-            tuple.getT1().keySet().forEach(x->{
+        return Mono.zip(valuesForDueday, valuesForReferencedate).map(tuple -> {
+            tuple.getT1().keySet().forEach(x -> {
                 var details = instrumentDetailMap.get(x);
                 details.setValue(tuple.getT1().get(x));
                 details.setReferenceValue(tuple.getT2().get(x));
                 instrumentDetailMap.put(x, details);
             });
-            return new ArrayList<>(instrumentDetailMap.values()); 
+            return new ArrayList<>(instrumentDetailMap.values());
         });
     }
 
     @Override
     public Mono<List<SecurityDetails>> listDetailedSecurities(LocalDate duedate, LocalDate referencedate) {
-        return instrumentClient.listSecurities().collectList().flatMap(a->collectSecurityDetails(a,duedate,referencedate));
+        return instrumentClient.listSecurities().collectList()
+                .flatMap(a -> collectSecurityDetails(a, duedate, referencedate));
     }
 
     private Mono<List<SecurityDetails>> collectSecurityDetails(List<Instrument> instruments, LocalDate duedate,
-    LocalDate referencedate) {
+            LocalDate referencedate) {
         var businesskeys = new ArrayList<String>();
         var instrumentDetailMap = new HashMap<String, SecurityDetails>();
-        instruments.forEach(i->{
+        instruments.forEach(i -> {
             var securityDetails = new SecurityDetails();
             securityDetails.setBusinesskey(i.getBusinesskey());
             securityDetails.setDescription(i.getDescription());
@@ -360,84 +379,87 @@ public class CompositeApiImpl implements CompositeApi {
             instrumentDetailMap.put(i.getBusinesskey(), securityDetails);
         });
 
-        //request the values for alle instruments,collect the flux and reduce it to one mono
+        // request the values for alle instruments,collect the flux and reduce it to one
+        // mono
         Mono<HashMap<String, Double>> valuesForDueday = valuationClient.getValues(businesskeys, duedate)
-        .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
-            accumulator.putAll(next);
-            return accumulator; // Return the modified accumulator
-        });
+                .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
+                    accumulator.putAll(next);
+                    return accumulator; // Return the modified accumulator
+                });
         Mono<HashMap<String, Double>> valuesForReferencedate = valuationClient.getValues(businesskeys, referencedate)
-        .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
-            accumulator.putAll(next);
-            return accumulator; // Return the modified accumulator
-        });
+                .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
+                    accumulator.putAll(next);
+                    return accumulator; // Return the modified accumulator
+                });
 
-
-        return Mono.zip(valuesForDueday, valuesForReferencedate).map(tuple ->{
-            tuple.getT1().keySet().forEach(x->{
+        return Mono.zip(valuesForDueday, valuesForReferencedate).map(tuple -> {
+            tuple.getT1().keySet().forEach(x -> {
                 var details = instrumentDetailMap.get(x);
                 details.setValue(tuple.getT1().get(x));
                 details.setReferenceValue(tuple.getT2().get(x));
                 instrumentDetailMap.put(x, details);
             });
-            return new ArrayList<>(instrumentDetailMap.values()); 
+            return new ArrayList<>(instrumentDetailMap.values());
         });
     }
 
     @Override
-    public Mono<InstrumentFullDetails> getInstrumentDetails(String businesskey, LocalDate duedate, LocalDate referencedate, LocalDate starttimeseries, LocalDate endtimeseries, LocalDate firstcashflowdate, LocalDate lastcashflowdate) {
-        var instrumentFullDetails = instrumentClient.getInstrument(businesskey).flatMap(i-> collectInstrumentFullDetails(i, duedate, referencedate));
+    public Mono<InstrumentFullDetails> getInstrumentDetails(String businesskey, LocalDate duedate,
+            LocalDate referencedate, LocalDate starttimeseries, LocalDate endtimeseries, LocalDate firstcashflowdate,
+            LocalDate lastcashflowdate) {
+        var instrumentFullDetails = instrumentClient.getInstrument(businesskey)
+                .flatMap(i -> collectInstrumentFullDetails(i, duedate, referencedate));
         var valueCurve = valuationClient.getValueCurve(businesskey, starttimeseries, endtimeseries);
         var avgExpensesOfLastYear = transactionClient.getAvgExpensesOfLastYear(businesskey);
         var cashflows = transactionClient.listCashflows4Instrument(businesskey, firstcashflowdate, lastcashflowdate);
 
-        var result = Mono.zip(instrumentFullDetails, valueCurve).map(tuple ->{
-            var  details  = tuple.getT1();
+        var result = Mono.zip(instrumentFullDetails, valueCurve).map(tuple -> {
+            var details = tuple.getT1();
             details.setValueCurve(tuple.getT2().getValueCurve());
-            return details; 
+            return details;
         }).zipWith(avgExpensesOfLastYear).map(tuple -> {
-            var  details  = tuple.getT1();
+            var details = tuple.getT1();
             details.addAdditionalValue("avgExpensesOfLastYear", tuple.getT2());
-            return details; 
+            return details;
         }).zipWith(cashflows.collectList()).map(tuple -> {
-            var  details  = tuple.getT1();
-            var expenses = tuple.getT2().stream().filter(c->c.getValue()<0).toList();
-            var incomes = tuple.getT2().stream().filter(c->c.getValue()>0).toList();
+            var details = tuple.getT1();
+            var expenses = tuple.getT2().stream().filter(c -> c.getValue() < 0).toList();
+            var incomes = tuple.getT2().stream().filter(c -> c.getValue() > 0).toList();
             details.setExpensesInPeriod(expenses);
             details.setIncomeInPeriod(incomes);
-            details.addAdditionalValue("sumOfIncome", incomes.stream().map(c->c.getValue()).reduce(0.0, Double::sum));
-            details.addAdditionalValue("sumOfExpense", expenses.stream().map(c->c.getValue()).reduce(0.0, Double::sum));
-            return details; 
+            details.addAdditionalValue("sumOfIncome", incomes.stream().map(c -> c.getValue()).reduce(0.0, Double::sum));
+            details.addAdditionalValue("sumOfExpense",
+                    expenses.stream().map(c -> c.getValue()).reduce(0.0, Double::sum));
+            return details;
         });
-
 
         return result;
 
     }
 
-    private Mono<InstrumentFullDetails> collectInstrumentFullDetails(Instrument instrument, LocalDate duedate, LocalDate referencedate){
+    private Mono<InstrumentFullDetails> collectInstrumentFullDetails(Instrument instrument, LocalDate duedate,
+            LocalDate referencedate) {
         var valueDuedate = valuationClient.getValue(instrument.getBusinesskey(), duedate);
         var valueReferencedate = valuationClient.getValue(instrument.getBusinesskey(), referencedate);
-        //transactionClient.listTransactions()
+        // transactionClient.listTransactions()
 
-        return Mono.zip(valueDuedate, valueReferencedate).map(tuple ->{
+        return Mono.zip(valueDuedate, valueReferencedate).map(tuple -> {
             var fullDetails = new InstrumentFullDetails();
             fullDetails.setBusinesskey(instrument.getBusinesskey());
             fullDetails.setDescription(instrument.getDescription());
             fullDetails.setInstrumentType(instrument.getInstrumentType());
             fullDetails.addAdditionalValue("valueDuedate", tuple.getT1());
             fullDetails.addAdditionalValue("valueReferencedate", tuple.getT2());
-            fullDetails.addAdditionalValue("valueChangeAbs", tuple.getT1()-tuple.getT2());
-            fullDetails.addAdditionalValue("valueChangeRel", ((tuple.getT1()/tuple.getT2())-1)*100);
-            return fullDetails; 
+            fullDetails.addAdditionalValue("valueChangeAbs", tuple.getT1() - tuple.getT2());
+            fullDetails.addAdditionalValue("valueChangeRel", ((tuple.getT1() / tuple.getT2()) - 1) * 100);
+            return fullDetails;
         });
     }
 
-
-
     /**
      * Since the sendMessage() uses blocking code, when calling streamBridge,
-     * it has to be executed on a thread provided by a dedicated scheduler, publishEventScheduler
+     * it has to be executed on a thread provided by a dedicated scheduler,
+     * publishEventScheduler
      */
     private void sendMessage(String bindingName, Event<String, Object> event) {
         Message<Event<String, Object>> message = MessageBuilder.withPayload(event)
@@ -445,7 +467,5 @@ public class CompositeApiImpl implements CompositeApi {
                 .build();
         streamBridge.send(bindingName, message);
     }
-
-
 
 }

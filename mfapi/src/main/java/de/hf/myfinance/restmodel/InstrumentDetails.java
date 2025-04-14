@@ -7,6 +7,8 @@ package de.hf.myfinance.restmodel;
 public class InstrumentDetails {
     private String businesskey;
     private String description;
+    private boolean active;
+    private InstrumentType instrumentType;
     private double value;
     private double referenceValue;
     private LiquidityType liquiditytype;
@@ -45,5 +47,21 @@ public class InstrumentDetails {
     }
     public void setLiquiditytype(LiquidityType liquiditytype) {
         this.liquiditytype = liquiditytype;
+    }
+
+    public boolean getActive() {
+        return this.active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public InstrumentType getInstrumentType() {
+        return this.instrumentType;
+    }
+
+    public void setInstrumentType(InstrumentType instrumentType) {
+        this.instrumentType = instrumentType;
     }
 }
