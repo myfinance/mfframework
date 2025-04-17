@@ -64,15 +64,11 @@ class CompositeApiImplTest {
         when(instrumentClient.listAccounts(tenantbusinesskey)).thenReturn(Flux.just(instrument1, instrument2));
 
         // Mocking valuationClient responses
-        HashMap<String, Double> valuesForDueday = new HashMap<>();
-        valuesForDueday.put("key1", 100.0);
-        valuesForDueday.put("key2", 200.0);
-        when(valuationClient.getValues(Arrays.asList("key1", "key2"), duedate)).thenReturn(Flux.just(valuesForDueday));
+        when(valuationClient.getValue("key1", duedate)).thenReturn(Mono.just(100.0));
+        when(valuationClient.getValue("key2", duedate)).thenReturn(Mono.just(200.0));
 
-        HashMap<String, Double> valuesForReferencedate = new HashMap<>();
-        valuesForReferencedate.put("key1", 90.0);
-        valuesForReferencedate.put("key2", 190.0);
-        when(valuationClient.getValues(Arrays.asList("key1", "key2"), referencedate)).thenReturn(Flux.just(valuesForReferencedate));
+        when(valuationClient.getValue("key1", referencedate)).thenReturn(Mono.just(90.0));
+        when(valuationClient.getValue("key2", referencedate)).thenReturn(Mono.just(190.0));
 
         // Testing listDetailedAccounts
         Mono<List<InstrumentDetails>> result = compositeApiImpl.listDetailedAccounts(tenantbusinesskey, duedate, referencedate);
@@ -87,8 +83,10 @@ class CompositeApiImplTest {
 
         // Verify interactions
         verify(instrumentClient).listAccounts(tenantbusinesskey);
-        verify(valuationClient).getValues(Arrays.asList("key1", "key2"), duedate);
-        verify(valuationClient).getValues(Arrays.asList("key1", "key2"), referencedate);
+        verify(valuationClient).getValue("key1", duedate);
+        verify(valuationClient).getValue("key2", duedate);
+        verify(valuationClient).getValue("key1", referencedate);
+        verify(valuationClient).getValue("key2", referencedate);
     }
 
     @Test

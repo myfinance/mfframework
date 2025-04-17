@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static de.hf.myfinance.event.Event.Type.*;
 
@@ -107,7 +108,8 @@ public class CompositeApiImpl implements CompositeApi {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // good pract
         }
-        //create budgets with default budget group first because realestates need a valuebudget
+        // create budgets with default budget group first because realestates need a
+        // valuebudget
         // there will be error msg for all other budgets
         Arrays.stream(instruments)
                 .filter(instrument -> instrument.getInstrumentType().equals(InstrumentType.BUDGET))
@@ -336,18 +338,18 @@ public class CompositeApiImpl implements CompositeApi {
             instrumentDetailMap.put(i.getBusinesskey(), instrumentDetails);
         });
 
-        // request the values for alle instruments,collect the flux and reduce it to one
-        // mono
-        Mono<HashMap<String, Double>> valuesForDueday = valuationClient.getValues(businesskeys, duedate)
-                .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
-                    accumulator.putAll(next);
-                    return accumulator; // Return the modified accumulator
-                });
-        Mono<HashMap<String, Double>> valuesForReferencedate = valuationClient.getValues(businesskeys, referencedate)
-                .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
-                    accumulator.putAll(next);
-                    return accumulator; // Return the modified accumulator
-                });
+        // request the value for each instrument, put the result in a map to connect in
+        // to the requested instrument key and collect it in a mon of the map
+
+        var valuesForDueday = Flux.fromIterable(businesskeys)
+                .flatMap(k -> valuationClient.getValue(k, duedate)
+                        .map(result -> Map.entry(k, result)))
+                .collectMap(Map.Entry::getKey, Map.Entry::getValue);
+
+        var valuesForReferencedate = Flux.fromIterable(businesskeys)
+                .flatMap(k -> valuationClient.getValue(k, referencedate)
+                        .map(result -> Map.entry(k, result)))
+                .collectMap(Map.Entry::getKey, Map.Entry::getValue);
 
         return Mono.zip(valuesForDueday, valuesForReferencedate).map(tuple -> {
             tuple.getT1().keySet().forEach(x -> {
@@ -379,18 +381,14 @@ public class CompositeApiImpl implements CompositeApi {
             instrumentDetailMap.put(i.getBusinesskey(), securityDetails);
         });
 
-        // request the values for alle instruments,collect the flux and reduce it to one
-        // mono
-        Mono<HashMap<String, Double>> valuesForDueday = valuationClient.getValues(businesskeys, duedate)
-                .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
-                    accumulator.putAll(next);
-                    return accumulator; // Return the modified accumulator
-                });
-        Mono<HashMap<String, Double>> valuesForReferencedate = valuationClient.getValues(businesskeys, referencedate)
-                .reduce(new HashMap<String, Double>(), (accumulator, next) -> {
-                    accumulator.putAll(next);
-                    return accumulator; // Return the modified accumulator
-                });
+        var valuesForDueday = Flux.fromIterable(businesskeys)
+                .flatMap(k -> valuationClient.getValue(k, duedate)
+                        .map(result -> Map.entry(k, result)))
+                .collectMap(Map.Entry::getKey, Map.Entry::getValue);
+        var valuesForReferencedate = Flux.fromIterable(businesskeys)
+                .flatMap(k -> valuationClient.getValue(k, referencedate)
+                        .map(result -> Map.entry(k, result)))
+                .collectMap(Map.Entry::getKey, Map.Entry::getValue);
 
         return Mono.zip(valuesForDueday, valuesForReferencedate).map(tuple -> {
             tuple.getT1().keySet().forEach(x -> {

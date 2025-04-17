@@ -29,7 +29,6 @@ public class MFValuationClient implements ValuationApi {
     private final ObjectMapper mapper;
     private final String valuationServiceUrl;
 
-    @Autowired
     public MFValuationClient(
             WebClient.Builder webClient,
             ObjectMapper mapper,
@@ -61,19 +60,6 @@ public class MFValuationClient implements ValuationApi {
         throw new MFException(MFMsgKey.UNSPECIFIED, "not implemented yet");
     }
 
-    @Override
-    public Flux<Map<String,Double>> getValues(List<String> businesskey, LocalDate date) {
-        StringBuilder uriBuilder = new StringBuilder("/getvalues?");
-        businesskey.forEach(b -> uriBuilder.append("businesskeys=").append(b).append("&"));
-        uriBuilder.append("date=").append(date);
-        String uri = uriBuilder.toString();
-        if(uri!=null) {
-            return webClient.get()
-                .uri(valuationServiceUrl + uri)
-                .retrieve().bodyToFlux(new ParameterizedTypeReference<Map<String, Double>>() {});
-        } 
-        throw new MFException(MFMsgKey.ILLEGAL_ARGUMENTS, "the uri ist not allowed to be null");  
-    }
 
     private String encodeUriParameters( String parameterName, String parameterValue){
 
