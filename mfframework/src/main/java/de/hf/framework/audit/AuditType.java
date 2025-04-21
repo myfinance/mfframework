@@ -6,6 +6,7 @@ public enum AuditType {
     TRANSACTIONEVENT,   // A Pushevent via Websocket to trigger Frontendupdates
     RECURRENTTRANSACTIONEVENT,   // A Pushevent via Websocket to trigger Frontendupdates
     VALUECHANGEDEVENT,   // A Pushevent via Websocket to trigger Frontendupdates
+    PRICECHANGEDEVENT,   // A Pushevent via Websocket to trigger Frontendupdates
     ERROR,  // A business error
     FATAL, // A fatal error in the Backend e.G:server crash
     DEBUG, //not published via Websocket only logged to the console
