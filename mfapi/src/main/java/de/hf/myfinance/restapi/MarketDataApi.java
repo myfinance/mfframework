@@ -17,7 +17,6 @@ public interface MarketDataApi {
             produces = "application/json")
     Mono<String> loadNewMarketData();
 
-
     @GetMapping(value = "/endOfDayPrices", produces = "application/json")
     Mono<EndOfDayPrices> getEndOfDayPrices(@RequestParam String businesskey);
 

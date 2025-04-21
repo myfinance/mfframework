@@ -118,6 +118,12 @@ public interface CompositeApi {
             produces = "application/json")
     Mono<String> loadNewMarketData();
 
+    @PostMapping(
+        value    = "/mf/loadNewMarketData4Instrument",
+        consumes = "application/json",
+        produces = "application/json")
+    Mono<String> loadNewMarketData4Instrument(@RequestParam String businesskey);
+
     @GetMapping(value = "/mf/endOfDayPrices", produces = "application/json")
     Mono<EndOfDayPrices> getEndOfDayPrices(@RequestParam String businesskey);
 

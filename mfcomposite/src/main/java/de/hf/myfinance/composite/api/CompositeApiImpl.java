@@ -277,7 +277,17 @@ public class CompositeApiImpl implements CompositeApi {
         return Mono.fromCallable(() -> {
 
             sendMessage("loadNewMarketData-out-0",
-                    new Event<>(START, "load", null));
+                    new Event<>(START, "load", "all"));
+            return "{\"success\": \"MarketData loading started \"}";
+        }).subscribeOn(publishEventScheduler);
+    }
+
+    @Override
+    public Mono<String> loadNewMarketData4Instrument(String businesskey) {
+        return Mono.fromCallable(() -> {
+
+            sendMessage("loadNewMarketData-out-0",
+                    new Event<>(START, "load", businesskey));
             return "{\"success\": \"MarketData loading started \"}";
         }).subscribeOn(publishEventScheduler);
     }
