@@ -18,6 +18,7 @@ public enum TransactionType {
     BUDGETTRANSFER,
     DEPOTCASHFLOW,
     INTERESTS,
+    LIFEINSURANCEEXPENSE,
     BUY,
     SELL
 }
