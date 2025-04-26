@@ -7,8 +7,11 @@ public class RecurrentTransaction {
     private String recurrentTransactionId;
     private String serviceAddress;
 
-    private String firstInstrumentBusinessKey;
-    private String secondInstrumentBusinessKey;
+    private String budgetKey;
+    private String trgBudgetKey;
+    private String accKey;
+    private String trgAccKey;
+    private String insuranceKey; 
     private RecurrentFrequency recurrentFrequency;
     private double value;
     private LocalDate nextTransactionDate;
@@ -30,19 +33,47 @@ public class RecurrentTransaction {
         this.serviceAddress = serviceAddress;
     }
 
-    public String getFirstInstrumentBusinessKey() {
-        return firstInstrumentBusinessKey;
-    }
-    public void setFirstInstrumentBusinessKey(String firstInstrumentBusinessKey) {
-        this.firstInstrumentBusinessKey = firstInstrumentBusinessKey;
+
+    public String getBudgetKey() {
+        return this.budgetKey;
     }
 
-    public String getSecondInstrumentBusinessKey() {
-        return secondInstrumentBusinessKey;
+    public void setBudgetKey(String budgetKey) {
+        this.budgetKey = budgetKey;
     }
-    public void setSecondInstrumentBusinessKey(String secondInstrumentBusinessKey) {
-        this.secondInstrumentBusinessKey = secondInstrumentBusinessKey;
+
+    public String getTrgBudgetKey() {
+        return this.trgBudgetKey;
     }
+
+    public void setTrgBudgetKey(String trgBudgetKey) {
+        this.trgBudgetKey = trgBudgetKey;
+    }
+
+    public String getAccKey() {
+        return this.accKey;
+    }
+
+    public void setAccKey(String accKey) {
+        this.accKey = accKey;
+    }
+
+    public String getTrgAccKey() {
+        return this.trgAccKey;
+    }
+
+    public void setTrgAccKey(String trgAccKey) {
+        this.trgAccKey = trgAccKey;
+    }
+
+    public String getInsuranceKey() {
+        return this.insuranceKey;
+    }
+
+    public void setInsuranceKey(String insuranceKey) {
+        this.insuranceKey = insuranceKey;
+    }
+
 
     public RecurrentFrequency getRecurrentFrequency() {
         return recurrentFrequency;
