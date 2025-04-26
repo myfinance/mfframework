@@ -15,8 +15,6 @@ public class Transaction {
     // map of instrumentBusinesskey and value
     private Map<String, Double> cashflows = new HashMap<>(0);
     private TransactionType transactionType;
-    
-    private Boolean isInterest;
 
     private String serviceAddress;
 
@@ -31,14 +29,6 @@ public class Transaction {
         this.description = description;
         this.transactiondate = transactiondate;
         this.transactionType = transactionType;
-    }
-
-    public Boolean getIsInterest() {
-        return this.isInterest;
-    }
-
-    public void setIsInterest(Boolean isInterest) {
-        this.isInterest = isInterest;
     }
 
     public String getTransactionId() {
