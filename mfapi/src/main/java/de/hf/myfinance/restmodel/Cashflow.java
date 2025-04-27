@@ -7,6 +7,8 @@ public class Cashflow {
     private LocalDate transactiondate;
     private String instrumentBusinesskey;
     private double value;
+    private boolean isInterest;
+    private boolean isTrade;
     private String serviceAddress;
 
     public Cashflow() {
@@ -53,5 +55,31 @@ public class Cashflow {
     public void setValue(double value) {
         this.value = value;
     }
+
+
+    public boolean isIsInterest() {
+        return this.isInterest;
+    }
+
+    public boolean getIsInterest() {
+        return this.isInterest;
+    }
+
+    public void setIsInterest(boolean isInterest) {
+        this.isInterest = isInterest;
+    }
+
+    public boolean isIsTrade() {
+        return this.isTrade;
+    }
+
+    public boolean getIsTrade() {
+        return this.isTrade;
+    }
+
+    public void setIsTrade(boolean isTrade) {
+        this.isTrade = isTrade;
+    }
+
 }
 
