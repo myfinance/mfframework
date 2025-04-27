@@ -1,5 +1,6 @@
 package de.hf.myfinance.restapi;
 
+import de.hf.myfinance.restmodel.Cashflow;
 import de.hf.myfinance.restmodel.ValueCurve;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
@@ -41,5 +43,8 @@ public interface ValuationApi {
 
 	@GetMapping(value = "/getvalue", produces = "application/json")
 	Mono<Double> getValue(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
+
+	@GetMapping(value = "/cashflows4instrument", produces = "application/json")
+    Flux<Cashflow> listCashflows4Instrument(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
 
 }

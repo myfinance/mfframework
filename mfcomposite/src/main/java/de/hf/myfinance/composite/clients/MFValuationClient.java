@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hf.framework.exceptions.MFException;
 import de.hf.myfinance.exception.MFMsgKey;
 import de.hf.myfinance.restapi.ValuationApi;
+import de.hf.myfinance.restmodel.Cashflow;
 import de.hf.myfinance.restmodel.ValueCurve;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +54,12 @@ public class MFValuationClient implements ValuationApi {
         return webClient.get()
                 .uri(valuationServiceUrl + "/getvalue?businesskey="+businesskey+"&date="+date)
                 .retrieve().bodyToMono(Double.class);
+    }
+
+    @Override
+    public Flux<Cashflow> listCashflows4Instrument(String businesskey, LocalDate startDate, LocalDate endDate) {
+        return webClient.get().uri(valuationServiceUrl + "/cashflows4instrument?businesskey="+businesskey+"&startDate="+startDate+"&endDate="+endDate)
+                .retrieve().bodyToFlux(Cashflow.class);
     }
 
     @Override

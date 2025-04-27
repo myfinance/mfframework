@@ -122,7 +122,7 @@ class CompositeApiImplTest {
         cashflows.add(cashflow2); 
         cashflows.add(cashflow3); 
         cashflows.add(cashflow4); 
-        when(transactionClient.listCashflows4Instrument(businesskey, duedate, referencedate)).thenReturn(Flux.fromIterable(cashflows));
+        when(valuationClient.listCashflows4Instrument(businesskey, duedate, referencedate)).thenReturn(Flux.fromIterable(cashflows));
 
         // Testing listDetailedAccounts
         var result = compositeApiImpl.getInstrumentDetails(businesskey, duedate, referencedate, duedate, referencedate, duedate, referencedate).block();

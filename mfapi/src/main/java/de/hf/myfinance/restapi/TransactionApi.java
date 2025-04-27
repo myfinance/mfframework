@@ -53,9 +53,6 @@ public interface TransactionApi {
     @GetMapping(value = "/transactions", produces = "application/json")
     Flux<Transaction> listTransactions(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
 
-    @GetMapping(value = "/cashflows4instrument", produces = "application/json")
-    Flux<Cashflow> listCashflows4Instrument(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
-
     @GetMapping(value = "/avgexpensesoflastyear", produces = "application/json")
     Mono<Double> getAvgExpensesOfLastYear(@RequestParam String businesskey);
 

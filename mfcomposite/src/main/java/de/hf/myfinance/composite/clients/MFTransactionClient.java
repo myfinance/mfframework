@@ -28,7 +28,6 @@ public class MFTransactionClient implements TransactionApi {
     private final WebClient webClient;
     private final String transactionServiceUrl;
 
-    @Autowired
     public MFTransactionClient(
             RestTemplate restTemplate,
             ObjectMapper mapper,
@@ -82,12 +81,6 @@ public class MFTransactionClient implements TransactionApi {
     @Override
     public Mono<String> delTransaction(String transactionId) {
         throw new MFException(MFMsgKey.UNSPECIFIED, "not implemented yet");
-    }
-
-    @Override
-    public Flux<Cashflow> listCashflows4Instrument(String businesskey, LocalDate startDate, LocalDate endDate) {
-        return webClient.get().uri(transactionServiceUrl + "/cashflows4instrument?businesskey="+businesskey+"&startDate="+startDate+"&endDate="+endDate)
-                .retrieve().bodyToFlux(Cashflow.class);
     }
 
     @Override
