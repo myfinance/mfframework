@@ -418,7 +418,7 @@ public class CompositeApiImpl implements CompositeApi {
         var instrumentFullDetails = instrumentClient.getInstrument(businesskey)
                 .flatMap(i -> collectInstrumentFullDetails(i, duedate, referencedate));
         var valueCurve = valuationClient.getValueCurve(businesskey, starttimeseries, endtimeseries);
-        var avgExpensesOfLastYear = transactionClient.getAvgExpensesOfLastYear(businesskey);
+        var avgExpensesOfLastYear = valuationClient.getAvgExpensesOfLastYear(businesskey);
         var cashflows = valuationClient.listCashflows4Instrument(businesskey, firstcashflowdate, lastcashflowdate);
 
         var result = Mono.zip(instrumentFullDetails, valueCurve).map(tuple -> {

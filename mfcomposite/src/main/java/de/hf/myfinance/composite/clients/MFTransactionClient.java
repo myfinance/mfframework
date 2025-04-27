@@ -83,11 +83,4 @@ public class MFTransactionClient implements TransactionApi {
         throw new MFException(MFMsgKey.UNSPECIFIED, "not implemented yet");
     }
 
-    @Override
-    public Mono<Double> getAvgExpensesOfLastYear(String businesskey) {
-        return webClient.get().uri(transactionServiceUrl + "/avgexpensesoflastyear?businesskey="+businesskey)
-                .retrieve().bodyToMono(Double.class);
-    }
-
-
 }

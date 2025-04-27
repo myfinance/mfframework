@@ -63,6 +63,12 @@ public class MFValuationClient implements ValuationApi {
     }
 
     @Override
+    public Mono<Double> getAvgExpensesOfLastYear(String businesskey) {
+        return webClient.get().uri(valuationServiceUrl + "/avgexpensesoflastyear?businesskey="+businesskey)
+                .retrieve().bodyToMono(Double.class);
+    }
+
+    @Override
     public String index() {
         throw new MFException(MFMsgKey.UNSPECIFIED, "not implemented yet");
     }

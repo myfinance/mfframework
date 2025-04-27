@@ -112,7 +112,7 @@ class CompositeApiImplTest {
         when(valuationClient.getValueCurve(businesskey, duedate, referencedate)).thenReturn(Mono.just(valueCurveObject));
 
         // Mocking transactionClient responses
-        when(transactionClient.getAvgExpensesOfLastYear(businesskey)).thenReturn(Mono.just(10.0));
+        when(valuationClient.getAvgExpensesOfLastYear(businesskey)).thenReturn(Mono.just(10.0));
         var cashflow1 = new Cashflow("bla1", duedate, businesskey, 100.0);
         var cashflow2 = new Cashflow("bla2", duedate, businesskey, 200.0);
         var cashflow3 = new Cashflow("bla3", duedate, businesskey, -50.0);
