@@ -52,5 +52,5 @@ public interface ValuationApi {
     Mono<Double> getAvgExpensesOfLastYear(@RequestParam String businesskey);
 
 	@GetMapping(value = "/positions", produces = "application/json")
-    Flux<Position> getPositions();
+    Flux<Position> getPositions(@RequestParam String tenantkey);
 }
