@@ -1,6 +1,7 @@
 package de.hf.myfinance.restapi;
 
 import de.hf.myfinance.restmodel.Cashflow;
+import de.hf.myfinance.restmodel.Position;
 import de.hf.myfinance.restmodel.ValueCurve;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -49,4 +50,7 @@ public interface ValuationApi {
 
 	@GetMapping(value = "/avgexpensesoflastyear", produces = "application/json")
     Mono<Double> getAvgExpensesOfLastYear(@RequestParam String businesskey);
+
+	@GetMapping(value = "/positions", produces = "application/json")
+    Flux<Position> getPositions();
 }

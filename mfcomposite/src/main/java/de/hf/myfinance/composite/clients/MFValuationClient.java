@@ -5,12 +5,9 @@ import de.hf.framework.exceptions.MFException;
 import de.hf.myfinance.exception.MFMsgKey;
 import de.hf.myfinance.restapi.ValuationApi;
 import de.hf.myfinance.restmodel.Cashflow;
+import de.hf.myfinance.restmodel.Position;
 import de.hf.myfinance.restmodel.ValueCurve;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,15 +16,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
 
 @Component
 public class MFValuationClient implements ValuationApi {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MFValuationClient.class);
     private final WebClient webClient;
-    private final ObjectMapper mapper;
     private final String valuationServiceUrl;
 
     public MFValuationClient(
@@ -37,7 +30,6 @@ public class MFValuationClient implements ValuationApi {
             @Value("${app.mfvaluation.port}") int valuationServicePort) {
 
         this.webClient = webClient.build();
-        this.mapper = mapper;
 
         valuationServiceUrl = "http://" + valuationServiceHost + ":" + valuationServicePort;
     }
@@ -81,5 +73,11 @@ public class MFValuationClient implements ValuationApi {
                                         .build()
                                         .encode()
                                         .toUriString();
+    }
+
+    @Override
+    public Flux<Position> getPositions() {
+        return webClient.get().uri(valuationServiceUrl + "/positions")
+                .retrieve().bodyToFlux(Position.class);
     }
 }
