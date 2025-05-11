@@ -161,5 +161,8 @@ public interface CompositeApi {
     Mono<List<SecurityDetails>> listDetailedSecurities(
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate duedate, 
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate referencedate);
+
+    @GetMapping(value = "/positions", produces = "application/json")
+    Flux<Position> getPositions(@RequestParam String tenantKey);
                                                     
 }

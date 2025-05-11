@@ -15,7 +15,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
 import java.time.LocalDate;
+import java.util.List;
 
 @Component
 public class MFValuationClient implements ValuationApi {
@@ -61,6 +63,20 @@ public class MFValuationClient implements ValuationApi {
     }
 
     @Override
+    public Flux<Position> getPositions(List<String> depotKeys) {
+        
+
+        URI uri = UriComponentsBuilder
+            .fromHttpUrl(valuationServiceUrl + "/positions")
+            .queryParam("depotKeys", depotKeys.toArray()) 
+            .build()
+            .encode()
+            .toUri();
+        return webClient.get().uri(uri)
+                .retrieve().bodyToFlux(Position.class);
+    }
+
+    @Override
     public String index() {
         throw new MFException(MFMsgKey.UNSPECIFIED, "not implemented yet");
     }
@@ -75,9 +91,5 @@ public class MFValuationClient implements ValuationApi {
                                         .toUriString();
     }
 
-    @Override
-    public Flux<Position> getPositions() {
-        return webClient.get().uri(valuationServiceUrl + "/positions")
-                .retrieve().bodyToFlux(Position.class);
-    }
+
 }

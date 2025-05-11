@@ -445,6 +445,38 @@ public class CompositeApiImpl implements CompositeApi {
 
     }
 
+    @Override
+    public Flux<Position> getPositions(String tenantbusinesskey) {
+        var allInstrumentsMono = listSecuritiesAndInstrumentsForTenant(tenantbusinesskey).collectList();
+
+        Flux<Position> enrichedPositions = allInstrumentsMono.flatMapMany(allInstruments -> {
+            
+            // Step 2: Filter instruments of type DEPOT
+            List<String> depotKeys = allInstruments.stream()
+                .filter(instr -> instr.getInstrumentType().equals(InstrumentType.DEPOT) && instr.isActive())
+                .map(Instrument::getBusinesskey)
+                .toList();
+        
+            // Step 3: Fetch positions for those keys
+            return valuationClient.getPositions(depotKeys)
+                .map(position -> {
+                    // Step 4: Enrich each position with matching instrument description
+                    allInstruments.stream()
+                        .filter(instr -> instr.getBusinesskey().equals(position.getDepotId()))
+                        .findFirst()
+                        .ifPresent(instr -> position.setDepotDescription(instr.getDescription()));
+                    allInstruments.stream()
+                        .filter(instr -> instr.getBusinesskey().equals(position.getSecurityId()))
+                        .findFirst()
+                        .ifPresent(instr -> position.setSecurityDescription(instr.getDescription()));
+                    
+                    return position;
+                });
+        });     
+        return enrichedPositions;   
+    }
+
+
     private Mono<InstrumentFullDetails> collectInstrumentFullDetails(Instrument instrument, LocalDate duedate,
             LocalDate referencedate) {
         var valueDuedate = valuationClient.getValue(instrument.getBusinesskey(), duedate);
@@ -475,5 +507,7 @@ public class CompositeApiImpl implements CompositeApi {
                 .build();
         streamBridge.send(bindingName, message);
     }
+
+
 
 }
