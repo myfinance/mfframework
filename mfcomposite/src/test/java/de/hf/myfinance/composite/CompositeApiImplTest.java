@@ -15,9 +15,11 @@ import de.hf.myfinance.restmodel.Cashflow;
 import de.hf.myfinance.restmodel.Instrument;
 import de.hf.myfinance.restmodel.InstrumentDetails;
 import de.hf.myfinance.restmodel.InstrumentType;
+import de.hf.myfinance.restmodel.Position;
 import de.hf.myfinance.restmodel.ValueCurve;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 import reactor.core.publisher.Flux;
@@ -142,5 +144,49 @@ class CompositeApiImplTest {
         assertEquals(-60.0, result.getAdditionalValues().get("sumOfExpense"));
         assertEquals(2, result.getIncomeInPeriod().size());
         assertEquals(2, result.getExpensesInPeriod().size());
+    }
+
+    @Test
+    void getPositionsTest() {
+        var tenantbusinesskey = "tenantkey";
+        var security1 = new Instrument("sec1Key", "sec1desc", InstrumentType.EQUITY, true);
+        var security2 = new Instrument("sec2Key", "sec2desc", InstrumentType.BOND, true);
+        var security3 = new Instrument("sec3Key", "sec3desc", InstrumentType.EQUITY, true);
+        var securities = new ArrayList<Instrument>();
+        securities.add(security1);
+        securities.add(security2);
+        securities.add(security3);
+        // Mocking instrumentClient response
+        when(instrumentClient.listSecurities()).thenReturn(Flux.fromIterable(securities));
+
+        var depot1 = new Instrument("depot1Key", "depot1desc", InstrumentType.DEPOT, true);
+        var depot2 = new Instrument("depot2Key", "depot2desc", InstrumentType.DEPOT, true);
+
+        var depots = new ArrayList<Instrument>();
+        depots.add(depot1);
+        depots.add(depot2);
+        when(instrumentClient.listInstrumentsForTenant(tenantbusinesskey)).thenReturn(Flux.fromIterable(depots));
+
+        var position1 = new Position("depot1Key", null, "sec1Key", null, InstrumentType.EQUITY);
+        var position2 = new Position("depot1Key", null, "sec2Key", null, InstrumentType.BOND);
+        var position3 = new Position("depot2Key", null, "sec3Key", null, InstrumentType.EQUITY);
+        var positions = new ArrayList<Position>();
+        positions.add(position1);
+        positions.add(position2);
+        positions.add(position3);
+        var depotKeys = new ArrayList<String>();
+        depotKeys.add("depot1Key");
+        depotKeys.add("depot2Key");
+        when(valuationClient.getPositions(depotKeys)).thenReturn(Flux.fromIterable(positions));
+        
+        var result = compositeApiImpl.getPositions(tenantbusinesskey).collectList().block();
+
+        assertEquals(3, result.size());
+        Position pos1 = result.stream().filter(r->r.getSecurityId().equals("sec1Key")).findFirst().orElseThrow();
+        assertNotNull(pos1);
+        assertEquals("depot1Key", pos1.getDepotId());
+        assertEquals("depot1desc", pos1.getDepotDescription());
+        assertEquals("sec1desc", pos1.getSecurityDescription());
+        assertEquals(InstrumentType.EQUITY, pos1.getSecurityType());
     }
 }
