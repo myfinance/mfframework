@@ -468,7 +468,10 @@ public class CompositeApiImpl implements CompositeApi {
                     allInstruments.stream()
                         .filter(instr -> instr.getBusinesskey().equals(position.getSecurityId()))
                         .findFirst()
-                        .ifPresent(instr -> position.setSecurityDescription(instr.getDescription()));
+                        .ifPresent(instr -> {
+                            position.setSecurityDescription(instr.getDescription());
+                            position.setSecurityType(instr.getInstrumentType());
+                        });
                     
                     return position;
                 });

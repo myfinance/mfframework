@@ -167,9 +167,9 @@ class CompositeApiImplTest {
         depots.add(depot2);
         when(instrumentClient.listInstrumentsForTenant(tenantbusinesskey)).thenReturn(Flux.fromIterable(depots));
 
-        var position1 = new Position("depot1Key", null, "sec1Key", null, InstrumentType.EQUITY);
-        var position2 = new Position("depot1Key", null, "sec2Key", null, InstrumentType.BOND);
-        var position3 = new Position("depot2Key", null, "sec3Key", null, InstrumentType.EQUITY);
+        var position1 = new Position("depot1Key", null, "sec1Key", null, null);
+        var position2 = new Position("depot1Key", null, "sec2Key", null, null);
+        var position3 = new Position("depot2Key", null, "sec3Key", null, null);
         var positions = new ArrayList<Position>();
         positions.add(position1);
         positions.add(position2);
