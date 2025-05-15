@@ -162,7 +162,7 @@ public interface CompositeApi {
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate duedate, 
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate referencedate);
 
-    @GetMapping(value = "/positions", produces = "application/json")
+    @GetMapping(value = "/mf/positions", produces = "application/json")
     Flux<Position> getPositions(@RequestParam String tenantbusinesskey);
                                                     
 }

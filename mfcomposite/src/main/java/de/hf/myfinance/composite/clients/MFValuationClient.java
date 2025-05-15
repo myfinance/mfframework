@@ -68,7 +68,7 @@ public class MFValuationClient implements ValuationApi {
 
         URI uri = UriComponentsBuilder
             .fromHttpUrl(valuationServiceUrl + "/positions")
-            .queryParam("depotKeys", depotKeys.toArray()) 
+            .queryParam("depots", depotKeys.toArray()) 
             .build()
             .encode()
             .toUri();
