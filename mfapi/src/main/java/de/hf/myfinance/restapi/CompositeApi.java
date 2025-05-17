@@ -64,6 +64,9 @@ public interface CompositeApi {
     @GetMapping(value = "/mf/budgets", produces = "application/json")
     Flux<Instrument> listBudgets(@RequestParam String tenantbusinesskey);
 
+    @GetMapping(value = "/mf/incomebudgets", produces = "application/json")
+    Flux<Instrument> getIncomeBudgets(@RequestParam String tenantbusinesskey);
+
 
 
 

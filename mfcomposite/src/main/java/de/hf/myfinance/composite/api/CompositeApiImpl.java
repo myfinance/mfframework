@@ -195,6 +195,11 @@ public class CompositeApiImpl implements CompositeApi {
         return instrumentClient.listBudgets(tenantbusinesskey);
     }
 
+    @Override
+	public Flux<Instrument> getIncomeBudgets(String tenantbusinesskey) {
+        return instrumentClient.getIncomeBudgets(tenantbusinesskey);
+    }
+
     /** Transactions: **/
 
     @Override
