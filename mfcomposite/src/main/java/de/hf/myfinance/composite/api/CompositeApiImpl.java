@@ -246,12 +246,12 @@ public class CompositeApiImpl implements CompositeApi {
     }
 
     @Override
-    public Mono<String> delRecurrentTransfer(String recurrentTransactionId) {
+    public Mono<String> delRecurrentTransfer(String transactionId) {
         return Mono.fromCallable(() -> {
 
-            sendMessage("recurrentTransactionaAproved-out-0",
-                    new Event<>(DELETE, recurrentTransactionId, recurrentTransactionId));
-            return "{\"success\": \"delete recurrentTransaction queued:" + recurrentTransactionId + " \"}";
+            sendMessage("recurrentTransactionApproved-out-0",
+                    new Event<>(DELETE, transactionId, new RecurrentTransaction()));
+            return "{\"success\": \"delete recurrentTransaction queued:" + transactionId + " \"}";
         }).subscribeOn(publishEventScheduler);
     }
 

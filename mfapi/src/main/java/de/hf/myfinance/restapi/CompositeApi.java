@@ -95,10 +95,10 @@ public interface CompositeApi {
     Mono<String> saveRecurrentTransaction(@RequestBody RecurrentTransaction transaction);
 
     @DeleteMapping(
-            value    = "/mf/delrecurrenttransfer/{recurrentTransactionId}",
+            value    = "/mf/delrecurrenttransfer/{transactionId}",
             consumes = "application/json",
             produces = "application/json")
-    Mono<String> delRecurrentTransfer(@PathVariable String recurrentTransactionId);
+    Mono<String> delRecurrentTransfer(@PathVariable String transactionId);
 
     @PostMapping(
             value    = "/mf/processRecurrentTransaction",
