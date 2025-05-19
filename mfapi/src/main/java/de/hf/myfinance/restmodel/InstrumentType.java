@@ -23,6 +23,7 @@ public enum InstrumentType {
     REALESTATE(21),
     LOAN(22),
     BUDGETPORTFOLIO(23),
+    KRYPTO(24),
     UNKNOWN(99);
 
     public static final String GIRO_IDSTRING = "1";
@@ -47,6 +48,7 @@ public enum InstrumentType {
     public static final String REALESTATE_IDSTRING = "21";
     public static final String LOAN_IDSTRING = "22";
     public static final String BUDGETPORTFOLIO_IDSTRING = "23";
+    public static final String KRYPTO_IDSTRING = "24";
 
     private final Integer value;
 
@@ -75,6 +77,7 @@ public enum InstrumentType {
             case 21 -> InstrumentTypeGroup.REALESTATE;
             case 22 -> InstrumentTypeGroup.LOAN;
             case 23 -> InstrumentTypeGroup.PORTFOLIO;
+            case 24 -> InstrumentTypeGroup.SECURITY;
             default -> InstrumentTypeGroup.CASHACCOUNT;
         };
     }
@@ -103,6 +106,7 @@ public enum InstrumentType {
             case 21 -> InstrumentType.REALESTATE;
             case 22 -> InstrumentType.LOAN;
             case 23 -> InstrumentType.BUDGETPORTFOLIO;
+            case 24 -> InstrumentType.KRYPTO;
             default -> InstrumentType.UNKNOWN;
         };
     }
