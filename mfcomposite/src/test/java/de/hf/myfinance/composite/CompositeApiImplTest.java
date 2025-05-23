@@ -115,10 +115,10 @@ class CompositeApiImplTest {
 
         // Mocking transactionClient responses
         when(valuationClient.getAvgExpensesOfLastYear(businesskey)).thenReturn(Mono.just(10.0));
-        var cashflow1 = new Cashflow("bla1", duedate, businesskey, 100.0, "id1");
-        var cashflow2 = new Cashflow("bla2", duedate, businesskey, 200.0, "id2");
-        var cashflow3 = new Cashflow("bla3", duedate, businesskey, -50.0, "id3");
-        var cashflow4 = new Cashflow("bla4", duedate, businesskey, -10.0, "id4");
+        var cashflow1 = new Cashflow("bla1", duedate, businesskey, 100.0);
+        var cashflow2 = new Cashflow("bla2", duedate, businesskey, 200.0);
+        var cashflow3 = new Cashflow("bla3", duedate, businesskey, -50.0);
+        var cashflow4 = new Cashflow("bla4", duedate, businesskey, -10.0);
         var cashflows= new ArrayList<Cashflow>();
         cashflows.add(cashflow1); 
         cashflows.add(cashflow2); 

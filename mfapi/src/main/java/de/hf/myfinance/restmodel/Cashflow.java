@@ -10,17 +10,15 @@ public class Cashflow {
     private boolean isInterest;
     private boolean isTrade;
     private String serviceAddress;
-    private String transactionId;
 
     public Cashflow() {
     }
 
-    public Cashflow(String description, LocalDate transactiondate, String instrumentBusinesskey, double value, String transactionId) {
+    public Cashflow(String description, LocalDate transactiondate, String instrumentBusinesskey, double value) {
         this.description = description;
         this.transactiondate = transactiondate;
         this.instrumentBusinesskey = instrumentBusinesskey;
         this.value = value;
-        this.transactionId = transactionId;
     }
 
     public String getDescription() {
@@ -82,15 +80,5 @@ public class Cashflow {
     public void setIsTrade(boolean isTrade) {
         this.isTrade = isTrade;
     }
-
-    public String getTransactionId() {
-        return this.transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-
-
 }
 
