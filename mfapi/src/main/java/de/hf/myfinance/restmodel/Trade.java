@@ -11,10 +11,11 @@ public class Trade {
         private LocalDate tradeDate;
         private String transactionId;
     
-        public Trade(String depotBusinessKey, String securityBusinessKey, Double amount) {
+        public Trade(String depotBusinessKey, String securityBusinessKey, Double amount, String transactionId) {
             this.depotBusinessKey = depotBusinessKey;
             this.securityBusinessKey = securityBusinessKey;
             this.amount = amount;
+            this.transactionId = transactionId;
         }
     
         public String getDepotBusinessKey() {

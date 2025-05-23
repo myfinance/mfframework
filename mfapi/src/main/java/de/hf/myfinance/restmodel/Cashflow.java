@@ -15,11 +15,12 @@ public class Cashflow {
     public Cashflow() {
     }
 
-    public Cashflow(String description, LocalDate transactiondate, String instrumentBusinesskey, double value) {
+    public Cashflow(String description, LocalDate transactiondate, String instrumentBusinesskey, double value, String transactionId) {
         this.description = description;
         this.transactiondate = transactiondate;
         this.instrumentBusinesskey = instrumentBusinesskey;
         this.value = value;
+        this.transactionId = transactionId;
     }
 
     public String getDescription() {
