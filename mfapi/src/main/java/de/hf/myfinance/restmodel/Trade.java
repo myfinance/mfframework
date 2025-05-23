@@ -9,6 +9,7 @@ public class Trade {
         private String securityBusinessKey;
         private Double amount;
         private LocalDate tradeDate;
+        private String transactionId;
     
         public Trade(String depotBusinessKey, String securityBusinessKey, Double amount) {
             this.depotBusinessKey = depotBusinessKey;
@@ -46,5 +47,13 @@ public class Trade {
       
         public void setTradeDate(LocalDate tradeDate) {
             this.tradeDate = tradeDate;
+        }
+
+        public String getTransactionId() {
+            return this.transactionId;
+        }
+    
+        public void setTransactionId(String transactionId) {
+            this.transactionId = transactionId;
         }
     }

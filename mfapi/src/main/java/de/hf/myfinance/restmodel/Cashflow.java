@@ -10,6 +10,7 @@ public class Cashflow {
     private boolean isInterest;
     private boolean isTrade;
     private String serviceAddress;
+    private String transactionId;
 
     public Cashflow() {
     }
@@ -80,6 +81,15 @@ public class Cashflow {
     public void setIsTrade(boolean isTrade) {
         this.isTrade = isTrade;
     }
+
+    public String getTransactionId() {
+        return this.transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
 
 }
 
