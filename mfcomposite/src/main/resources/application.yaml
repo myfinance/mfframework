@@ -40,31 +40,31 @@ spring.cloud.stream:
   bindings.validateInstrumentRequest-out-0:
     destination: validateInstrumentRequest
     producer:
-      required-groups: validateInstrumentauditGroup
+      required-groups: validateInstrumentsGroup
   bindings.validateTransactionRequest-out-0:
     destination: validateTransactionRequest
     producer:
-      required-groups: validateTransactionRequestAuditGroup
+      required-groups: validateTransactionGroup
   bindings.validateRecurrentTransactionRequest-out-0:
     destination: validateRecurrentTransactionRequest
     producer:
-      required-groups: validateRecurrentTransactionRequestAuditGroup
+      required-groups: validateRecurrentTransactionGroup
   bindings.processRecurrentTransactions-out-0:
     destination: processRecurrentTransactions
     producer:
-      required-groups: processRecurrentTransactionsAuditGroup
+      required-groups: processRecurrentTransactionsGroup
   bindings.loadNewMarketData-out-0:
     destination: loadNewMarketData
     producer:
-      required-groups: loadNewMarketDataAuditGroup
+      required-groups: loadNewMarketDataGroup
   bindings.recurrentTransactionApproved-out-0:
     destination: recurrentTransactionApproved
     producer:
-      required-groups: recurrentTransactionApprovedAuditGroup
+      required-groups: saveRecurrentTransactionGroup
   bindings.validateSinglePriceRequest-out-0:
     destination: validateSinglePriceRequest
     producer:
-      required-groups: validateSinglePriceAuditGroup      
+      required-groups: validateSinglePriceGroup      
 
 spring.rabbitmq:
   host: ${env.host}
