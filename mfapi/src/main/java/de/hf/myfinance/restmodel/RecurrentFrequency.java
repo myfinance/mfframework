@@ -2,7 +2,7 @@ package de.hf.myfinance.restmodel;
 
 public enum RecurrentFrequency {
     MONTHLY(1),
-    QUATERLY(2),
+    QUARTERLY(2),
     YEARLY(3),
     UNKNOWN(99);
 
@@ -21,7 +21,7 @@ public enum RecurrentFrequency {
     public static RecurrentFrequency getRecurrentFrequencyById(int recurrentfrequencyId){
         return switch (recurrentfrequencyId) {
             case 1 -> RecurrentFrequency.MONTHLY;
-            case 2 -> RecurrentFrequency.QUATERLY;
+            case 2 -> RecurrentFrequency.QUARTERLY;
             case 3 -> RecurrentFrequency.YEARLY;
             default -> RecurrentFrequency.UNKNOWN;
         };
