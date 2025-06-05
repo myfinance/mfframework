@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import static de.hf.myfinance.event.Event.Type.*;
 
@@ -196,7 +197,7 @@ public class CompositeApiImpl implements CompositeApi {
     }
 
     @Override
-	public Flux<Instrument> getIncomeBudgets(String tenantbusinesskey) {
+    public Flux<Instrument> getIncomeBudgets(String tenantbusinesskey) {
         return instrumentClient.getIncomeBudgets(tenantbusinesskey);
     }
 
@@ -335,7 +336,29 @@ public class CompositeApiImpl implements CompositeApi {
     public Mono<List<InstrumentDetails>> listDetailedBudets(String tenantbusinesskey, LocalDate duedate,
             LocalDate referencedate) {
 
-        return listBudgets(tenantbusinesskey).collectList().flatMap(a -> collectDetails(a, duedate, referencedate));
+        var detailsWithValues = instrumentClient.listAllBudgets(tenantbusinesskey).collectList()
+                .flatMap(a -> collectDetails(a, duedate, referencedate));
+
+        // setParents
+        var allInstruments = instrumentClient.listInstruments();
+        return Mono.zip(
+                detailsWithValues, // Mono<List<InstrumentDetails>>
+                allInstruments.collectMap(Instrument::getBusinesskey) // Mono<Map<String, Instrument>>
+        ).map(tuple -> {
+            List<InstrumentDetails> detailsList = tuple.getT1();
+            Map<String, Instrument> instrumentMap = tuple.getT2();
+
+            for (InstrumentDetails details : detailsList) {
+                String parentKey = details.getInstrumentParent();
+                Instrument parentInstrument = instrumentMap.get(parentKey);
+
+                if (parentInstrument != null) {
+                    details.setInstrumentParent(parentInstrument.getDescription());
+                }
+            }
+
+            return detailsList;
+        });
     }
 
     private Mono<List<InstrumentDetails>> collectDetails(List<Instrument> instruments, LocalDate duedate,
@@ -347,6 +370,7 @@ public class CompositeApiImpl implements CompositeApi {
             instrumentDetails.setBusinesskey(i.getBusinesskey());
             instrumentDetails.setDescription(i.getDescription());
             instrumentDetails.setActive(i.isActive());
+            instrumentDetails.setInstrumentParent(i.getParentBusinesskey());
             instrumentDetails.setInstrumentType(i.getInstrumentType());
             instrumentDetails.setLiquiditytype(i.getLiquidityType());
             businesskeys.add(i.getBusinesskey());
@@ -455,35 +479,34 @@ public class CompositeApiImpl implements CompositeApi {
         var allInstrumentsMono = listSecuritiesAndInstrumentsForTenant(tenantbusinesskey).collectList();
 
         Flux<Position> enrichedPositions = allInstrumentsMono.flatMapMany(allInstruments -> {
-            
+
             // Step 2: Filter instruments of type DEPOT
             List<String> depotKeys = allInstruments.stream()
-                .filter(instr -> instr.getInstrumentType().equals(InstrumentType.DEPOT) && instr.isActive())
-                .map(Instrument::getBusinesskey)
-                .toList();
-        
+                    .filter(instr -> instr.getInstrumentType().equals(InstrumentType.DEPOT) && instr.isActive())
+                    .map(Instrument::getBusinesskey)
+                    .toList();
+
             // Step 3: Fetch positions for those keys
             return valuationClient.getPositions(depotKeys)
-                .map(position -> {
-                    // Step 4: Enrich each position with matching instrument description
-                    allInstruments.stream()
-                        .filter(instr -> instr.getBusinesskey().equals(position.getDepotId()))
-                        .findFirst()
-                        .ifPresent(instr -> position.setDepotDescription(instr.getDescription()));
-                    allInstruments.stream()
-                        .filter(instr -> instr.getBusinesskey().equals(position.getSecurityId()))
-                        .findFirst()
-                        .ifPresent(instr -> {
-                            position.setSecurityDescription(instr.getDescription());
-                            position.setSecurityType(instr.getInstrumentType());
-                        });
-                    
-                    return position;
-                });
-        });     
-        return enrichedPositions;   
-    }
+                    .map(position -> {
+                        // Step 4: Enrich each position with matching instrument description
+                        allInstruments.stream()
+                                .filter(instr -> instr.getBusinesskey().equals(position.getDepotId()))
+                                .findFirst()
+                                .ifPresent(instr -> position.setDepotDescription(instr.getDescription()));
+                        allInstruments.stream()
+                                .filter(instr -> instr.getBusinesskey().equals(position.getSecurityId()))
+                                .findFirst()
+                                .ifPresent(instr -> {
+                                    position.setSecurityDescription(instr.getDescription());
+                                    position.setSecurityType(instr.getInstrumentType());
+                                });
 
+                        return position;
+                    });
+        });
+        return enrichedPositions;
+    }
 
     private Mono<InstrumentFullDetails> collectInstrumentFullDetails(Instrument instrument, LocalDate duedate,
             LocalDate referencedate) {
@@ -516,8 +539,4 @@ public class CompositeApiImpl implements CompositeApi {
         streamBridge.send(bindingName, message);
     }
 
-
-
 }
-
-

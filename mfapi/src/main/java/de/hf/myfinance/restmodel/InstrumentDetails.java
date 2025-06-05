@@ -12,6 +12,7 @@ public class InstrumentDetails {
     private double value;
     private double referenceValue;
     private LiquidityType liquiditytype;
+    private String instrumentParent;
 
     public String getBusinesskey() {
         return businesskey;
@@ -64,4 +65,17 @@ public class InstrumentDetails {
     public void setInstrumentType(InstrumentType instrumentType) {
         this.instrumentType = instrumentType;
     }
+
+    public boolean isActive() {
+        return this.active;
+    }
+
+    public String getInstrumentParent() {
+        return this.instrumentParent;
+    }
+
+    public void setInstrumentParent(String instrumentParent) {
+        this.instrumentParent = instrumentParent;
+    }
+
 }

@@ -90,6 +90,59 @@ class CompositeApiImplTest {
     }
 
     @Test
+    void listDetailedBudgetsTest() {
+        String tenantbusinesskey = "tenant1";
+        LocalDate duedate = LocalDate.now();
+        LocalDate referencedate = LocalDate.now().minusDays(1);
+
+
+        // Mocking instrumentClient response
+        Instrument parent1 = new Instrument("parentkey1", "parent 1", InstrumentType.BUDGETGROUP, true);
+        Instrument parent2 = new Instrument("parentkey2", "parent 2", InstrumentType.BUDGETGROUP, true);
+        Instrument instrument1 = new Instrument("key1", "Instrument 1", InstrumentType.BUDGET, true);
+        instrument1.setParentBusinesskey("parentkey1");
+        Instrument instrument2 = new Instrument("key2", "Instrument 2", InstrumentType.BUDGET, true);
+        instrument2.setParentBusinesskey("parentkey1");
+        Instrument instrument3 = new Instrument("key3", "Instrument 3", InstrumentType.BUDGET, true);
+        instrument3.setParentBusinesskey("parentkey2");
+        when(instrumentClient.listAllBudgets(tenantbusinesskey)).thenReturn(Flux.just(instrument1, instrument2,instrument3));
+        when(instrumentClient.listInstruments()).thenReturn(Flux.just(instrument1, instrument2,instrument3,parent1,parent2));
+
+        // Mocking valuationClient responses
+        when(valuationClient.getValue("key1", duedate)).thenReturn(Mono.just(100.0));
+        when(valuationClient.getValue("key2", duedate)).thenReturn(Mono.just(200.0));
+        when(valuationClient.getValue("key3", duedate)).thenReturn(Mono.just(50.0));
+
+        when(valuationClient.getValue("key1", referencedate)).thenReturn(Mono.just(90.0));
+        when(valuationClient.getValue("key2", referencedate)).thenReturn(Mono.just(190.0));
+        when(valuationClient.getValue("key3", referencedate)).thenReturn(Mono.just(70.0));
+
+        // Testing listDetailedAccounts
+        Mono<List<InstrumentDetails>> result = compositeApiImpl.listDetailedBudets(tenantbusinesskey, duedate, referencedate);
+
+        StepVerifier.create(result)
+                .expectNextMatches(list -> list.size() == 3 &&
+                        list.get(0).getValue() == 100.0 &&
+                        list.get(0).getReferenceValue() == 90.0 &&
+                        list.get(0).getInstrumentParent().equals("parent 1") &&
+                        list.get(1).getValue() == 200.0 &&
+                        list.get(1).getReferenceValue() == 190.0 &&
+                        list.get(1).getInstrumentParent().equals("parent 1") &&
+                        list.get(2).getValue() == 50.0 &&
+                        list.get(2).getReferenceValue() == 70.0 &&
+                        list.get(2).getInstrumentParent().equals("parent 2") 
+                    )
+                .verifyComplete();
+
+        // Verify interactions
+        verify(instrumentClient).listAllBudgets(tenantbusinesskey);
+        verify(valuationClient).getValue("key1", duedate);
+        verify(valuationClient).getValue("key2", duedate);
+        verify(valuationClient).getValue("key1", referencedate);
+        verify(valuationClient).getValue("key2", referencedate);
+    }
+
+    @Test
     void listInstrumentDetailsTest() {
         String businesskey = "key";
         String desc = "bla";

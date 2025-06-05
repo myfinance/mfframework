@@ -42,6 +42,9 @@ public interface InstrumentApi {
 	@GetMapping(value = "/budgets", produces = "application/json")
 	Flux<Instrument> listBudgets(@RequestParam String tenantbusinesskey);
 
+	@GetMapping(value = "/allbudgets", produces = "application/json")
+	Flux<Instrument> listAllBudgets(@RequestParam String tenantbusinesskey);
+
 	@GetMapping(value = "/incomebudgets", produces = "application/json")
 	Flux<Instrument> getIncomeBudgets(@RequestParam String tenantbusinesskey);
 
