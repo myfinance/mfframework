@@ -329,7 +329,7 @@ public class CompositeApiImpl implements CompositeApi {
     @Override
     public Mono<List<InstrumentDetails>> listDetailedAccounts(String tenantbusinesskey, LocalDate duedate,
             LocalDate referencedate) {
-        return listAccounts(tenantbusinesskey).collectList().flatMap(a -> collectDetails(a, duedate, referencedate));
+        return instrumentClient.listAllAccounts(tenantbusinesskey).collectList().flatMap(a -> collectDetails(a, duedate, referencedate));
     }
 
     @Override
@@ -395,6 +395,7 @@ public class CompositeApiImpl implements CompositeApi {
                 var details = instrumentDetailMap.get(x);
                 details.setValue(tuple.getT1().get(x));
                 details.setReferenceValue(tuple.getT2().get(x));
+                details.setDiff(tuple.getT1().get(x)-(tuple.getT2().get(x)));
                 instrumentDetailMap.put(x, details);
             });
             return new ArrayList<>(instrumentDetailMap.values());

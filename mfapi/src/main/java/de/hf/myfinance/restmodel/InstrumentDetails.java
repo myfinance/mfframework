@@ -13,6 +13,7 @@ public class InstrumentDetails {
     private double referenceValue;
     private LiquidityType liquiditytype;
     private String instrumentParent;
+    private double diff;
 
     public String getBusinesskey() {
         return businesskey;
@@ -78,4 +79,11 @@ public class InstrumentDetails {
         this.instrumentParent = instrumentParent;
     }
 
+    public double getDiff() {
+        return this.diff;
+    }
+
+    public void setDiff(double diff) {
+        this.diff = diff;
+    }
 }
