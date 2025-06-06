@@ -61,7 +61,7 @@ class CompositeApiImplTest {
         // Mocking instrumentClient response
         Instrument instrument1 = new Instrument("key1", "Instrument 1", InstrumentType.GIRO, true);
         Instrument instrument2 = new Instrument("key2", "Instrument 2", InstrumentType.GIRO, true);
-        when(instrumentClient.listAccounts(tenantbusinesskey)).thenReturn(Flux.just(instrument1, instrument2));
+        when(instrumentClient.listAllAccounts(tenantbusinesskey)).thenReturn(Flux.just(instrument1, instrument2));
 
         // Mocking valuationClient responses
         when(valuationClient.getValue("key1", duedate)).thenReturn(Mono.just(100.0));
@@ -82,7 +82,7 @@ class CompositeApiImplTest {
                 .verifyComplete();
 
         // Verify interactions
-        verify(instrumentClient).listAccounts(tenantbusinesskey);
+        verify(instrumentClient).listAllAccounts(tenantbusinesskey);
         verify(valuationClient).getValue("key1", duedate);
         verify(valuationClient).getValue("key2", duedate);
         verify(valuationClient).getValue("key1", referencedate);
