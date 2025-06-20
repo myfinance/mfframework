@@ -28,6 +28,7 @@ import reactor.test.StepVerifier;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -179,6 +180,10 @@ class CompositeApiImplTest {
         cashflows.add(cashflow4); 
         when(valuationClient.listCashflows4Instrument(businesskey, duedate, referencedate)).thenReturn(Flux.fromIterable(cashflows));
 
+        var linkedValueMap = new HashMap<String, Double>();
+        linkedValueMap.put("linkedInstrumentKey", 10.0);
+        when(valuationClient.getLinkedValues(businesskey, duedate)).thenReturn(Mono.just(linkedValueMap));
+
         // Testing listDetailedAccounts
         var result = compositeApiImpl.getInstrumentDetails(businesskey, duedate, referencedate, duedate, referencedate, duedate, referencedate).block();
 
@@ -197,6 +202,8 @@ class CompositeApiImplTest {
         assertEquals(-60.0, result.getAdditionalValues().get("sumOfExpense"));
         assertEquals(2, result.getIncomeInPeriod().size());
         assertEquals(2, result.getExpensesInPeriod().size());
+        assertEquals(1, result.getLinkedValues().size());
+        assertEquals(10.0, result.getLinkedValues().get("linkedInstrumentKey"));
     }
 
     @Test
