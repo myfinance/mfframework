@@ -4,15 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hf.framework.exceptions.MFException;
 import de.hf.myfinance.exception.MFMsgKey;
 import de.hf.myfinance.restapi.MarketDataApi;
-import de.hf.myfinance.restmodel.EndOfDayPrice;
 import de.hf.myfinance.restmodel.EndOfDayPrices;
-import de.hf.myfinance.restmodel.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -24,7 +21,6 @@ public class MFMarketdataClient implements MarketDataApi {
     private final WebClient webClient;
     private final String serviceUrl;
 
-    @Autowired
     public MFMarketdataClient(
             ObjectMapper mapper,
             WebClient.Builder webClient,

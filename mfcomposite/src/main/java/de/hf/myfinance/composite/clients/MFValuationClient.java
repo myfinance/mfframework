@@ -8,6 +8,7 @@ import de.hf.myfinance.restmodel.Cashflow;
 import de.hf.myfinance.restmodel.Position;
 import de.hf.myfinance.restmodel.ValueCurve;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -18,6 +19,7 @@ import reactor.core.publisher.Mono;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class MFValuationClient implements ValuationApi {
@@ -95,6 +97,13 @@ public class MFValuationClient implements ValuationApi {
     public Mono<ValueCurve> recalcAndGetValueCurve(String businesskey) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'recalcAndGetValueCurve'");
+    }
+
+    @Override
+    public Mono<Map<String, Double>> getLinkedValues(String businesskey, LocalDate valueDate) {
+        return webClient.get()
+                .uri(valuationServiceUrl + "/linkedvalues?businesskey="+businesskey+"&date="+valueDate)
+                .retrieve().bodyToMono(new ParameterizedTypeReference<Map<String, Double>>() {});
     }
 
 

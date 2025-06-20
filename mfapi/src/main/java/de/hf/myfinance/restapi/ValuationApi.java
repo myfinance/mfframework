@@ -18,6 +18,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Tag(name = "ValuationApi", description =
 		"${api.common.description}")
@@ -58,4 +59,7 @@ public interface ValuationApi {
 
 	@GetMapping(value = "/recalcandgetvaluecurve", produces = "application/json")
 	Mono<ValueCurve> recalcAndGetValueCurve(@RequestParam String businesskey);
+
+	@GetMapping(value = "/linkedvalues", produces = "application/json")
+	Mono<Map<String,Double>> getLinkedValues(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate valueDate);
 }

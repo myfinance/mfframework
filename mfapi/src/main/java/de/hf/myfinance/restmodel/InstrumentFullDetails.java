@@ -14,6 +14,7 @@ public class InstrumentFullDetails {
     private String description;
     private InstrumentType instrumentType;
     private Map<String, Double> additionalValues;
+    private Map<String, Double> linkedValues;
     private List<Cashflow> expensesInPeriod;
     private List<Cashflow> incomeInPeriod;
     private Map<LocalDate, Double> valueCurve;
@@ -71,6 +72,20 @@ public class InstrumentFullDetails {
     }
     public void setValueCurve(Map<LocalDate, Double> valueCurve) {
         this.valueCurve = valueCurve;
+    }
+
+    public Map<String, Double> getLinkedValues() {
+        return linkedValues;
+    }
+
+    public void setLinkedValues(Map<String, Double> linkedValues) {
+        this.linkedValues = linkedValues;
+    }
+    public void addLinkedValue(String key, Double value) {
+        if(this.linkedValues == null) {
+            this.linkedValues = new HashMap<String, Double>();
+        }
+        this.linkedValues.put(key, value);
     }
 }
  
