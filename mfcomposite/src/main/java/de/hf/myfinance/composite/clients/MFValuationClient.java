@@ -91,5 +91,11 @@ public class MFValuationClient implements ValuationApi {
                                         .toUriString();
     }
 
+    @Override
+    public Mono<ValueCurve> recalcAndGetValueCurve(String businesskey) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'recalcAndGetValueCurve'");
+    }
+
 
 }

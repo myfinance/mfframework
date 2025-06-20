@@ -55,4 +55,7 @@ public interface ValuationApi {
 
 	@GetMapping(value = "/positions", produces = "application/json")
     Flux<Position> getPositions(@RequestParam List<String> depotKeys);
+
+	@GetMapping(value = "/recalcandgetvaluecurve", produces = "application/json")
+	Mono<ValueCurve> recalcAndGetValueCurve(@RequestParam String businesskey);
 }
