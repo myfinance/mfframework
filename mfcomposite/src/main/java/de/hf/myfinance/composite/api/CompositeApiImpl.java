@@ -450,6 +450,7 @@ public class CompositeApiImpl implements CompositeApi {
         var valueCurve = valuationClient.getValueCurve(businesskey, starttimeseries, endtimeseries);
         var avgExpensesOfLastYear = valuationClient.getAvgExpensesOfLastYear(businesskey);
         var cashflows = valuationClient.listCashflows4Instrument(businesskey, firstcashflowdate, lastcashflowdate);
+        var linkedValues = valuationClient.getLinkedValues(businesskey, duedate);
 
         var result = Mono.zip(instrumentFullDetails, valueCurve).map(tuple -> {
             var details = tuple.getT1();
@@ -468,6 +469,10 @@ public class CompositeApiImpl implements CompositeApi {
             details.addAdditionalValue("sumOfIncome", incomes.stream().map(c -> c.getValue()).reduce(0.0, Double::sum));
             details.addAdditionalValue("sumOfExpense",
                     expenses.stream().map(c -> c.getValue()).reduce(0.0, Double::sum));
+            return details;
+        }).zipWith(linkedValues).map(tuple -> {
+            var details = tuple.getT1();
+            details.setLinkedValues(tuple.getT2());
             return details;
         });
 

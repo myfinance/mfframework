@@ -102,7 +102,7 @@ public class MFValuationClient implements ValuationApi {
     @Override
     public Mono<Map<String, Double>> getLinkedValues(String businesskey, LocalDate valueDate) {
         return webClient.get()
-                .uri(valuationServiceUrl + "/linkedvalues?businesskey="+businesskey+"&date="+valueDate)
+                .uri(valuationServiceUrl + "/linkedvalues?businesskey="+businesskey+"&valueDate="+valueDate)
                 .retrieve().bodyToMono(new ParameterizedTypeReference<Map<String, Double>>() {});
     }
 
