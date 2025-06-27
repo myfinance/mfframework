@@ -4,6 +4,7 @@ import de.hf.framework.exceptions.MFException;
 import de.hf.framework.utils.ServiceUtil;
 import de.hf.myfinance.composite.clients.MFInstrumentClient;
 import de.hf.myfinance.composite.clients.MFMarketdataClient;
+import de.hf.myfinance.composite.clients.MFSecurityMetricsClient;
 import de.hf.myfinance.composite.clients.MFTransactionClient;
 import de.hf.myfinance.composite.clients.MFValuationClient;
 import de.hf.myfinance.event.Event;
@@ -27,7 +28,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 import static de.hf.myfinance.event.Event.Type.*;
 
@@ -38,6 +38,7 @@ public class CompositeApiImpl implements CompositeApi {
     MFTransactionClient transactionClient;
     MFMarketdataClient marketdataClient;
     MFValuationClient valuationClient;
+    MFSecurityMetricsClient securityMetricsClient;
     @Value("${api.common.version}")
     String apiVersion;
 
@@ -49,6 +50,7 @@ public class CompositeApiImpl implements CompositeApi {
             MFTransactionClient transactionClient,
             MFMarketdataClient marketdataClient,
             MFValuationClient valuationClient,
+            MFSecurityMetricsClient securityMetricsClient,
             StreamBridge streamBridge,
             @Qualifier("publishEventScheduler") Scheduler publishEventScheduler) {
         this.serviceUtil = serviceUtil;
@@ -56,6 +58,7 @@ public class CompositeApiImpl implements CompositeApi {
         this.transactionClient = transactionClient;
         this.marketdataClient = marketdataClient;
         this.valuationClient = valuationClient;
+        this.securityMetricsClient = securityMetricsClient;
         this.streamBridge = streamBridge;
         this.publishEventScheduler = publishEventScheduler;
     }
@@ -533,6 +536,21 @@ public class CompositeApiImpl implements CompositeApi {
         });
     }
 
+    @Override
+    public Flux<SecurityMetrics> getSecurityMetrics() {
+        return securityMetricsClient.getSecurityMetrics();
+    }
+
+    @Override
+    public Mono<String> saveSecurityMetrics(SecurityMetrics securityMetrics) {
+        return Mono.fromCallable(() -> {
+
+            sendMessage("validateSecurityMetricsRequest-out-0",
+                    new Event<>(CREATE, securityMetrics.getBusinesskey(), securityMetrics));
+            return "{\"success\": \"SecurityMetrics for " + securityMetrics.getDescription() + " saved\"}";
+        }).subscribeOn(publishEventScheduler);
+    }
+
     /**
      * Since the sendMessage() uses blocking code, when calling streamBridge,
      * it has to be executed on a thread provided by a dedicated scheduler,
@@ -544,5 +562,4 @@ public class CompositeApiImpl implements CompositeApi {
                 .build();
         streamBridge.send(bindingName, message);
     }
-
 }

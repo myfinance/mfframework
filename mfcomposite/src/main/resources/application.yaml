@@ -21,6 +21,9 @@ app:
   mfvaluation:
     host: ${server.host}
     port: 30034
+  mfsecuritymetrics:
+    host: ${server.host}
+    port: 30035
 
 springdoc:
   swagger-ui.path: /openapi/swagger-ui.html
@@ -64,7 +67,11 @@ spring.cloud.stream:
   bindings.validateSinglePriceRequest-out-0:
     destination: validateSinglePriceRequest
     producer:
-      required-groups: validateSinglePriceGroup      
+      required-groups: validateSinglePriceGroup 
+  bindings.validateSecurityMetricsRequest-out-0:
+    destination: validateSecurityMetrics
+    producer:
+      required-groups: validateSecurityMetricsGroup         
 
 spring.rabbitmq:
   host: ${env.host}

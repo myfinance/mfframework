@@ -9,6 +9,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 import de.hf.myfinance.composite.api.CompositeApiImpl;
 import de.hf.myfinance.composite.clients.MFInstrumentClient;
+import de.hf.myfinance.composite.clients.MFSecurityMetricsClient;
 import de.hf.myfinance.composite.clients.MFTransactionClient;
 import de.hf.myfinance.composite.clients.MFValuationClient;
 import de.hf.myfinance.restmodel.Cashflow;
@@ -43,6 +44,9 @@ class CompositeApiImplTest {
 
     @Mock
     private MFTransactionClient transactionClient;
+
+    @Mock
+    private MFSecurityMetricsClient securityMetricsClient;
 
     @InjectMocks
     private CompositeApiImpl compositeApiImpl;
