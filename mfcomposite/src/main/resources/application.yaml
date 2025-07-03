@@ -69,7 +69,7 @@ spring.cloud.stream:
     producer:
       required-groups: validateSinglePriceGroup 
   bindings.validateSecurityMetricsRequest-out-0:
-    destination: validateSecurityMetrics
+    destination: validateSecurityMetricsRequest
     producer:
       required-groups: validateSecurityMetricsGroup         
 
