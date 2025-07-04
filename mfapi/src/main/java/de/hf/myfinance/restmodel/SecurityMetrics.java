@@ -17,6 +17,8 @@ public class SecurityMetrics {
     // all values are yearly TTM values
     //mandatory
     Double price;
+    String currency;
+    Double priceInEuro;
     Double sharesOutstanding;
     Double revenue;
     Double eps;
@@ -417,4 +419,21 @@ public class SecurityMetrics {
         this.description = description;
     }
 
+
+    public String getCurrency() {
+        return this.currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public Double getPriceInEuro() {
+        return this.priceInEuro;
+    }
+
+    public void setPriceInEuro(Double priceInEuro) {
+        this.priceInEuro = priceInEuro;
+    }
+    
 }
