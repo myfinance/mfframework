@@ -22,7 +22,8 @@ public class SecurityMetrics {
     Double sharesOutstanding;
     Double revenue;
     Double eps;
-    Double freeCashflow;
+    Double capitalExpenditures;
+    Double operatingCashflow;
 
     //optional
     Double totalAssets;
@@ -40,6 +41,7 @@ public class SecurityMetrics {
 
 
     //calculated
+    Double freeCashflow;
     Double netIncome;
     Double pe;
     Double roa;
@@ -436,4 +438,21 @@ public class SecurityMetrics {
         this.priceInEuro = priceInEuro;
     }
     
+
+    public Double getCapitalExpenditures() {
+        return this.capitalExpenditures;
+    }
+
+    public void setCapitalExpenditures(Double capitalExpenditures) {
+        this.capitalExpenditures = capitalExpenditures;
+    }
+
+    public Double getOperatingCashflow() {
+        return this.operatingCashflow;
+    }
+
+    public void setOperatingCashflow(Double operatingCashflow) {
+        this.operatingCashflow = operatingCashflow;
+    }
+
 }
