@@ -423,15 +423,6 @@ public class SecurityMetrics {
         this.description = description;
     }
 
-
-    public String getCurrency() {
-        return this.currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
     public Double getPriceInEuro() {
         return this.priceInEuro;
     }
@@ -457,10 +448,14 @@ public class SecurityMetrics {
         this.operatingCashflow = operatingCashflow;
     }
 
-    public Double getPriceEUR() {
-        return this.priceEUR;
+
+    public String getCurrencyKey() {
+        return this.currencyKey;
     }
-    public void setPriceEUR(Double priceEUR) {
-        this.priceEUR = priceEUR;
+
+    public void setCurrencyKey(String currencyKey) {
+        this.currencyKey = currencyKey;
     }
+
+
 }
