@@ -17,6 +17,7 @@ public class SecurityMetrics {
     // all values are yearly TTM values
     //mandatory
     Double price;
+    Double priceEUR;
     String currency;
     Double priceInEuro;
     Double sharesOutstanding;
@@ -455,4 +456,10 @@ public class SecurityMetrics {
         this.operatingCashflow = operatingCashflow;
     }
 
+    public Double getPriceEUR() {
+        return this.priceEUR;
+    }
+    public void setPriceEUR(Double priceEUR) {
+        this.priceEUR = priceEUR;
+    }
 }
