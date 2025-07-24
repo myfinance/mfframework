@@ -7,7 +7,10 @@ public class SecurityMetrics {
 
     String businesskey;
     String description;
+    // the currency code of the security, e.g. EUR, USD, GBP just for display purposes
     String currencyCode;
+    //the businesskey of the currency to identify the value curve of the currency and calculate the price in Euro
+    String currencyKey;
     LocalDate fiscalEndDate;
     SecurityLifecyclePhase securityLifecyclePhase;
     RiskProfile riskProfile;
@@ -17,8 +20,6 @@ public class SecurityMetrics {
     // all values are yearly TTM values
     //mandatory
     Double price;
-    Double priceEUR;
-    String currency;
     Double priceInEuro;
     Double sharesOutstanding;
     Double revenue;
