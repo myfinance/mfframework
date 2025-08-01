@@ -1,6 +1,7 @@
 package de.hf.myfinance.restmodel;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class SecurityMetrics {
@@ -15,6 +16,7 @@ public class SecurityMetrics {
     SecurityLifecyclePhase securityLifecyclePhase;
     RiskProfile riskProfile;
     String sector;
+    LocalDateTime lastUpdateTs;
 
 
     // all values are yearly TTM values
@@ -23,9 +25,9 @@ public class SecurityMetrics {
     Double priceInEuro;
     Double sharesOutstanding;
     Double revenue;
-    Double eps;
     Double capitalExpenditures;
     Double operatingCashflow;
+    Double netIncome;
 
     //optional
     Double totalAssets;
@@ -40,11 +42,11 @@ public class SecurityMetrics {
     Double minForwardFCF10YCAGR;
     Double avgForwardFCF10YCAGR;
     Double maxForwardFCF10YCAGR;
+    
 
 
     //calculated
     Double freeCashflow;
-    Double netIncome;
     Double pe;
     Double roa;
     Double debtToAssets;
@@ -55,6 +57,7 @@ public class SecurityMetrics {
     Double lynchScore;
     Double avgHistoricalFCFGrowthRate;
     Double revenueGrowthRate;
+    Double eps;
 
     //historical map<fiscalaenddate, value>. fiscalaenddate is a Date, the values are TTM(trailing twelve month) values
     Map<LocalDate, Double> historicalRevenue;
@@ -457,5 +460,12 @@ public class SecurityMetrics {
         this.currencyKey = currencyKey;
     }
 
+    public LocalDateTime getLastUpdateTs() {
+        return this.lastUpdateTs;
+    }
+
+    public void setLastUpdateTs(LocalDateTime lastUpdateTs) {
+        this.lastUpdateTs = lastUpdateTs;
+    }
 
 }

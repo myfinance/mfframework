@@ -168,11 +168,27 @@ public interface CompositeApi {
     @GetMapping(value = "/mf/positions", produces = "application/json")
     Flux<Position> getPositions(@RequestParam String tenantbusinesskey);
 
-    @GetMapping(value = "/securityMetrics", produces = "application/json")
+
+
+ /** SecurityMetrics: **/
+
+    @PostMapping(
+            value    = "/mf/loadSecurityMetrics",
+            consumes = "application/json",
+            produces = "application/json")
+    Mono<String> loadSecurityMetrics();
+
+    @PostMapping(
+        value    = "/mf/loadNewSecurityMetrics4Instrument",
+        consumes = "application/json",
+        produces = "application/json")
+    Mono<String> loadNewSecurityMetrics4Instrument(@RequestParam String businesskey);
+
+    @GetMapping(value = "/mf/securityMetrics", produces = "application/json")
     Flux<SecurityMetrics> getSecurityMetrics();
 
     @PostMapping(
-        value    = "/saveSecurityMetrics",
+        value    = "/mf/saveSecurityMetrics",
         consumes = "application/json",
         produces = "application/json")
     Mono<String> saveSecurityMetrics(@RequestBody SecurityMetrics securityMetrics);

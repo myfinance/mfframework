@@ -562,4 +562,25 @@ public class CompositeApiImpl implements CompositeApi {
                 .build();
         streamBridge.send(bindingName, message);
     }
+
+    @Override
+    public Mono<String> loadSecurityMetrics() {
+        return Mono.fromCallable(() -> {
+
+            sendMessage("loadSecurityMetrics-out-0",
+                    new Event<>(START, "load", "all"));
+            return "{\"success\": \"securityMetric loading started \"}";
+        }).subscribeOn(publishEventScheduler);
+    }
+
+    @Override
+    public Mono<String> loadNewSecurityMetrics4Instrument(String businesskey) {
+        return Mono.fromCallable(() -> {
+
+            sendMessage("loadSecurityMetrics-out-0",
+                    new Event<>(START, "load", businesskey));
+            return "{\"success\": \"SecurityMetric loading started \"}";
+        }).subscribeOn(publishEventScheduler);
+    }
+
 }
