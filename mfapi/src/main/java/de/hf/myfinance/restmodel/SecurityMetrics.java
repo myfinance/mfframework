@@ -17,6 +17,7 @@ public class SecurityMetrics {
     RiskProfile riskProfile;
     String sector;
     LocalDateTime lastUpdateTs;
+    LocalDateTime priceLastUpdateTs;
 
 
     // all values are yearly TTM values
@@ -58,6 +59,10 @@ public class SecurityMetrics {
     Double avgHistoricalFCFGrowthRate;
     Double revenueGrowthRate;
     Double eps;
+
+    //config
+    Double avgMarktcapFreeCashflowRatio;
+    Double expectedCashflowGrowth;
 
     //historical map<fiscalaenddate, value>. fiscalaenddate is a Date, the values are TTM(trailing twelve month) values
     Map<LocalDate, Double> historicalRevenue;
