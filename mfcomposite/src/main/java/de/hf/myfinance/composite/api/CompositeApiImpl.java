@@ -567,7 +567,7 @@ Not used yet. but maybe later in case i want to see the securities with the bigg
                 })
         ).flatMap(securityMetric -> {
                 if(securityMetric.getPriceLastUpdateTs() == null &&
-                    (securityMetric.getInstrumentType().equals(InstrumentType.CURRENCY) || securityMetric.getInstrumentType().equals(InstrumentType.KRYPTO) || securityMetric.getInstrumentType().equals(InstrumentType.ETF)))
+                    (securityMetric.getInstrumentType().equals(InstrumentType.EQUITY) ||securityMetric.getInstrumentType().equals(InstrumentType.CURRENCY) || securityMetric.getInstrumentType().equals(InstrumentType.KRYPTO) || securityMetric.getInstrumentType().equals(InstrumentType.ETF)))
                     return valuationClient.getValueTs(securityMetric.getBusinesskey())
                         .map(priceTs -> {
                             securityMetric.setPriceLastUpdateTs(priceTs);
