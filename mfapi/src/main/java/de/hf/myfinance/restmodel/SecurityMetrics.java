@@ -8,6 +8,7 @@ public class SecurityMetrics {
 
     String businesskey;
     String description;
+    InstrumentType instrumentType;
     // the currency code of the security, e.g. EUR, USD, GBP just for display purposes
     String currencyCode;
     //the businesskey of the currency to identify the value curve of the currency and calculate the price in Euro
@@ -471,6 +472,39 @@ public class SecurityMetrics {
 
     public void setLastUpdateTs(LocalDateTime lastUpdateTs) {
         this.lastUpdateTs = lastUpdateTs;
+    }
+
+
+    public InstrumentType getInstrumentType() {
+        return this.instrumentType;
+    }
+
+    public void setInstrumentType(InstrumentType instrumentType) {
+        this.instrumentType = instrumentType;
+    }
+
+    public LocalDateTime getPriceLastUpdateTs() {
+        return this.priceLastUpdateTs;
+    }
+
+    public void setPriceLastUpdateTs(LocalDateTime priceLastUpdateTs) {
+        this.priceLastUpdateTs = priceLastUpdateTs;
+    }
+
+    public Double getAvgMarktcapFreeCashflowRatio() {
+        return this.avgMarktcapFreeCashflowRatio;
+    }
+
+    public void setAvgMarktcapFreeCashflowRatio(Double avgMarktcapFreeCashflowRatio) {
+        this.avgMarktcapFreeCashflowRatio = avgMarktcapFreeCashflowRatio;
+    }
+
+    public Double getExpectedCashflowGrowth() {
+        return this.expectedCashflowGrowth;
+    }
+
+    public void setExpectedCashflowGrowth(Double expectedCashflowGrowth) {
+        this.expectedCashflowGrowth = expectedCashflowGrowth;
     }
 
 }

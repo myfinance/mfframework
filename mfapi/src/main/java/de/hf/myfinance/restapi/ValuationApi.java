@@ -17,6 +17,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +48,10 @@ public interface ValuationApi {
 
 	@GetMapping(value = "/getvalue", produces = "application/json")
 	Mono<Double> getValue(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
+
+	// returns the timestamp of the last update of the value curve for the given businesskey 
+	@GetMapping(value = "/getvaluets", produces = "application/json")
+	Mono<LocalDateTime> getValueTs(@RequestParam String businesskey);
 
 	@GetMapping(value = "/cashflows4instrument", produces = "application/json")
     Flux<Cashflow> listCashflows4Instrument(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);

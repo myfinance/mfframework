@@ -1,6 +1,7 @@
 package de.hf.myfinance.restmodel;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.TreeMap;
 
 public class ValueCurve {
@@ -9,6 +10,7 @@ public class ValueCurve {
     private String instrumentBusinesskey;
     private String parentBusinesskey;
     private String linkedInstrumentKey;
+    private LocalDateTime lastUpdateTs;
 
     public ValueCurve(){
 
@@ -54,4 +56,10 @@ public class ValueCurve {
         this.linkedInstrumentKey = linkedInstrumentKey;
     }
 
+    public LocalDateTime getLastUpdateTs() {
+        return lastUpdateTs;
+    }
+    public void setLastUpdateTs(LocalDateTime lastUpdateTs) {
+        this.lastUpdateTs = lastUpdateTs;
+    }
 }

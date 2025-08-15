@@ -404,7 +404,9 @@ public class CompositeApiImpl implements CompositeApi {
             return new ArrayList<>(instrumentDetailMap.values());
         });
     }
-
+/**
+Not used yet. but maybe later in case i want to see the securities with the biggest drop or gain in a certain period
+ 
     @Override
     public Mono<List<SecurityDetails>> listDetailedSecurities(LocalDate duedate, LocalDate referencedate) {
         return instrumentClient.listSecurities().collectList()
@@ -443,7 +445,7 @@ public class CompositeApiImpl implements CompositeApi {
             return new ArrayList<>(instrumentDetailMap.values());
         });
     }
-
+*/
     @Override
     public Mono<InstrumentFullDetails> getInstrumentDetails(String businesskey, LocalDate duedate,
             LocalDate referencedate, LocalDate starttimeseries, LocalDate endtimeseries, LocalDate firstcashflowdate,
@@ -538,8 +540,46 @@ public class CompositeApiImpl implements CompositeApi {
 
     @Override
     public Flux<SecurityMetrics> getSecurityMetrics() {
-        return securityMetricsClient.getSecurityMetrics();
+        var activeSecurities = instrumentClient.listSecurities().filter(i -> i.isActive()).collectList();
+        var metrics = securityMetricsClient.getSecurityMetrics().collectMap(SecurityMetrics::getBusinesskey);
+
+        return Mono.zip(activeSecurities, metrics).flatMapMany(tuple -> {
+            List<Instrument> securities = tuple.getT1();
+            Map<String, SecurityMetrics> metricsMap = tuple.getT2();
+            List<SecurityMetrics> result = new ArrayList<>();
+
+            for (Instrument security : securities) {
+                SecurityMetrics securityMetric = metricsMap.get(security.getBusinesskey());
+                if (securityMetric == null) {
+                    securityMetric = new SecurityMetrics();
+                    securityMetric.setBusinesskey(security.getBusinesskey());
+                    securityMetric.setDescription(security.getDescription());
+                }
+                securityMetric.setInstrumentType(security.getInstrumentType());
+                result.add(securityMetric);
+            }
+            return Flux.fromIterable(result);
+        }).flatMap(securityMetric ->
+            valuationClient.getValue(securityMetric.getBusinesskey(), LocalDate.now())
+                .map(price -> {
+                    securityMetric.setPriceInEuro(price);
+                    return securityMetric;
+                })
+        ).flatMap(securityMetric -> {
+                if(securityMetric.getPriceLastUpdateTs() == null &&
+                    (securityMetric.getInstrumentType().equals(InstrumentType.CURRENCY) || securityMetric.getInstrumentType().equals(InstrumentType.KRYPTO) || securityMetric.getInstrumentType().equals(InstrumentType.ETF)))
+                    return valuationClient.getValueTs(securityMetric.getBusinesskey())
+                        .map(priceTs -> {
+                            securityMetric.setPriceLastUpdateTs(priceTs);
+                            return securityMetric;
+                        });
+                else
+                    return Mono.just(securityMetric);
+        }
+        );
     }
+
+
 
     @Override
     public Mono<String> saveSecurityMetrics(SecurityMetrics securityMetrics) {

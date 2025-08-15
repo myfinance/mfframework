@@ -18,6 +18,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +51,14 @@ public class MFValuationClient implements ValuationApi {
         return webClient.get()
                 .uri(valuationServiceUrl + "/getvalue?businesskey="+businesskey+"&date="+date)
                 .retrieve().bodyToMono(Double.class);
+    }
+
+
+    @Override
+    public Mono<LocalDateTime> getValueTs(String businesskey) {
+        return webClient.get()
+                .uri(valuationServiceUrl + "/getvaluets?businesskey="+businesskey)
+                .retrieve().bodyToMono(LocalDateTime.class);
     }
 
     @Override

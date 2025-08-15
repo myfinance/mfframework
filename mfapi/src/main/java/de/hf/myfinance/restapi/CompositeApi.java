@@ -160,10 +160,14 @@ public interface CompositeApi {
                                                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstcashflowdate, 
                                                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastcashflowdate);
 
+/**
+Not used yet. but maybe later in case i want to see the securities with the biggest drop or gain in a certain period
+ 
     @GetMapping(value = "/mf/listdetailedsecurities", produces = "application/json")
     Mono<List<SecurityDetails>> listDetailedSecurities(
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate duedate, 
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate referencedate);
+*/
 
     @GetMapping(value = "/mf/positions", produces = "application/json")
     Flux<Position> getPositions(@RequestParam String tenantbusinesskey);
