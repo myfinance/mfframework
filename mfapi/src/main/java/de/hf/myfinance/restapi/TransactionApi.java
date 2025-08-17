@@ -1,6 +1,5 @@
 package de.hf.myfinance.restapi;
 
-import de.hf.myfinance.restmodel.Cashflow;
 import de.hf.myfinance.restmodel.RecurrentTransaction;
 import de.hf.myfinance.restmodel.Transaction;
 import io.swagger.v3.oas.annotations.tags.Tag;

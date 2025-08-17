@@ -13,6 +13,6 @@ public interface SecurityMetricsApi {
 	@GetMapping("/")
     String index();
 
-    @GetMapping(value = "/mf/securityMetrics", produces = "application/json")
+    @GetMapping(value = "/securityMetrics", produces = "application/json")
     Flux<SecurityMetrics> getSecurityMetrics();
 } 
