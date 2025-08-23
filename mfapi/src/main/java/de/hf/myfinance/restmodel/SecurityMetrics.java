@@ -63,6 +63,10 @@ public class SecurityMetrics {
 
     //config
     Double avgMarktcapFreeCashflowRatio;
+    //durchschnitt in den nächsten 10 Jahren erwartetes Wachstum des Free Cashflows
+    //this is used to calculate the intrinsic value
+    //it is the average of next 10 years of the FreeCashflow growth rate
+    // notation e.g. 1.4 means 40% growth
     Double expectedCashflowGrowth;
 
     //historical map<fiscalaenddate, value>. fiscalaenddate is a Date, the values are TTM(trailing twelve month) values
