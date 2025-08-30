@@ -119,13 +119,13 @@ public interface CompositeApi {
             value    = "/mf/loadNewMarketData",
             consumes = "application/json",
             produces = "application/json")
-    Mono<String> loadNewMarketData();
+    Mono<String> loadNewMarketData(@RequestParam MarketDataImportType marketDataImportType);
 
     @PostMapping(
         value    = "/mf/loadNewMarketData4Instrument",
         consumes = "application/json",
         produces = "application/json")
-    Mono<String> loadNewMarketData4Instrument(@RequestParam String businesskey);
+    Mono<String> loadNewMarketData4Instrument(@RequestParam MarketDataImportType marketDataImportType, @RequestParam String businesskey);
 
     @GetMapping(value = "/mf/endOfDayPrices", produces = "application/json")
     Mono<EndOfDayPrices> getEndOfDayPrices(@RequestParam String businesskey);
@@ -176,17 +176,6 @@ Not used yet. but maybe later in case i want to see the securities with the bigg
 
  /** SecurityMetrics: **/
 
-    @PostMapping(
-            value    = "/mf/loadSecurityMetrics",
-            consumes = "application/json",
-            produces = "application/json")
-    Mono<String> loadSecurityMetrics();
-
-    @PostMapping(
-        value    = "/mf/loadNewSecurityMetrics4Instrument",
-        consumes = "application/json",
-        produces = "application/json")
-    Mono<String> loadNewSecurityMetrics4Instrument(@RequestParam String businesskey);
 
     @GetMapping(value = "/mf/securityMetrics", produces = "application/json")
     Flux<SecurityMetrics> getSecurityMetrics();

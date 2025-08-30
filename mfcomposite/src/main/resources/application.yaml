@@ -72,10 +72,6 @@ spring.cloud.stream:
     destination: validateSecurityMetricsRequest
     producer:
       required-groups: validateSecurityMetricsGroup         
-  bindings.loadSecurityMetrics-out-0:
-    destination: loadSecurityMetrics
-    producer:
-      required-groups: loadSecurityMetricsGroup
 
 spring.rabbitmq:
   host: ${env.host}

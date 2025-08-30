@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -282,21 +283,17 @@ public class CompositeApiImpl implements CompositeApi {
     /** MarketData: **/
 
     @Override
-    public Mono<String> loadNewMarketData() {
+    public Mono<String> loadNewMarketData(MarketDataImportType marketDataImportType) {
         return Mono.fromCallable(() -> {
-
-            sendMessage("loadNewMarketData-out-0",
-                    new Event<>(START, "load", "all"));
+            sendloadNewMarketDataMessage(marketDataImportType, "all");
             return "{\"success\": \"MarketData loading started \"}";
         }).subscribeOn(publishEventScheduler);
     }
 
     @Override
-    public Mono<String> loadNewMarketData4Instrument(String businesskey) {
+    public Mono<String> loadNewMarketData4Instrument(MarketDataImportType marketDataImportType, String businesskey) {
         return Mono.fromCallable(() -> {
-
-            sendMessage("loadNewMarketData-out-0",
-                    new Event<>(START, "load", businesskey));
+            sendloadNewMarketDataMessage(marketDataImportType, businesskey);
             return "{\"success\": \"MarketData loading started \"}";
         }).subscribeOn(publishEventScheduler);
     }
@@ -602,25 +599,13 @@ Not used yet. but maybe later in case i want to see the securities with the bigg
                 .build();
         streamBridge.send(bindingName, message);
     }
-
-    @Override
-    public Mono<String> loadSecurityMetrics() {
-        return Mono.fromCallable(() -> {
-
-            sendMessage("loadSecurityMetrics-out-0",
-                    new Event<>(START, "load", "all"));
-            return "{\"success\": \"securityMetric loading started \"}";
-        }).subscribeOn(publishEventScheduler);
+    private void sendloadNewMarketDataMessage(MarketDataImportType marketDataImportType, Object payload) {
+        Event<MarketDataImportType, Object> event = new Event<>(START, marketDataImportType, payload);
+        Message<Event<MarketDataImportType, Object>> message = MessageBuilder.withPayload(event)
+                .setHeader("partitionKey", event.getKey())
+                .build();
+        streamBridge.send("loadNewMarketData-out-0", message);
     }
 
-    @Override
-    public Mono<String> loadNewSecurityMetrics4Instrument(String businesskey) {
-        return Mono.fromCallable(() -> {
-
-            sendMessage("loadSecurityMetrics-out-0",
-                    new Event<>(START, "load", businesskey));
-            return "{\"success\": \"SecurityMetric loading started \"}";
-        }).subscribeOn(publishEventScheduler);
-    }
 
 }
