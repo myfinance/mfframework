@@ -13,6 +13,6 @@ public enum AdditionalProperties {
     CURRENCYCODE,
     VALUEBUDGETID,
     ISIN,
-    SOURCEOFSECURITYMETRICS, //e.g. AlphaVantage, Polygon, all, none(=null)
+    SOURCEOFSECURITYMETRICS, //e.g. AlphaVantage, Polygon, all(=null), none
     IBAN;
 }
