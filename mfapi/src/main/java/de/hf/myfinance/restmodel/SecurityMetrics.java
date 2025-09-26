@@ -60,6 +60,8 @@ public class SecurityMetrics {
     Double dividendPayoutRatio;
     Double intrinsicValue;
     Double intrinsicValueMargin;
+    //intrinsic value / enterprice value per share
+    Double intrinsicValueEVMargin;
     Double lynchScore;
     Double avgHistoricalFCFGrowthRate;
     Double revenueGrowthRate;
@@ -554,6 +556,14 @@ public class SecurityMetrics {
 
     public void setExpectedFreeCashflowPerYear(Map<Integer,Double> expectedFreeCashflowPerYear) {
         this.expectedFreeCashflowPerYear = expectedFreeCashflowPerYear;
+    }
+
+    public Double getIntrinsicValueEVMargin() {
+        return this.intrinsicValueEVMargin;
+    }
+
+    public void setIntrinsicValueEVMargin(Double intrinsicValueEVMargin) {
+        this.intrinsicValueEVMargin = intrinsicValueEVMargin;
     }
 
 }
