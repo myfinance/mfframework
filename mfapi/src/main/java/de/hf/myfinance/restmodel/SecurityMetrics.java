@@ -50,8 +50,11 @@ public class SecurityMetrics {
 
     //calculated
     Double freeCashflow;
+    //expected free cashflow, baseline for the intrinsic value calculation, it is the average of the last 5 years free cashflow or the last year free cashflow if not enough historical data is available or in case the FCF is bigger than the avg
     Double expectedFreeCashflow;
+    //average of the last 5 years free cashflow
     Double avgFreeCashflow5Y;
+    //average growth of the free cashflow in the last 5 years
     Double avgFreeCashflowGrowth5Y;
     Double pe;
     Double roa;
@@ -63,7 +66,6 @@ public class SecurityMetrics {
     //intrinsic value / enterprice value per share
     Double intrinsicValueEVMargin;
     Double lynchScore;
-    Double avgHistoricalFCFGrowthRate;
     Double revenueGrowthRate;
     Double eps;
 
@@ -344,14 +346,6 @@ public class SecurityMetrics {
 
     public void setLynchScore(Double lynchScore) {
         this.lynchScore = lynchScore;
-    }
-
-    public Double getAvgHistoricalFCFGrowthRate() {
-        return this.avgHistoricalFCFGrowthRate;
-    }
-
-    public void setAvgHistoricalFCFGrowthRate(Double avgHistoricalFCFGrowthRate) {
-        this.avgHistoricalFCFGrowthRate = avgHistoricalFCFGrowthRate;
     }
 
     public Double getRevenueGrowthRate() {
