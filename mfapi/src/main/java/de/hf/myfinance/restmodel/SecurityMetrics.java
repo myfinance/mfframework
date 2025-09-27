@@ -81,7 +81,7 @@ public class SecurityMetrics {
     Map<Integer, Double> historicalRevenue;
     Map<Integer, Double> historicalNetIncome;
     Map<Integer, Double> historicalFreeCashflow;
-    Map<Integer, Double> expectedFreeCashflowPerYear;
+    Map<Integer, Double> expectedFreeCashflowGrowthPerYear;// the keys are 1..10 for the next 10 years. Year 1 is next year, so the value is the expectedFreeCashflowfor this year (or the current FCF)* (1+expectedCashflowGrowth)
 
     //ranks
     Integer rankByPE;
@@ -544,12 +544,12 @@ public class SecurityMetrics {
         this.avgFreeCashflowGrowth5Y = avgFreeCashflowGrowth5Y;
     }
 
-    public Map<Integer,Double> getExpectedFreeCashflowPerYear() {
-        return this.expectedFreeCashflowPerYear;
+    public Map<Integer,Double> getExpectedFreeCashflowGrowthPerYear() {
+        return this.expectedFreeCashflowGrowthPerYear;
     }
 
-    public void setExpectedFreeCashflowPerYear(Map<Integer,Double> expectedFreeCashflowPerYear) {
-        this.expectedFreeCashflowPerYear = expectedFreeCashflowPerYear;
+    public void setExpectedFreeCashflowGrowthPerYear(Map<Integer,Double> expectedFreeCashflowGrowthPerYear) {
+        this.expectedFreeCashflowGrowthPerYear = expectedFreeCashflowGrowthPerYear;
     }
 
     public Double getIntrinsicValueEVMargin() {
