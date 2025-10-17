@@ -41,11 +41,7 @@ public class SecurityMetrics {
     Double forwardPriceToSales;
     Double beta;
     Double tam;
-    Double forwardPE;
-    Double minForwardFCF10YCAGR;
-    Double avgForwardFCF10YCAGR;
-    Double maxForwardFCF10YCAGR;
-    
+    Double forwardPE;    
 
 
     //calculated
@@ -250,30 +246,6 @@ public class SecurityMetrics {
 
     public void setForwardPE(Double forwardPE) {
         this.forwardPE = forwardPE;
-    }
-
-    public Double getMinForwardFCF10YCAGR() {
-        return this.minForwardFCF10YCAGR;
-    }
-
-    public void setMinForwardFCF10YCAGR(Double minForwardFCF10YCAGR) {
-        this.minForwardFCF10YCAGR = minForwardFCF10YCAGR;
-    }
-
-    public Double getAvgForwardFCF10YCAGR() {
-        return this.avgForwardFCF10YCAGR;
-    }
-
-    public void setAvgForwardFCF10YCAGR(Double avgForwardFCF10YCAGR) {
-        this.avgForwardFCF10YCAGR = avgForwardFCF10YCAGR;
-    }
-
-    public Double getMaxForwardFCF10YCAGR() {
-        return this.maxForwardFCF10YCAGR;
-    }
-
-    public void setMaxForwardFCF10YCAGR(Double maxForwardFCF10YCAGR) {
-        this.maxForwardFCF10YCAGR = maxForwardFCF10YCAGR;
     }
 
     public Double getNetIncome() {
