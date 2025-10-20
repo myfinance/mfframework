@@ -549,8 +549,8 @@ Not used yet. but maybe later in case i want to see the securities with the bigg
                 if (securityMetric == null) {
                     securityMetric = new SecurityMetrics();
                     securityMetric.setBusinesskey(security.getBusinesskey());
-                    securityMetric.setDescription(security.getDescription());
                 }
+                securityMetric.setDescription(security.getDescription());
                 securityMetric.setInstrumentType(security.getInstrumentType());
                 result.add(securityMetric);
             }
