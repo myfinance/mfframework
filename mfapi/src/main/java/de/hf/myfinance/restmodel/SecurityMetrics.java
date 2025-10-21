@@ -17,8 +17,10 @@ public class SecurityMetrics {
     SecurityLifecyclePhase securityLifecyclePhase;
     RiskProfile riskProfile;
     String sector;
+    String country;
     LocalDateTime lastUpdateTs;
     LocalDateTime priceLastUpdateTs;
+
 
 
     // all values are yearly TTM values
@@ -42,7 +44,13 @@ public class SecurityMetrics {
     Double forwardPriceToSales;
     Double beta;
     Double tam;
-    Double forwardPE;    
+    Double forwardPE;   
+    Double goodwill; 
+    Double ebitda;
+    Double ebit;
+    Double grossProfit;
+    Double totalEquity;
+    Double currentLiabilities;
 
 
     //calculated
@@ -54,7 +62,13 @@ public class SecurityMetrics {
     //average growth of the free cashflow in the last 5 years
     Double avgFreeCashflowGrowth5Y;
     Double pe;
+    //return on assts
     Double roa;
+    //return on equity
+    Double roe;
+    //ReturnOnCapitalEmployed (ROCE) = EBIT/(Assets-currentLiabilities)
+    Double roce;
+    //debt to assets
     Double debtToAssets;
     Double dividendYield;
     Double dividendPayoutRatio;
@@ -65,6 +79,8 @@ public class SecurityMetrics {
     Double lynchScore;
     Double revenueGrowthRate;
     Double eps;
+    Double ruleOfFourty;
+    Double grossMargin;
 
     //config
     Double avgMarktcapFreeCashflowRatio;
@@ -539,6 +555,96 @@ public class SecurityMetrics {
 
     public void setIntrinsicValueEVMargin(Double intrinsicValueEVMargin) {
         this.intrinsicValueEVMargin = intrinsicValueEVMargin;
+    }
+
+
+    public String getCountry() {
+        return this.country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Double getGoodwill() {
+        return this.goodwill;
+    }
+
+    public void setGoodwill(Double goodwill) {
+        this.goodwill = goodwill;
+    }
+
+
+    public Double getEbitda() {
+        return this.ebitda;
+    }
+
+    public void setEbitda(Double ebitda) {
+        this.ebitda = ebitda;
+    }
+
+    public Double getEbit() {
+        return this.ebit;
+    }
+
+    public void setEbit(Double ebit) {
+        this.ebit = ebit;
+    }
+
+    public Double getGrossProfit() {
+        return this.grossProfit;
+    }
+
+    public void setGrossProfit(Double grossProfit) {
+        this.grossProfit = grossProfit;
+    }
+
+    public Double getTotalEquity() {
+        return this.totalEquity;
+    }
+
+    public void setTotalEquity(Double totalEquity) {
+        this.totalEquity = totalEquity;
+    }
+
+    public Double getCurrentLiabilities() {
+        return this.currentLiabilities;
+    }
+
+    public void setCurrentLiabilities(Double currentLiabilities) {
+        this.currentLiabilities = currentLiabilities;
+    }
+
+    public Double getRoe() {
+        return this.roe;
+    }
+
+    public void setRoe(Double roe) {
+        this.roe = roe;
+    }
+
+    public Double getRoce() {
+        return this.roce;
+    }
+
+    public void setRoce(Double roce) {
+        this.roce = roce;
+    }
+
+    public Double getRuleOfFourty() {
+        return this.ruleOfFourty;
+    }
+
+    public void setRuleOfFourty(Double ruleOfFourty) {
+        this.ruleOfFourty = ruleOfFourty;
+    }
+
+    public Double getGrossMargin() {
+        return this.grossMargin;
+    }
+
+    public void setGrossMargin(Double grossMargin) {
+        this.grossMargin = grossMargin;
     }
 
 }
