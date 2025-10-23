@@ -81,6 +81,8 @@ public class SecurityMetrics {
     Double eps;
     Double ruleOfFourty;
     Double grossMargin;
+    Double pricePerSales;
+    Double fcfMargin;
 
     //config
     Double avgMarktcapFreeCashflowRatio;
@@ -645,6 +647,24 @@ public class SecurityMetrics {
 
     public void setGrossMargin(Double grossMargin) {
         this.grossMargin = grossMargin;
+    }
+
+
+    public Double getPricePerSales() {
+        return this.pricePerSales;
+    }
+
+    public void setPricePerSales(Double pricePerSales) {
+        this.pricePerSales = pricePerSales;
+    }
+
+
+    public Double getFcfMargin() {
+        return this.fcfMargin;
+    }
+
+    public void setFcfMargin(Double fcfMargin) {
+        this.fcfMargin = fcfMargin;
     }
 
 }
