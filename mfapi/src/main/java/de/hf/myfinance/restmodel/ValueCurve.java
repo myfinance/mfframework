@@ -10,6 +10,7 @@ public class ValueCurve {
     private String instrumentBusinesskey;
     private String parentBusinesskey;
     private String linkedInstrumentKey;
+    private ValuationType valuationType;
     private LocalDateTime lastUpdateTs;
 
     public ValueCurve(){
@@ -62,4 +63,13 @@ public class ValueCurve {
     public void setLastUpdateTs(LocalDateTime lastUpdateTs) {
         this.lastUpdateTs = lastUpdateTs;
     }
+
+    public ValuationType getValuationType() {
+        return this.valuationType;
+    }
+
+    public void setValuationType(ValuationType valuationType) {
+        this.valuationType = valuationType;
+    }
+
 }
