@@ -10,7 +10,7 @@ public class ValueCurve {
     private String instrumentBusinesskey;
     private String parentBusinesskey;
     private String linkedInstrumentKey;
-    private ValuationType valuationType;
+    private ValuationType valuationType = ValuationType.MARKETVALUE;
     private LocalDateTime lastUpdateTs;
 
     public ValueCurve(){
