@@ -91,6 +91,8 @@ public class SecurityMetrics {
     //it is the average of next 10 years of the FreeCashflow growth rate
     // notation e.g. 1.4 means 40% growth
     Double expectedCashflowGrowth;
+    //overrides the expectedFreeCashflow for the intrinsic value calculation if not 0.0
+    Double expectedFreeCashflowOverride;
 
     //historical map<year of fiscalaenddate, value>. fiscalaenddate is a Date, the values are TTM(trailing twelve month) values
     Map<Integer, Double> historicalRevenue;
@@ -666,5 +668,15 @@ public class SecurityMetrics {
     public void setFcfMargin(Double fcfMargin) {
         this.fcfMargin = fcfMargin;
     }
+
+
+    public Double getExpectedFreeCashflowOverride() {
+        return this.expectedFreeCashflowOverride;
+    }
+
+    public void setExpectedFreeCashflowOverride(Double expectedFreeCashflowOverride) {
+        this.expectedFreeCashflowOverride = expectedFreeCashflowOverride;
+    }
+
 
 }
