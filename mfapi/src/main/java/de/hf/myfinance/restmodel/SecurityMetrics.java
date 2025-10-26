@@ -19,6 +19,7 @@ public class SecurityMetrics {
     String sector;
     String country;
     LocalDateTime lastUpdateTs;
+    LocalDateTime lastManualReviewTs;
     LocalDateTime priceLastUpdateTs;
 
 
@@ -678,5 +679,13 @@ public class SecurityMetrics {
         this.expectedFreeCashflowOverride = expectedFreeCashflowOverride;
     }
 
+
+    public LocalDateTime getLastManualReviewTs() {
+        return this.lastManualReviewTs;
+    }
+
+    public void setLastManualReviewTs(LocalDateTime lastManualReviewTs) {
+        this.lastManualReviewTs = lastManualReviewTs;
+    }
 
 }
