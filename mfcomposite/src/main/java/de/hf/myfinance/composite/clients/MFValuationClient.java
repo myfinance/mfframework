@@ -115,5 +115,11 @@ public class MFValuationClient implements ValuationApi {
                 .retrieve().bodyToMono(new ParameterizedTypeReference<Map<String, Double>>() {});
     }
 
+    @Override
+    public Mono<ValueCurve> recalcAllCurves() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'recalcAllCurves'");
+    }
+
 
 }

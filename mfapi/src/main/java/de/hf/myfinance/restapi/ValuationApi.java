@@ -65,6 +65,9 @@ public interface ValuationApi {
 	@GetMapping(value = "/recalcandgetvaluecurve", produces = "application/json")
 	Mono<ValueCurve> recalcAndGetValueCurve(@RequestParam String businesskey);
 
+	@GetMapping(value = "/recalcAllCurves", produces = "application/json")
+	Mono<ValueCurve> recalcAllCurves();
+
 	@GetMapping(value = "/linkedvalues", produces = "application/json")
 	Mono<Map<String,Double>> getLinkedValues(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate valueDate);
 }
