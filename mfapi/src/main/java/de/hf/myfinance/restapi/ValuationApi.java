@@ -1,7 +1,6 @@
 package de.hf.myfinance.restapi;
 
 import de.hf.myfinance.restmodel.Cashflow;
-import de.hf.myfinance.restmodel.Instrument;
 import de.hf.myfinance.restmodel.Position;
 import de.hf.myfinance.restmodel.ValueCurve;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,7 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import reactor.core.publisher.Flux;
@@ -62,11 +61,11 @@ public interface ValuationApi {
 	@GetMapping(value = "/positions", produces = "application/json")
     Flux<Position> getPositions(@RequestParam List<String> depotKeys);
 
-	@GetMapping(value = "/recalcandgetvaluecurve", produces = "application/json")
+	@PostMapping(value = "/recalcandgetvaluecurve", produces = "application/json")
 	Mono<ValueCurve> recalcAndGetValueCurve(@RequestParam String businesskey);
 
 	@GetMapping(value = "/recalcAllCurves", produces = "application/json")
-	Mono<ValueCurve> recalcAllCurves();
+	Mono<String> recalcAllCurves();
 
 	@GetMapping(value = "/linkedvalues", produces = "application/json")
 	Mono<Map<String,Double>> getLinkedValues(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate valueDate);

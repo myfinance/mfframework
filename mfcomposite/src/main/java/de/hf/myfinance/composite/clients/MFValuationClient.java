@@ -116,7 +116,7 @@ public class MFValuationClient implements ValuationApi {
     }
 
     @Override
-    public Mono<ValueCurve> recalcAllCurves() {
+    public Mono<String> recalcAllCurves() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'recalcAllCurves'");
     }
