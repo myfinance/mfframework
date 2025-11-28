@@ -43,14 +43,14 @@ public class MFValuationClient implements ValuationApi {
     @Override
     public Mono<ValueCurve> getValueCurve(String businesskey, LocalDate startDate, LocalDate endDate, ValuationType valuationType) {
         return webClient.get()
-                .uri(valuationServiceUrl + "/getvaluecurve?businesskey="+businesskey+"&startDate="+startDate+"&endDate="+endDate+"&valuationType="+valuationType)
+                .uri(valuationServiceUrl + "/getvaluecurve?businesskey="+businesskey+"&startDate="+startDate+"&endDate="+endDate+"&valType="+valuationType)
                 .retrieve().bodyToMono(ValueCurve.class);
     }
 
     @Override
     public Mono<Double> getValue(String businesskey, LocalDate date, ValuationType valuationType) {
         return webClient.get()
-                .uri(valuationServiceUrl + "/getvalue?businesskey="+businesskey+"&date="+date+"&valuationType="+valuationType)
+                .uri(valuationServiceUrl + "/getvalue?businesskey="+businesskey+"&date="+date+"&valType="+valuationType)
                 .retrieve().bodyToMono(Double.class);
     }
 
@@ -102,7 +102,7 @@ public class MFValuationClient implements ValuationApi {
     @Override
     public Mono<Map<String, Double>> getLinkedValues(String businesskey, LocalDate valueDate, ValuationType valuationType) {
         return webClient.get()
-                .uri(valuationServiceUrl + "/linkedvalues?businesskey="+businesskey+"&valueDate="+valueDate+"&valuationType="+valuationType)
+                .uri(valuationServiceUrl + "/linkedvalues?businesskey="+businesskey+"&valueDate="+valueDate+"&valType="+valuationType)
                 .retrieve().bodyToMono(new ParameterizedTypeReference<Map<String, Double>>() {});
     }
 
