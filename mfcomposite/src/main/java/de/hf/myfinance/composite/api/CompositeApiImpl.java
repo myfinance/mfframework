@@ -316,27 +316,27 @@ public class CompositeApiImpl implements CompositeApi {
     /** Valuation: **/
 
     @Override
-    public Mono<ValueCurve> getValueCurve(String businesskey, LocalDate startDate, LocalDate endDate) {
-        return valuationClient.getValueCurve(businesskey, startDate, endDate);
+    public Mono<ValueCurve> getValueCurve(String businesskey, LocalDate startDate, LocalDate endDate, ValuationType valuationType) {
+        return valuationClient.getValueCurve(businesskey, startDate, endDate, valuationType);
     }
 
     @Override
-    public Mono<Double> getValue(String businesskey, LocalDate date) {
-        return valuationClient.getValue(businesskey, date);
+    public Mono<Double> getValue(String businesskey, LocalDate date, ValuationType valuationType) {
+        return valuationClient.getValue(businesskey, date, valuationType);
     }
 
     @Override
     public Mono<List<InstrumentDetails>> listDetailedAccounts(String tenantbusinesskey, LocalDate duedate,
-            LocalDate referencedate) {
-        return instrumentClient.listAllAccounts(tenantbusinesskey).collectList().flatMap(a -> collectDetails(a, duedate, referencedate));
+            LocalDate referencedate, ValuationType valuationType) {
+        return instrumentClient.listAllAccounts(tenantbusinesskey).collectList().flatMap(a -> collectDetails(a, duedate, referencedate, valuationType));
     }
 
     @Override
     public Mono<List<InstrumentDetails>> listDetailedBudets(String tenantbusinesskey, LocalDate duedate,
-            LocalDate referencedate) {
+            LocalDate referencedate, ValuationType valuationType) {
 
         var detailsWithValues = instrumentClient.listAllBudgets(tenantbusinesskey).collectList()
-                .flatMap(a -> collectDetails(a, duedate, referencedate));
+                .flatMap(a -> collectDetails(a, duedate, referencedate, valuationType));
 
         // setParents
         var allInstruments = instrumentClient.listInstruments();
@@ -361,7 +361,7 @@ public class CompositeApiImpl implements CompositeApi {
     }
 
     private Mono<List<InstrumentDetails>> collectDetails(List<Instrument> instruments, LocalDate duedate,
-            LocalDate referencedate) {
+            LocalDate referencedate, ValuationType valuationType) {
         var businesskeys = new ArrayList<String>();
         var instrumentDetailMap = new HashMap<String, InstrumentDetails>();
         instruments.forEach(i -> {
@@ -380,12 +380,12 @@ public class CompositeApiImpl implements CompositeApi {
         // to the requested instrument key and collect it in a mon of the map
 
         var valuesForDueday = Flux.fromIterable(businesskeys)
-                .flatMap(k -> valuationClient.getValue(k, duedate)
+                .flatMap(k -> valuationClient.getValue(k, duedate, valuationType)
                         .map(result -> Map.entry(k, result)))
                 .collectMap(Map.Entry::getKey, Map.Entry::getValue);
 
         var valuesForReferencedate = Flux.fromIterable(businesskeys)
-                .flatMap(k -> valuationClient.getValue(k, referencedate)
+                .flatMap(k -> valuationClient.getValue(k, referencedate, valuationType)
                         .map(result -> Map.entry(k, result)))
                 .collectMap(Map.Entry::getKey, Map.Entry::getValue);
 
@@ -445,13 +445,13 @@ Not used yet. but maybe later in case i want to see the securities with the bigg
     @Override
     public Mono<InstrumentFullDetails> getInstrumentDetails(String businesskey, LocalDate duedate,
             LocalDate referencedate, LocalDate starttimeseries, LocalDate endtimeseries, LocalDate firstcashflowdate,
-            LocalDate lastcashflowdate) {
+            LocalDate lastcashflowdate, ValuationType valuationType) {
         var instrumentFullDetails = instrumentClient.getInstrument(businesskey)
-                .flatMap(i -> collectInstrumentFullDetails(i, duedate, referencedate));
-        var valueCurve = valuationClient.getValueCurve(businesskey, starttimeseries, endtimeseries);
+                .flatMap(i -> collectInstrumentFullDetails(i, duedate, referencedate, valuationType));
+        var valueCurve = valuationClient.getValueCurve(businesskey, starttimeseries, endtimeseries, valuationType);
         var avgExpensesOfLastYear = valuationClient.getAvgExpensesOfLastYear(businesskey);
         var cashflows = valuationClient.listCashflows4Instrument(businesskey, firstcashflowdate, lastcashflowdate);
-        var linkedValues = valuationClient.getLinkedValues(businesskey, duedate);
+        var linkedValues = valuationClient.getLinkedValues(businesskey, duedate, valuationType);
 
         var result = Mono.zip(instrumentFullDetails, valueCurve).map(tuple -> {
             var details = tuple.getT1();
@@ -516,9 +516,9 @@ Not used yet. but maybe later in case i want to see the securities with the bigg
     }
 
     private Mono<InstrumentFullDetails> collectInstrumentFullDetails(Instrument instrument, LocalDate duedate,
-            LocalDate referencedate) {
-        var valueDuedate = valuationClient.getValue(instrument.getBusinesskey(), duedate);
-        var valueReferencedate = valuationClient.getValue(instrument.getBusinesskey(), referencedate);
+            LocalDate referencedate, ValuationType valuationType) {
+        var valueDuedate = valuationClient.getValue(instrument.getBusinesskey(), duedate, valuationType);
+        var valueReferencedate = valuationClient.getValue(instrument.getBusinesskey(), referencedate, valuationType);
         // transactionClient.listTransactions()
 
         return Mono.zip(valueDuedate, valueReferencedate).map(tuple -> {
@@ -556,7 +556,7 @@ Not used yet. but maybe later in case i want to see the securities with the bigg
             }
             return Flux.fromIterable(result);
         }).flatMap(securityMetric ->
-            valuationClient.getValue(securityMetric.getBusinesskey(), LocalDate.now())
+            valuationClient.getValue(securityMetric.getBusinesskey(), LocalDate.now(), ValuationType.MARKETVALUE)
                 .map(price -> {
                     securityMetric.setPriceInEuro(price);
                     return securityMetric;

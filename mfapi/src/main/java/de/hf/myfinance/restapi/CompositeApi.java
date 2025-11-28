@@ -140,16 +140,16 @@ public interface CompositeApi {
     /** Valuation: **/
 
     @GetMapping(value = "/mf/getvaluecurve", produces = "application/json")
-    Mono<ValueCurve> getValueCurve(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
+    Mono<ValueCurve> getValueCurve(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate, @RequestParam ValuationType valuationType);
 
     @GetMapping(value = "/mf/getvalue", produces = "application/json")
-    Mono<Double> getValue(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
+    Mono<Double> getValue(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, @RequestParam ValuationType valuationType);
 
     @GetMapping(value = "/mf/listdetailedaccounts", produces = "application/json")
-    Mono<List<InstrumentDetails>> listDetailedAccounts(@RequestParam String tenantbusinesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate duedate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate referencedate);
+    Mono<List<InstrumentDetails>> listDetailedAccounts(@RequestParam String tenantbusinesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate duedate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate referencedate, @RequestParam ValuationType valuationType);
 
     @GetMapping(value = "/mf/listdetailedbudgets", produces = "application/json")
-    Mono<List<InstrumentDetails>> listDetailedBudets(@RequestParam String tenantbusinesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate duedate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate referencedate);
+    Mono<List<InstrumentDetails>> listDetailedBudets(@RequestParam String tenantbusinesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate duedate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate referencedate, @RequestParam ValuationType valuationType);
 
     @GetMapping(value = "/mf/instrumentdetails", produces = "application/json")
     Mono<InstrumentFullDetails> getInstrumentDetails(@RequestParam String businesskey, 
@@ -158,7 +158,8 @@ public interface CompositeApi {
                                                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate starttimeseries, 
                                                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endtimeseries,
                                                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstcashflowdate, 
-                                                        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastcashflowdate);
+                                                        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastcashflowdate,
+                                                        @RequestParam ValuationType valuationType);
 
 /**
 Not used yet. but maybe later in case i want to see the securities with the biggest drop or gain in a certain period

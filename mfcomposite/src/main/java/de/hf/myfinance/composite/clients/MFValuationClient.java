@@ -6,6 +6,7 @@ import de.hf.myfinance.exception.MFMsgKey;
 import de.hf.myfinance.restapi.ValuationApi;
 import de.hf.myfinance.restmodel.Cashflow;
 import de.hf.myfinance.restmodel.Position;
+import de.hf.myfinance.restmodel.ValuationType;
 import de.hf.myfinance.restmodel.ValueCurve;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -40,16 +41,16 @@ public class MFValuationClient implements ValuationApi {
     }
 
     @Override
-    public Mono<ValueCurve> getValueCurve(String businesskey, LocalDate startDate, LocalDate endDate) {
+    public Mono<ValueCurve> getValueCurve(String businesskey, LocalDate startDate, LocalDate endDate, ValuationType valuationType) {
         return webClient.get()
-                .uri(valuationServiceUrl + "/getvaluecurve?businesskey="+businesskey+"&startDate="+startDate+"&endDate="+endDate)
+                .uri(valuationServiceUrl + "/getvaluecurve?businesskey="+businesskey+"&startDate="+startDate+"&endDate="+endDate+"&valuationType="+valuationType)
                 .retrieve().bodyToMono(ValueCurve.class);
     }
 
     @Override
-    public Mono<Double> getValue(String businesskey, LocalDate date) {
+    public Mono<Double> getValue(String businesskey, LocalDate date, ValuationType valuationType) {
         return webClient.get()
-                .uri(valuationServiceUrl + "/getvalue?businesskey="+businesskey+"&date="+date)
+                .uri(valuationServiceUrl + "/getvalue?businesskey="+businesskey+"&date="+date+"&valuationType="+valuationType)
                 .retrieve().bodyToMono(Double.class);
     }
 
@@ -92,16 +93,6 @@ public class MFValuationClient implements ValuationApi {
         throw new MFException(MFMsgKey.UNSPECIFIED, "not implemented yet");
     }
 
-
-    private String encodeUriParameters( String parameterName, String parameterValue){
-
-        return UriComponentsBuilder.fromPath("")
-                                        .queryParam(parameterName, parameterValue)
-                                        .build()
-                                        .encode()
-                                        .toUriString();
-    }
-
     @Override
     public Mono<ValueCurve> recalcAndGetValueCurve(String businesskey) {
         // TODO Auto-generated method stub
@@ -109,9 +100,9 @@ public class MFValuationClient implements ValuationApi {
     }
 
     @Override
-    public Mono<Map<String, Double>> getLinkedValues(String businesskey, LocalDate valueDate) {
+    public Mono<Map<String, Double>> getLinkedValues(String businesskey, LocalDate valueDate, ValuationType valuationType) {
         return webClient.get()
-                .uri(valuationServiceUrl + "/linkedvalues?businesskey="+businesskey+"&valueDate="+valueDate)
+                .uri(valuationServiceUrl + "/linkedvalues?businesskey="+businesskey+"&valueDate="+valueDate+"&valuationType="+valuationType)
                 .retrieve().bodyToMono(new ParameterizedTypeReference<Map<String, Double>>() {});
     }
 

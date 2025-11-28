@@ -17,6 +17,7 @@ import de.hf.myfinance.restmodel.Instrument;
 import de.hf.myfinance.restmodel.InstrumentDetails;
 import de.hf.myfinance.restmodel.InstrumentType;
 import de.hf.myfinance.restmodel.Position;
+import de.hf.myfinance.restmodel.ValuationType;
 import de.hf.myfinance.restmodel.ValueCurve;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -69,14 +70,14 @@ class CompositeApiImplTest {
         when(instrumentClient.listAllAccounts(tenantbusinesskey)).thenReturn(Flux.just(instrument1, instrument2));
 
         // Mocking valuationClient responses
-        when(valuationClient.getValue("key1", duedate)).thenReturn(Mono.just(100.0));
-        when(valuationClient.getValue("key2", duedate)).thenReturn(Mono.just(200.0));
+        when(valuationClient.getValue("key1", duedate, ValuationType.MARKETVALUE)).thenReturn(Mono.just(100.0));
+        when(valuationClient.getValue("key2", duedate, ValuationType.MARKETVALUE)).thenReturn(Mono.just(200.0));
 
-        when(valuationClient.getValue("key1", referencedate)).thenReturn(Mono.just(90.0));
-        when(valuationClient.getValue("key2", referencedate)).thenReturn(Mono.just(190.0));
+        when(valuationClient.getValue("key1", referencedate, ValuationType.MARKETVALUE)).thenReturn(Mono.just(90.0));
+        when(valuationClient.getValue("key2", referencedate, ValuationType.MARKETVALUE)).thenReturn(Mono.just(190.0));
 
         // Testing listDetailedAccounts
-        Mono<List<InstrumentDetails>> result = compositeApiImpl.listDetailedAccounts(tenantbusinesskey, duedate, referencedate);
+        Mono<List<InstrumentDetails>> result = compositeApiImpl.listDetailedAccounts(tenantbusinesskey, duedate, referencedate, ValuationType.MARKETVALUE);
 
         StepVerifier.create(result)
                 .expectNextMatches(list -> list.size() == 2 &&
@@ -88,10 +89,10 @@ class CompositeApiImplTest {
 
         // Verify interactions
         verify(instrumentClient).listAllAccounts(tenantbusinesskey);
-        verify(valuationClient).getValue("key1", duedate);
-        verify(valuationClient).getValue("key2", duedate);
-        verify(valuationClient).getValue("key1", referencedate);
-        verify(valuationClient).getValue("key2", referencedate);
+        verify(valuationClient).getValue("key1", duedate, ValuationType.MARKETVALUE);
+        verify(valuationClient).getValue("key2", duedate, ValuationType.MARKETVALUE);
+        verify(valuationClient).getValue("key1", referencedate, ValuationType.MARKETVALUE);
+        verify(valuationClient).getValue("key2", referencedate, ValuationType.MARKETVALUE);
     }
 
     @Test
@@ -114,16 +115,16 @@ class CompositeApiImplTest {
         when(instrumentClient.listInstruments()).thenReturn(Flux.just(instrument1, instrument2,instrument3,parent1,parent2));
 
         // Mocking valuationClient responses
-        when(valuationClient.getValue("key1", duedate)).thenReturn(Mono.just(100.0));
-        when(valuationClient.getValue("key2", duedate)).thenReturn(Mono.just(200.0));
-        when(valuationClient.getValue("key3", duedate)).thenReturn(Mono.just(50.0));
+        when(valuationClient.getValue("key1", duedate, ValuationType.MARKETVALUE)).thenReturn(Mono.just(100.0));
+        when(valuationClient.getValue("key2", duedate, ValuationType.MARKETVALUE)).thenReturn(Mono.just(200.0));
+        when(valuationClient.getValue("key3", duedate, ValuationType.MARKETVALUE)).thenReturn(Mono.just(50.0));
 
-        when(valuationClient.getValue("key1", referencedate)).thenReturn(Mono.just(90.0));
-        when(valuationClient.getValue("key2", referencedate)).thenReturn(Mono.just(190.0));
-        when(valuationClient.getValue("key3", referencedate)).thenReturn(Mono.just(70.0));
+        when(valuationClient.getValue("key1", referencedate, ValuationType.MARKETVALUE)).thenReturn(Mono.just(90.0));
+        when(valuationClient.getValue("key2", referencedate, ValuationType.MARKETVALUE)).thenReturn(Mono.just(190.0));
+        when(valuationClient.getValue("key3", referencedate, ValuationType.MARKETVALUE)).thenReturn(Mono.just(70.0));
 
         // Testing listDetailedAccounts
-        Mono<List<InstrumentDetails>> result = compositeApiImpl.listDetailedBudets(tenantbusinesskey, duedate, referencedate);
+        Mono<List<InstrumentDetails>> result = compositeApiImpl.listDetailedBudets(tenantbusinesskey, duedate, referencedate, ValuationType.MARKETVALUE);
 
         StepVerifier.create(result)
                 .expectNextMatches(list -> list.size() == 3 &&
@@ -141,10 +142,10 @@ class CompositeApiImplTest {
 
         // Verify interactions
         verify(instrumentClient).listAllBudgets(tenantbusinesskey);
-        verify(valuationClient).getValue("key1", duedate);
-        verify(valuationClient).getValue("key2", duedate);
-        verify(valuationClient).getValue("key1", referencedate);
-        verify(valuationClient).getValue("key2", referencedate);
+        verify(valuationClient).getValue("key1", duedate, ValuationType.MARKETVALUE);
+        verify(valuationClient).getValue("key2", duedate, ValuationType.MARKETVALUE);
+        verify(valuationClient).getValue("key1", referencedate, ValuationType.MARKETVALUE);
+        verify(valuationClient).getValue("key2", referencedate, ValuationType.MARKETVALUE);
     }
 
     @Test
@@ -167,9 +168,9 @@ class CompositeApiImplTest {
         when(instrumentClient.getInstrument(businesskey)).thenReturn(Mono.just(instrument));
 
         // Mocking valuationClient responses
-        when(valuationClient.getValue(businesskey, duedate)).thenReturn(Mono.just(value));
-        when(valuationClient.getValue(businesskey, referencedate)).thenReturn(Mono.just(referencevalue));
-        when(valuationClient.getValueCurve(businesskey, duedate, referencedate)).thenReturn(Mono.just(valueCurveObject));
+        when(valuationClient.getValue(businesskey, duedate, ValuationType.MARKETVALUE)).thenReturn(Mono.just(value));
+        when(valuationClient.getValue(businesskey, referencedate, ValuationType.MARKETVALUE)).thenReturn(Mono.just(referencevalue));
+        when(valuationClient.getValueCurve(businesskey, duedate, referencedate, ValuationType.MARKETVALUE)).thenReturn(Mono.just(valueCurveObject));
 
         // Mocking transactionClient responses
         when(valuationClient.getAvgExpensesOfLastYear(businesskey)).thenReturn(Mono.just(10.0));
@@ -186,10 +187,10 @@ class CompositeApiImplTest {
 
         var linkedValueMap = new HashMap<String, Double>();
         linkedValueMap.put("linkedInstrumentKey", 10.0);
-        when(valuationClient.getLinkedValues(businesskey, duedate)).thenReturn(Mono.just(linkedValueMap));
+        when(valuationClient.getLinkedValues(businesskey, duedate, ValuationType.MARKETVALUE)).thenReturn(Mono.just(linkedValueMap));
 
         // Testing listDetailedAccounts
-        var result = compositeApiImpl.getInstrumentDetails(businesskey, duedate, referencedate, duedate, referencedate, duedate, referencedate).block();
+        var result = compositeApiImpl.getInstrumentDetails(businesskey, duedate, referencedate, duedate, referencedate, duedate, referencedate, ValuationType.MARKETVALUE).block();
 
         assertEquals(businesskey, result.getBusinesskey());
         assertEquals(desc, result.getDescription());

@@ -2,6 +2,7 @@ package de.hf.myfinance.restapi;
 
 import de.hf.myfinance.restmodel.Cashflow;
 import de.hf.myfinance.restmodel.Position;
+import de.hf.myfinance.restmodel.ValuationType;
 import de.hf.myfinance.restmodel.ValueCurve;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -43,10 +44,10 @@ public interface ValuationApi {
 					"${api.responseCodes.unprocessableEntity.description}")
 	})
 	@GetMapping(value = "/getvaluecurve", produces = "application/json")
-	Mono<ValueCurve> getValueCurve(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate);
+	Mono<ValueCurve> getValueCurve(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate, @RequestParam ValuationType valuationType);
 
 	@GetMapping(value = "/getvalue", produces = "application/json")
-	Mono<Double> getValue(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
+	Mono<Double> getValue(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, @RequestParam ValuationType valuationType);
 
 	// returns the timestamp of the last update of the value curve for the given businesskey 
 	@GetMapping(value = "/getvaluets", produces = "application/json")
@@ -68,5 +69,5 @@ public interface ValuationApi {
 	Mono<String> recalcAllCurves();
 
 	@GetMapping(value = "/linkedvalues", produces = "application/json")
-	Mono<Map<String,Double>> getLinkedValues(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate valueDate);
+	Mono<Map<String,Double>> getLinkedValues(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate valueDate, @RequestParam ValuationType valuationType);
 }
