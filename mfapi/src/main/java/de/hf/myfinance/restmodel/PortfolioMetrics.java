@@ -3,14 +3,11 @@ package de.hf.myfinance.restmodel;
 import java.util.Map;
 
 public class PortfolioMetrics {
-  private String portfolio;
 
-    private Integer version;
-
+    private String portfolio;
     private Map<Integer, Double> cagrPerYear;
     private Double totalCagr;
-
-    private Double positionCurve;
+    private Boolean isSingleSecurity;
 
     public PortfolioMetrics(){}
 
@@ -32,14 +29,6 @@ public class PortfolioMetrics {
         this.portfolio = portfolio;
     }
 
-    public Integer getVersion() {
-        return this.version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
     public Map<Integer,Double> getCagrPerYear() {
         return this.cagrPerYear;
     }
@@ -56,12 +45,13 @@ public class PortfolioMetrics {
         this.totalCagr = totalCagr;
     }
 
-    public Double getPositionCurve() {
-        return this.positionCurve;
+    public Boolean getIsSingleSecurity() {
+        return this.isSingleSecurity;
     }
 
-    public void setPositionCurve(Double positionCurve) {
-        this.positionCurve = positionCurve;
+    public void setIsSingleSecurity(Boolean isSingleSecurity) {
+        this.isSingleSecurity = isSingleSecurity;
     }
+    
      
 }

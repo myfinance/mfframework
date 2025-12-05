@@ -606,5 +606,10 @@ Not used yet. but maybe later in case i want to see the securities with the bigg
         streamBridge.send("loadNewMarketData-out-0", message);
     }
 
+    @Override
+    public Flux<PortfolioMetrics> getPortfolioMetrics() {
+        return valuationClient.getPortfolioMetrics();
+    }
+
 
 }

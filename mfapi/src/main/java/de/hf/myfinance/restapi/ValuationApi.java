@@ -1,6 +1,7 @@
 package de.hf.myfinance.restapi;
 
 import de.hf.myfinance.restmodel.Cashflow;
+import de.hf.myfinance.restmodel.PortfolioMetrics;
 import de.hf.myfinance.restmodel.Position;
 import de.hf.myfinance.restmodel.ValuationType;
 import de.hf.myfinance.restmodel.ValueCurve;
@@ -70,4 +71,7 @@ public interface ValuationApi {
 
 	@GetMapping(value = "/linkedvalues", produces = "application/json")
 	Mono<Map<String,Double>> getLinkedValues(@RequestParam String businesskey, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate valueDate, @RequestParam ValuationType valuationType);
+
+	@GetMapping(value = "/portfoliometrics", produces = "application/json")
+    Flux<PortfolioMetrics> getPortfolioMetrics();
 }

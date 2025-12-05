@@ -186,5 +186,9 @@ Not used yet. but maybe later in case i want to see the securities with the bigg
         consumes = "application/json",
         produces = "application/json")
     Mono<String> saveSecurityMetrics(@RequestBody SecurityMetrics securityMetrics);
+
+
+    @GetMapping(value = "/mf/portfoliometrics", produces = "application/json")
+    Flux<PortfolioMetrics> getPortfolioMetrics();
                                                     
 }
