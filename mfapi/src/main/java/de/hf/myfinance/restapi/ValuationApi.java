@@ -74,4 +74,7 @@ public interface ValuationApi {
 
 	@GetMapping(value = "/portfoliometrics", produces = "application/json")
     Flux<PortfolioMetrics> getPortfolioMetrics();
+
+	@GetMapping(value = "/recalcAPortfolioMetrics", produces = "application/json")
+	Mono<String> recalcAPortfolioMetrics();
 }

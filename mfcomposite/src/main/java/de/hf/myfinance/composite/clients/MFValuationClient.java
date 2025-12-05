@@ -119,5 +119,11 @@ public class MFValuationClient implements ValuationApi {
         return webClient.get().uri(valuationServiceUrl + "/portfoliometrics").retrieve().bodyToFlux(PortfolioMetrics.class);
     }
 
+    @Override
+    public Mono<String> recalcAPortfolioMetrics() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'recalcAPortfolioMetrics'");
+    }
+
 
 }
