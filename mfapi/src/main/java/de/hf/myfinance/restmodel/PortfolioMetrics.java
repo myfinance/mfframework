@@ -15,9 +15,9 @@ public class PortfolioMetrics {
     private Double totalCagr;
     private Boolean isSingleSecurity;
     //just to understand from which cashflows the metrics were calculated
-    private List<Cashflow> cashflows;
+    private List<Double> cashflows;
     // with start and final values added
-    private Map<Integer, Cashflow> cashflowsWithStartAndEndValues;
+    private Map<Integer, Double> cashflowsWithStartAndEndValues;
 
     public PortfolioMetrics(){}
 
@@ -63,19 +63,19 @@ public class PortfolioMetrics {
         this.isSingleSecurity = isSingleSecurity;
     }
 
-    public List<Cashflow> getCashflows() {
+    public List<Double> getCashflows() {
         return this.cashflows;
     }
 
-    public void setCashflows(List<Cashflow> cashflows) {
+    public void setCashflows(List<Double> cashflows) {
         this.cashflows = cashflows;
     }
 
-    public Map<Integer, Cashflow> getCashflowsWithStartAndEndValues() {
+    public Map<Integer, Double> getCashflowsWithStartAndEndValues() {
         return this.cashflowsWithStartAndEndValues;
     }
 
-    public void setCashflowsWithStartAndEndValues(Map<Integer, Cashflow> cashflowsWithStartAndEndValues) {
+    public void setCashflowsWithStartAndEndValues(Map<Integer, Double> cashflowsWithStartAndEndValues) {
         this.cashflowsWithStartAndEndValues = cashflowsWithStartAndEndValues;
     }
      
