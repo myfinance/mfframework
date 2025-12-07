@@ -4,13 +4,20 @@ import java.util.List;
 import java.util.Map;
 
 public class PortfolioMetrics {
-
+    // TOTAL - Complete Portfolio with all securities and Cash Positions
+    // SECURITIES - ALL Security 
+    // EQUITIES, BONDS, FUNDS, ETF - Asset Classes
+    // INDUSTRY - like Technology, Health Care
+    // Region like Europe
+    // Single Security Businesskey
     private String portfolio;
     private Map<Integer, Double> cagrPerYear;
     private Double totalCagr;
     private Boolean isSingleSecurity;
     //just to understand from which cashflows the metrics were calculated
     private List<Cashflow> cashflows;
+    // with start and final values added
+    private Map<Integer, Cashflow> cashflowsWithStartAndEndValues;
 
     public PortfolioMetrics(){}
 
@@ -62,6 +69,14 @@ public class PortfolioMetrics {
 
     public void setCashflows(List<Cashflow> cashflows) {
         this.cashflows = cashflows;
+    }
+
+    public Map<Integer, Cashflow> getCashflowsWithStartAndEndValues() {
+        return this.cashflowsWithStartAndEndValues;
+    }
+
+    public void setCashflowsWithStartAndEndValues(Map<Integer, Cashflow> cashflowsWithStartAndEndValues) {
+        this.cashflowsWithStartAndEndValues = cashflowsWithStartAndEndValues;
     }
      
 }
