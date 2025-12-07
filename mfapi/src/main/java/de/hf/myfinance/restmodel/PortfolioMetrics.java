@@ -1,5 +1,6 @@
 package de.hf.myfinance.restmodel;
 
+import java.util.List;
 import java.util.Map;
 
 public class PortfolioMetrics {
@@ -8,6 +9,8 @@ public class PortfolioMetrics {
     private Map<Integer, Double> cagrPerYear;
     private Double totalCagr;
     private Boolean isSingleSecurity;
+    //just to understand from which cashflows the metrics were calculated
+    private List<Cashflow> cashflows;
 
     public PortfolioMetrics(){}
 
@@ -52,6 +55,13 @@ public class PortfolioMetrics {
     public void setIsSingleSecurity(Boolean isSingleSecurity) {
         this.isSingleSecurity = isSingleSecurity;
     }
-    
+
+    public List<Cashflow> getCashflows() {
+        return this.cashflows;
+    }
+
+    public void setCashflows(List<Cashflow> cashflows) {
+        this.cashflows = cashflows;
+    }
      
 }

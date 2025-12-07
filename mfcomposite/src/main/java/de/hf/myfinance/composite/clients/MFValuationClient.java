@@ -5,7 +5,6 @@ import de.hf.framework.exceptions.MFException;
 import de.hf.myfinance.exception.MFMsgKey;
 import de.hf.myfinance.restapi.ValuationApi;
 import de.hf.myfinance.restmodel.Cashflow;
-import de.hf.myfinance.restmodel.Instrument;
 import de.hf.myfinance.restmodel.PortfolioMetrics;
 import de.hf.myfinance.restmodel.Position;
 import de.hf.myfinance.restmodel.ValuationType;
