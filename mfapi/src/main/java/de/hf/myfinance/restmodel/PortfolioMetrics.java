@@ -17,7 +17,7 @@ public class PortfolioMetrics {
     //just to understand from which cashflows the metrics were calculated
     private List<Double> cashflows;
     // with start and final values added
-    private Map<Integer, Double> cashflowsWithStartAndEndValues;
+    private Map<Integer, List<Double>> cashflowsWithStartAndEndValues;
 
     public PortfolioMetrics(){}
 
@@ -71,11 +71,11 @@ public class PortfolioMetrics {
         this.cashflows = cashflows;
     }
 
-    public Map<Integer, Double> getCashflowsWithStartAndEndValues() {
+    public Map<Integer, List<Double>> getCashflowsWithStartAndEndValues() {
         return this.cashflowsWithStartAndEndValues;
     }
 
-    public void setCashflowsWithStartAndEndValues(Map<Integer, Double> cashflowsWithStartAndEndValues) {
+    public void setCashflowsWithStartAndEndValues(Map<Integer, List<Double>> cashflowsWithStartAndEndValues) {
         this.cashflowsWithStartAndEndValues = cashflowsWithStartAndEndValues;
     }
      
