@@ -12,6 +12,8 @@ public class PortfolioMetrics {
     // Single Security Businesskey
     private String portfolio;
     private Map<Integer, Double> cagrPerYear;
+    // unlike cagr it is not scaled per year, but only to the last cashflow or current date
+    private Map<Integer, Double> yieldPerYear;
     private Double totalCagr;
     private Boolean isSingleSecurity;
     //just to understand from which cashflows the metrics were calculated
@@ -77,6 +79,14 @@ public class PortfolioMetrics {
 
     public void setCashflowsWithStartAndEndValues(Map<Integer, List<Double>> cashflowsWithStartAndEndValues) {
         this.cashflowsWithStartAndEndValues = cashflowsWithStartAndEndValues;
+    }
+
+    public Map<Integer, Double> getYieldPerYear() {
+        return yieldPerYear;
+    }
+
+    public void setYieldPerYear(Map<Integer, Double> yieldPerYear) {
+        this.yieldPerYear = yieldPerYear;
     }
      
 }
