@@ -23,8 +23,8 @@ public class MFMarketdataClient implements MarketDataApi {
     public MFMarketdataClient(
             ObjectMapper mapper,
             WebClient.Builder webClient,
-            @Value("${app.mfvaluation.host}") String serviceHost,
-            @Value("${app.mfvaluation.port}") int servicePort) {
+            @Value("${app.mfmarketdata.host}") String serviceHost,
+            @Value("${app.mfmarketdata.port}") int servicePort) {
 
         this.webClient = webClient.build();
         this.mapper = mapper;
