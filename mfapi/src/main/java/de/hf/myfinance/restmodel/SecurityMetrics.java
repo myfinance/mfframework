@@ -14,13 +14,15 @@ public class SecurityMetrics {
     //the businesskey of the currency to identify the value curve of the currency and calculate the price in Euro
     String currencyKey;
     LocalDate fiscalEndDate;
-    SecurityLifecyclePhase securityLifecyclePhase;
     RiskProfile riskProfile;
     String sector;
     String country;
     LocalDateTime lastUpdateTs;
     LocalDateTime lastManualReviewTs;
     LocalDateTime priceLastUpdateTs;
+    SecurityLifecyclePhase securityLifecyclePhase;
+    SecurityLifecyclePhase securityLifecyclePhaseOverride;
+    SecurityLifecyclePhase securityLifecyclePhaseAutoCalculated;
 
 
 
@@ -44,10 +46,9 @@ public class SecurityMetrics {
     Double dilutedEPS5Y;
     Double dividendPerShare;
     Double forwardFreeCashflow5YCAGR;
-    Double forwardPriceToSales;
+    Double forwardSales;
     Double beta;
     Double tam;
-    Double forwardPE;   
     Double goodwill; 
     Double ebitda;
     Double ebit;
@@ -66,6 +67,7 @@ public class SecurityMetrics {
     //average growth of the free cashflow in the last 5 years
     Double avgFreeCashflowGrowth5Y;
     Double pe;
+    Double forwardPE;  
     //return on assts
     Double roa;
     //return on equity
@@ -86,7 +88,13 @@ public class SecurityMetrics {
     Double ruleOfFourty;
     Double grossMargin;
     Double pricePerSales;
+    Double forwardPriceToSales;
+    Double pricePerGrossProfit;
     Double fcfMargin;
+    Double priceToFCF;
+    Double forwardPriceToFCF;
+    Double evToFCF;
+    Double forwardevToFCF;
 
     //config
     Double avgMarktcapFreeCashflowRatio;
@@ -662,5 +670,69 @@ public class SecurityMetrics {
         return this.hasDividendsOrBuyBacks;
     }
 
+
+    public SecurityLifecyclePhase getSecurityLifecyclePhaseOverride() {
+        return this.securityLifecyclePhaseOverride;
+    }
+
+    public void setSecurityLifecyclePhaseOverride(SecurityLifecyclePhase securityLifecyclePhaseOverride) {
+        this.securityLifecyclePhaseOverride = securityLifecyclePhaseOverride;
+    }
+
+    public SecurityLifecyclePhase getSecurityLifecyclePhaseAutoCalculated() {
+        return this.securityLifecyclePhaseAutoCalculated;
+    }
+
+    public void setSecurityLifecyclePhaseAutoCalculated(SecurityLifecyclePhase securityLifecyclePhaseAutoCalculated) {
+        this.securityLifecyclePhaseAutoCalculated = securityLifecyclePhaseAutoCalculated;
+    }
+
+    public Double getForwardSales() {
+        return this.forwardSales;
+    }
+
+    public void setForwardSales(Double forwardSales) {
+        this.forwardSales = forwardSales;
+    }
+
+    public Double getPricePerGrossProfit() {
+        return this.pricePerGrossProfit;
+    }
+
+    public void setPricePerGrossProfit(Double pricePerGrossProfit) {
+        this.pricePerGrossProfit = pricePerGrossProfit;
+    }
+
+    public Double getPriceToFCF() {
+        return this.priceToFCF;
+    }
+
+    public void setPriceToFCF(Double priceToFCF) {
+        this.priceToFCF = priceToFCF;
+    }
+
+    public Double getForwardPriceToFCF() {
+        return this.forwardPriceToFCF;
+    }
+
+    public void setForwardPriceToFCF(Double forwardPriceToFCF) {
+        this.forwardPriceToFCF = forwardPriceToFCF;
+    }
+
+    public Double getEvToFCF() {
+        return this.evToFCF;
+    }
+
+    public void setEvToFCF(Double evToFCF) {
+        this.evToFCF = evToFCF;
+    }
+
+    public Double getForwardevToFCF() {
+        return this.forwardevToFCF;
+    }
+
+    public void setForwardevToFCF(Double forwardevToFCF) {
+        this.forwardevToFCF = forwardevToFCF;
+    }
 
 }
