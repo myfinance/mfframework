@@ -46,6 +46,7 @@ public class SecurityMetrics {
     Double dilutedEPS5Y;
     Double dividendPerShare;
     Double forwardFreeCashflow5YCAGR;
+    //expected FCF next year
     Double forwardFCF;
     Double forwardSales;
     Double beta;
@@ -67,8 +68,7 @@ public class SecurityMetrics {
     Double avgFreeCashflow5Y;
     //average growth of the free cashflow in the last 5 years
     Double avgFreeCashflowGrowth5Y;
-    Double pe;
-    Double forwardPE;  
+    Double pe; 
     //return on assts
     Double roa;
     //return on equity
@@ -271,14 +271,6 @@ public class SecurityMetrics {
 
     public void setTam(Double tam) {
         this.tam = tam;
-    }
-
-    public Double getForwardPE() {
-        return this.forwardPE;
-    }
-
-    public void setForwardPE(Double forwardPE) {
-        this.forwardPE = forwardPE;
     }
 
     public Double getNetIncome() {
@@ -712,14 +704,6 @@ public class SecurityMetrics {
         this.priceToFCF = priceToFCF;
     }
 
-    public Double getForwardPriceToFCF() {
-        return this.forwardPriceToFCF;
-    }
-
-    public void setForwardPriceToFCF(Double forwardPriceToFCF) {
-        this.forwardPriceToFCF = forwardPriceToFCF;
-    }
-
     public Double getEvToFCF() {
         return this.evToFCF;
     }
@@ -742,6 +726,14 @@ public class SecurityMetrics {
 
     public void setForwardFCF(Double forwardFCF) {
         this.forwardFCF = forwardFCF;
+    }
+
+    public Double getForwardPriceToFCF() {
+        return this.forwardPriceToFCF;
+    }
+
+    public void setForwardPriceToFCF(Double forwardPriceToFCF) {
+        this.forwardPriceToFCF = forwardPriceToFCF;
     }
 
 
