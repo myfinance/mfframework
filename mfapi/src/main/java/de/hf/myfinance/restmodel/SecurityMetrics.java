@@ -46,6 +46,7 @@ public class SecurityMetrics {
     Double dilutedEPS5Y;
     Double dividendPerShare;
     Double forwardFreeCashflow5YCAGR;
+    Double forwardFCF;
     Double forwardSales;
     Double beta;
     Double tam;
@@ -94,7 +95,7 @@ public class SecurityMetrics {
     Double priceToFCF;
     Double forwardPriceToFCF;
     Double evToFCF;
-    Double forwardevToFCF;
+    Double forwardEvToFCF;
 
     //config
     Double avgMarktcapFreeCashflowRatio;
@@ -727,12 +728,21 @@ public class SecurityMetrics {
         this.evToFCF = evToFCF;
     }
 
-    public Double getForwardevToFCF() {
-        return this.forwardevToFCF;
+    public Double getForwardEvToFCF() {
+        return this.forwardEvToFCF;
     }
 
-    public void setForwardevToFCF(Double forwardevToFCF) {
-        this.forwardevToFCF = forwardevToFCF;
+    public void setForwardEvToFCF(Double forwardEvToFCF) {
+        this.forwardEvToFCF = forwardEvToFCF;
     }
+
+    public Double getForwardFCF() {
+        return this.forwardFCF;
+    }
+
+    public void setForwardFCF(Double forwardFCF) {
+        this.forwardFCF = forwardFCF;
+    }
+
 
 }
