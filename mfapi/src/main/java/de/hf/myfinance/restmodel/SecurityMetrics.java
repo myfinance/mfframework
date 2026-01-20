@@ -794,4 +794,12 @@ public class SecurityMetrics {
         this.opportunityScore = opportunityScore;
     }
 
+    public Double getOpportunityScoreValue() {
+        return this.opportunityScoreValue;
+    }
+
+    public void setOpportunityScoreValue(Double opportunityScoreValue) {
+        this.opportunityScoreValue = opportunityScoreValue;
+    }
+
 }
