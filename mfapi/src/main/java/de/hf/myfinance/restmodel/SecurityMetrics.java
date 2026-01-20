@@ -27,7 +27,10 @@ public class SecurityMetrics {
     String moatScore;
     String riskScore;
     String growthScore;
+    //green yellow or red depending on opportunityScoreValue
     String opportunityScore;
+    //calculated from a lifecycle phase specific value e.G:pE with added pennalties for riskScore etc.
+    Double opportunityScoreValue;
     String comment;
 
 
