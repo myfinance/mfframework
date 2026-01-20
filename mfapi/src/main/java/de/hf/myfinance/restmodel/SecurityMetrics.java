@@ -26,6 +26,8 @@ public class SecurityMetrics {
     String metricScore;
     String moatScore;
     String riskScore;
+    String growthScore;
+    String opportunityScore;
     String comment;
 
 
@@ -771,6 +773,22 @@ public class SecurityMetrics {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getGrowthScore() {
+        return this.growthScore;
+    }
+
+    public void setGrowthScore(String growthScore) {
+        this.growthScore = growthScore;
+    }
+
+    public String getOpportunityScore() {
+        return this.opportunityScore;
+    }
+
+    public void setOpportunityScore(String opportunityScore) {
+        this.opportunityScore = opportunityScore;
     }
 
 }
