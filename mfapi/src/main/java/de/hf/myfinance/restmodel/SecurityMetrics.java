@@ -741,12 +741,12 @@ public class SecurityMetrics {
     }
 
 
-    public String getMetricScrore() {
+    public String getMetricScore() {
         return this.metricScore;
     }
 
-    public void setMetricScrore(String metricScrore) {
-        this.metricScore = metricScrore;
+    public void setMetricScore(String metricScore) {
+        this.metricScore = metricScore;
     }
 
     public String getMoatScore() {
