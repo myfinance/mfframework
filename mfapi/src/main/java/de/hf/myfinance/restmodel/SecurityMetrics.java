@@ -804,11 +804,11 @@ public class SecurityMetrics {
     }
 
 
-    public Double getEVPerEarnings() {
+    public Double getEvPerEarnings() {
         return this.evPerEarnings;
     }
 
-    public void setEVPerEarnings(Double evPerEarnings) {
+    public void setEvPerEarnings(Double evPerEarnings) {
         this.evPerEarnings = evPerEarnings;
     }
 
