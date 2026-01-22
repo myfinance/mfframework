@@ -14,7 +14,6 @@ public class SecurityMetrics {
     //the businesskey of the currency to identify the value curve of the currency and calculate the price in Euro
     String currencyKey;
     LocalDate fiscalEndDate;
-    RiskProfile riskProfile;
     String sector;
     String country;
     LocalDateTime lastUpdateTs;
@@ -57,6 +56,7 @@ public class SecurityMetrics {
     Double forwardFreeCashflow5YCAGR;
     //expected FCF next year
     Double forwardFCF;
+    Double forwardEps;
     Double forwardSales;
     Double beta;
     Double tam;
@@ -78,6 +78,8 @@ public class SecurityMetrics {
     //average growth of the free cashflow in the last 5 years
     Double avgFreeCashflowGrowth5Y;
     Double pe; 
+    Double forwardPe; 
+    Double forwardEvPerEarnings; 
     Double evPerEarnings;
     //return on assts
     Double roa;
@@ -153,14 +155,6 @@ public class SecurityMetrics {
 
     public void setSecurityLifecyclePhase(SecurityLifecyclePhase securityLifecyclePhase) {
         this.securityLifecyclePhase = securityLifecyclePhase;
-    }
-
-    public RiskProfile getRiskProfile() {
-        return this.riskProfile;
-    }
-
-    public void setRiskProfile(RiskProfile riskProfile) {
-        this.riskProfile = riskProfile;
     }
 
     public String getSector() {
@@ -810,6 +804,31 @@ public class SecurityMetrics {
 
     public void setEvPerEarnings(Double evPerEarnings) {
         this.evPerEarnings = evPerEarnings;
+    }
+
+
+    public Double getForwardEps() {
+        return this.forwardEps;
+    }
+
+    public void setForwardEps(Double forwardEps) {
+        this.forwardEps = forwardEps;
+    }
+
+    public Double getForwardPe() {
+        return this.forwardPe;
+    }
+
+    public void setForwardPe(Double forwardPe) {
+        this.forwardPe = forwardPe;
+    }
+
+    public Double getForwardEvPerEarnings() {
+        return this.forwardEvPerEarnings;
+    }
+
+    public void setForwardEvPerEarnings(Double forwardEvPerEarnings) {
+        this.forwardEvPerEarnings = forwardEvPerEarnings;
     }
 
 
