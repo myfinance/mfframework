@@ -611,5 +611,65 @@ Not used yet. but maybe later in case i want to see the securities with the bigg
         return valuationClient.getPortfolioMetrics();
     }
 
+    @Override
+    public Flux<PositionMetrics> getPositionMetrics(String tenantbusinesskey) {
+        return getPositions(tenantbusinesskey)
+                .filter(position -> position.getValue() != 0.0)
+                .collectList()
+                .flatMap(positions -> valuationClient.getPortfolioMetrics()
+                        .filter(portfolioMetrics -> portfolioMetrics.getIsSingleSecurity())
+                        .collectList()
+                        .flatMap(portfolioMetricsList -> {
+                            Map<String, PositionMetrics> aggregatedPositionMetrics = new HashMap<>();
 
+                            for (Position position : positions) {
+                                portfolioMetricsList.stream()
+                                        .filter(pm -> pm.getPortfolio().equals(position.getSecurityId()))
+                                        .findFirst()
+                                        .ifPresent(pm -> {
+                                            String portfolioBusinesskey = pm.getPortfolio();
+                                            aggregatedPositionMetrics.compute(portfolioBusinesskey, (key, existingMetrics) -> {
+                                                if (existingMetrics == null) {
+                                                    PositionMetrics newMetrics = new PositionMetrics();
+                                                    newMetrics.setBusinesskey(position.getSecurityId());
+                                                    newMetrics.setDescription(position.getSecurityDescription());
+                                                    newMetrics.setInstrumentType(position.getSecurityType());
+                                                    newMetrics.setAmount(position.getAmount());
+                                                    newMetrics.setValue(position.getValue());
+                                                    // Populate CAGR and Yield from PortfolioMetrics if it's a single security portfolio
+                                                    newMetrics.setCagrPerYear(pm.getCagrPerYear());
+                                                    newMetrics.setYieldPerYear(pm.getYieldPerYear());
+                                                    newMetrics.setTotalCagr(pm.getTotalCagr());
+                                                    return newMetrics;
+                                                } else {
+                                                    existingMetrics.setAmount(existingMetrics.getAmount() + position.getAmount());
+                                                    existingMetrics.setValue(existingMetrics.getValue() + position.getValue());
+                                                    return existingMetrics;
+                                                }
+                                            });
+                                        });
+                            }
+                            return Mono.just(aggregatedPositionMetrics);
+                        }))
+                .flatMapMany(aggregatedPositionMetricsMap -> securityMetricsClient.getSecurityMetrics()
+                        .collectMap(SecurityMetrics::getBusinesskey)
+                        .flatMapMany(securityMetricsMap -> {
+                            aggregatedPositionMetricsMap.values().forEach(positionMetrics -> {
+                                SecurityMetrics securityMetrics = securityMetricsMap.get(positionMetrics.getBusinesskey());
+                                if (securityMetrics != null) {
+                                    positionMetrics.setSector(securityMetrics.getSector());
+                                    positionMetrics.setCountry(securityMetrics.getCountry());
+                                    positionMetrics.setSecurityLifecyclePhase(securityMetrics.getSecurityLifecyclePhase());
+                                    positionMetrics.setMetricScore(securityMetrics.getMetricScore());
+                                    positionMetrics.setMoatScore(securityMetrics.getMoatScore());
+                                    positionMetrics.setRiskScore(securityMetrics.getRiskScore());
+                                    positionMetrics.setGrowthScore(securityMetrics.getGrowthScore());
+                                    positionMetrics.setOpportunityScore(securityMetrics.getOpportunityScore());
+                                    // CAGR and Yield are already set from PortfolioMetrics, but if SecurityMetrics has more specific ones, they could override here.
+                                    // For now, assuming PortfolioMetrics' CAGR/Yield for single security is sufficient.
+                                }
+                            });
+                            return Flux.fromIterable(aggregatedPositionMetricsMap.values());
+                        }));
+    }
 }

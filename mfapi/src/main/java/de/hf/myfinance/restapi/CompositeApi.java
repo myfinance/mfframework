@@ -170,6 +170,7 @@ Not used yet. but maybe later in case i want to see the securities with the bigg
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate referencedate);
 */
 
+    /** get all positions (key = depot and instrument) for a tenant,m enriched with instrumentdetails like description**/
     @GetMapping(value = "/mf/positions", produces = "application/json")
     Flux<Position> getPositions(@RequestParam String tenantbusinesskey);
 
@@ -190,5 +191,8 @@ Not used yet. but maybe later in case i want to see the securities with the bigg
 
     @GetMapping(value = "/mf/portfoliometrics", produces = "application/json")
     Flux<PortfolioMetrics> getPortfolioMetrics();
+
+    @GetMapping(value = "/mf/positionmetrics", produces = "application/json")
+    Flux<PositionMetrics> getPositionMetrics(@RequestParam String tenantbusinesskey);
                                                     
 }
