@@ -665,6 +665,7 @@ Not used yet. but maybe later in case i want to see the securities with the bigg
                                     positionMetrics.setRiskScore(securityMetrics.getRiskScore());
                                     positionMetrics.setGrowthScore(securityMetrics.getGrowthScore());
                                     positionMetrics.setOpportunityScore(securityMetrics.getOpportunityScore());
+                                    positionMetrics.setPortfolio(securityMetrics.getDefaultPortfolio());
                                     // CAGR and Yield are already set from PortfolioMetrics, but if SecurityMetrics has more specific ones, they could override here.
                                     // For now, assuming PortfolioMetrics' CAGR/Yield for single security is sufficient.
                                 }
