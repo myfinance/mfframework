@@ -16,33 +16,46 @@ in my case it ist my local nexus where I deploy all my artifacts.
 
 start with repo mfinfra first
 
-to install the application manually with helm install the complete bundle see repo mfbundle
-
-if Database is fresh: add via gui or api-Docs: currency EUR and USD
-then add equities for example DE0005140008 deutsche Bank
-US5949181045 Microsoft
-add symbols MSFT, DB
-start import prices
-
 ### Backend access ###
 
 #### local development ####
 
-to create the envirnment on your local maschine install kubernetes (Docker desktop, minikube etc)
-Then run kubectl apply -f .\devenv_deploy.yaml
-install Studio 3T Free to query the mongodb
+install an docker runtime i.g. docker desktop
 
+i personally use Orbstack. it is more stable, slim and fast.
 
-for  Google Cloud Worksation:
-Access the Workstation via https://console.cloud.google.com/workstations/list?project=p-2005472-ceu-ops-0000
-use docker Compose: docker compose -f ./mfframework/localenv/dockerCompose.yaml up -d 
-Open the Websites to configure. e.G.  Keycloak with https://console.cloud.google.com/workstations/list?project=p-2005472-ceu-ops-0000 - Verbindung zur Webanwendung über port - 30024
+run bootstrap/install_local_env.sh
 
+if you want to restore a dump:
+copy your dumpfile to /Users/holgerfischer/repos/dump
+replace timestamp and run the cmd:
 
-#### development with gitpod ####
+```bash
+docker run --rm \
+ --network bootstrap_myfinance-net \
+  -v /Users/holgerfischer/repos/dump:/dump \
+  mongo:5.0 \
+  mongorestore \
+  --host mongo:27017 \
+  --username root \
+  --password vulkan \
+  --authenticationDatabase admin \
+  --drop --gzip --archive=/dump/mfbackup_2026-02-08_22-01-01.gz 
+```
 
-for the development of the frontend with the gitpod ide it is necessary to have a dev backend available. For this the backend will publish via ci after every commit at my server https://babcom.myds.me:30022/dac/rest.
-SSL usage is important or other wise no connection is allowed from an gitpod envirmonment.
+### setup keycloak ###
+
+for each environment you have to setup keycloak initialy. 
+To do so you have to go to the admin-page and create the Realm myfinance
+Create all Users and passwords
+create client: mfclient (set valid redirecturl: http://localhost:4200/* and weborigins http://localhost:4200)
+realm settings - sessions: set SSO Session idle to 5h
+realm settings - tokens: set access token lifespan to 4h
+Export config: kubectl exec -n mfdev --stdin --tty pod/keycloak-55c6f45f7d-7mtvt -- /bin/bash
+/opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm myfinance --users realm_file
+
+## certificates
+
 to create a certificate I've used my synology:
 - control_center-external_access-ddns add babcom.myds.me
 - control_center-security-certificate add new lets encrypt certifikate
@@ -50,7 +63,7 @@ to create a certificate I've used my synology:
   the is easier but you can use lets encrypt directly or any other service to create a certificate as well
 
 to use the certificate in the backend you have to do the following steps:
-- unzip at your win-client and upload them to a linix server with java installed (currently my devenv2 server see MYF-527)
+- unzip at your client and upload them to a linix server with java installed 
 - rename privkey.pem to privkey.key
 - openssl pkcs12 -export -out eneCert.pkcs12 -inkey privkey.pem -in cert.pem
 - keytool -genkey -keyalg RSA -alias selfsigned -keystore devkeystore.jks  //use your personal infos but mind to use the same password as configured in in dac.res org.ops4j.pax.web.ssl.password
@@ -64,10 +77,11 @@ I use a reversproxy for frontend. In this case the user do not have to use a spe
 I would like to do it the same way for the backend but unfortunately my integrated Reversproxy in the firewall is only working for the root domain.
 You have to publish the backend with https as well because an https frontend is not allowed to communicate with an unsecure backend.
 
-##APIdoc
+## APIdoc
+
 see http://yourserviceurl/openapi/swagger-ui.html
 
-#test api request with oauth2
+### test api request with oauth2
 
 request the token:
 curl \
@@ -85,16 +99,7 @@ eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJidG1qb0NaY3RoNTdBS0lBdkY5bXRq
 put the token in the api request
 curl -v -H "Origin: http://localhost:4200" -H "Access-Control-Allow-Origin: /" -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJidG1qb0NaY3RoNTdBS0lBdkY5bXRqUl9fdFVBSERCX0tqYmY0aW5QczlRIn0.eyJleHAiOjE2OTIzODAyMjEsImlhdCI6MTY5MjM3ODQyMSwianRpIjoiODk3ZGFjNGMtNDI2Mi00YTg2LThhYzEtYmRkMjY5ZmZlYTE2IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDozMDAyNC9yZWFsbXMvbXlmaW5hbmNlIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjY3MmE5Y2Y3LTNkZjUtNGE2My04OGU3LWM0MjRiNjAwZjQ0MCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im1mY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImY1MWJkMDFiLTgzOTQtNGE3Mi1hZjY2LWU3MjFmOTdkODY3NSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo0MjAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW15ZmluYW5jZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJzaWQiOiJmNTFiZDAxYi04Mzk0LTRhNzItYWY2Ni1lNzIxZjk3ZDg2NzUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJIb2xnZXIgRklTQ0hFUiIsInByZWZlcnJlZF91c2VybmFtZSI6ImhvbGdlciIsImdpdmVuX25hbWUiOiJIb2xnZXIiLCJmYW1pbHlfbmFtZSI6IkZJU0NIRVIiLCJlbWFpbCI6ImhvbGdlckBoZmlzY2hlci5vcmcifQ.kIuxv7dHAR0Fozb7lFSGA_8Y1yIhAH0-NJQhVt5ljFM7H-xE4hBnKFforAtjfUksAcT6dq-wm8L6_CNTKjvO3PYqv-Hh7B8NVtoNWoOSNVqAg_nGF4uJsWlawYhz-KZ7ItADgR2uu8IpP8aV9b9KwZl8c2s_kE5A8vn0I06l_DHytKEpt0tOS9XZmLA8jTiZc-21Y5dtD1sgJonKXjxPIz7rhYidpsZBmUh3znqEF8aMMR6-7LMDhQQn8acbzpQcyh_2MNP01R1JtIGwcNbxoftW7rZ6rn-zl6UyL-8FhDlOZXV3yvblIl28t9TvXOzM10Lhg1boy2ZGA-1e1YoKlw" http://localhost:7009/mf/tenants
 
-### setup keycloak ###
 
-for each environment you have to setup keycloak initialy. 
-To do so you have to go to the admin-page and create the Realm myfinance
-Create all Users and passwords
-create client: mfclient (set valid redirecturl: http://localhost:4200/* and weborigins http://localhost:4200)
-realm settings - sessions: set SSO Session idle to 5h
-realm settings - tokens: set access token lifespan to 4h
-Export config: kubectl exec -n mfdev --stdin --tty pod/keycloak-55c6f45f7d-7mtvt -- /bin/bash
-/opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm myfinance --users realm_file
 
 ## tekton
 

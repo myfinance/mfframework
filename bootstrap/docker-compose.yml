@@ -1,0 +1,62 @@
+version: '3.8'
+
+# This docker-compose file sets up a local development environment with Keycloak, MongoDB, and RabbitMQ.
+# The configuration is based on the Helm charts found in the mfdeployment project.
+#
+# To start the services, run:
+# docker-compose up -d
+#
+# To stop the services, run:
+# docker-compose down
+
+services:
+  mongo:
+    image: "mongo:5.0"
+    container_name: mfmongo
+    ports:
+      - "30023:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=vulkan
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - myfinance-net
+
+  rabbitmq:
+    image: "rabbitmq:3.11.13-management"
+    container_name: mfrabbitmq
+    ports:
+      - "30021:5672"
+      - "30022:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=vulkan
+    volumes:
+      - rabbitmqdata:/var/lib/rabbitmq
+    networks:
+      - myfinance-net
+
+  keycloak:
+    image: "quay.io/keycloak/keycloak:22.0.1"
+    container_name: mfkeycloak
+    ports:
+      - "30024:8080"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    command: ["start-dev", "--import-realm"]
+    volumes:
+      - ./myfinance-realm.json:/opt/keycloak/data/import/myfinance-realm.json
+    networks:
+      - myfinance-net
+
+volumes:
+  mongodata:
+    driver: local
+  rabbitmqdata:
+    driver: local
+
+networks:
+  myfinance-net:
+    driver: bridge
