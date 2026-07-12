@@ -35,7 +35,7 @@
         <jacoco.version>0.8.7</jacoco.version>
 
         <!-- properties for container image. -->
-        <jib.baseimage>eclipse-temurin:17.0.1_12-jre-alpine</jib.baseimage>
+        <jib.baseimage>gcr.io/distroless/java17-debian11</jib.baseimage>
         <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
         <jib.container-repo>192.168.100.73:31003/repository/mydockerrepo/</jib.container-repo>
         <jib.container-name>holgerfischer/myfinance-mfcomposite:</jib.container-name>
