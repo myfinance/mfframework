@@ -177,4 +177,3 @@ for the Prod-deployment you have to all versios form test to Prod-folder in the 
 - on feature branches and on the master will be no ci-builds
 
 git log --oneline --graph --decorate
-
