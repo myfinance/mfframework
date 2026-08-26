@@ -4,12 +4,31 @@ to use this in other project add the mavenrepository with this artifacts to your
 in my case it ist my local nexus where I deploy all my artifacts.
 
 ```xml
-<mirror>
-  <id>my-local-repo</id>
-  <mirrorOf>external:http:*</mirrorOf>
-  <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo/</url>
-  <blocked>false</blocked>
-</mirror>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd">
+                <servers>
+                  <server>
+                    <id>localRepo</id>
+                    <username>deployment</username>
+                    <password>pw</password>
+                  </server>
+                </servers>
+                <mirrors>
+                  <mirror>
+                    <id>nexus-mirror</id>
+                    <url>http://192.168.100.81:31001/repository/maven-releases/</url>
+                    <mirrorOf>mynexus-release</mirrorOf>
+                    <blocked>false</blocked>
+                  </mirror>
+                  <mirror>
+                    <id>central</id>
+                    <url>http://192.168.100.81:31001/repository/maven-public/</url>
+                    <mirrorOf>central</mirrorOf>
+                    <blocked>false</blocked>
+                  </mirror>
+                </mirrors>
+</settings>
 ```
 
 ## get started ##
