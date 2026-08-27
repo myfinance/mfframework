@@ -42,7 +42,7 @@
 
         <springdoc.version>1.7.0</springdoc.version>
         <openapistarter.version>2.0.2</openapistarter.version>
-        <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
         <!--list helper-->
         <guava.version>33.1.0-jre</guava.version>
         <!--json handling-->
